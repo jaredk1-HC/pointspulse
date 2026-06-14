@@ -1393,7 +1393,7 @@ Return ONLY valid JSON, no markdown, no explanation outside the JSON, in exactly
   });
 
   try {
-    var res = await fetch('/api/claude', {
+    var res = await fetch('/.netlify/functions/claude', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -1880,7 +1880,7 @@ async function processProOfferFile(f) {
     var mediaType = f.type || 'image/png';
 
     try {
-      var res = await fetch('/api/claude', {
+      var res = await fetch('/.netlify/functions/claude', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -2015,7 +2015,7 @@ async function sendAI() {
   aiHistory.push({ role: 'user', content: q });
 
   try {
-    var res = await fetch('/api/claude', {
+    var res = await fetch('/.netlify/functions/claude', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
