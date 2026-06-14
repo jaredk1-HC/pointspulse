@@ -1,14 +1,18 @@
-export default async (request) => {
-  if (request.method === 'OPTIONS') {
-    return new Response(null, {
+exports.handler = async (event) => {
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': 'Content-Type',
         'Access-Control-Allow-Methods': 'POST'
-      }
-    });
+      },
+      body: ''
+    };
   }
-  const body = await request.json();
+
+  const body = JSON.parse(event.body);
+
   const response = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
@@ -18,13 +22,15 @@ export default async (request) => {
     },
     body: JSON.stringify(body)
   });
+
   const data = await response.json();
-  return new Response(JSON.stringify(data), {
+
+  return {
+    statusCode: 200,
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'
-    }
-  });
+    },
+    body: JSON.stringify(data)
+  };
 };
-
-export const config = { path: '/api/claude' };
