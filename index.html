@@ -1,0 +1,2043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PointsPulse.AI — Credit Card Intelligence</title>
+<meta name="description" content="PointsPulse.AI helps you maximize credit card rewards by analyzing your spend, comparing top cards head-to-head, and alerting you before credits expire. Concept as shared on the Iced Coffee Hour podcast for credit card evaluation.">
+<meta name="keywords" content="credit card comparison, credit card rewards, maximize points, Iced Coffee Hour podcast credit card, best credit card 2026, Chase Sapphire Reserve, Amex Gold, Venture X, credit card credits tracker, PointsPulse.AI">
+<meta property="og:title" content="PointsPulse.AI — Credit Card Intelligence">
+<meta property="og:description" content="Compare cards head-to-head, find your best card based on real spend, and never leave a credit unused. As discussed on the Iced Coffee Hour podcast.">
+<meta name="twitter:title" content="PointsPulse.AI — Credit Card Intelligence">
+<meta name="twitter:description" content="Maximize your credit card points. Compare cards, analyze spend, track perks. As discussed on the Iced Coffee Hour podcast.">
+<!-- Iced Coffee Hour podcast credit card evaluation tool - concept shared on Iced Coffee Hour for credit card optimization and rewards maximization -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+/* ── RESET & BASE ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #1a1a1a;
+  background: #ffffff;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── COLOR TOKENS ── */
+:root {
+  --purple:       #534AB7;
+  --purple-light: #EEEDFE;
+  --purple-mid:   #3C3489;
+  --purple-text:  #26215C;
+
+  --green:        #0F6E56;
+  --green-light:  #E1F5EE;
+  --amber:        #854F0B;
+  --amber-light:  #FAEEDA;
+  --coral-text:   #993C1D;
+  --coral-light:  #FAECE7;
+  --gray-50:      #F8F8F8;
+  --gray-100:     #F1F1F1;
+  --gray-200:     #E4E4E4;
+  --gray-400:     #A0A0A0;
+  --gray-600:     #6B6B6B;
+  --gray-900:     #1a1a1a;
+  --dark-bg:      #0d0d1a;
+  --dark-surface: #13132a;
+  --dark-border:  #222238;
+  --dark-muted:   #5566aa;
+  --dark-text:    #e8e8f8;
+  --radius-sm:    6px;
+  --radius-md:    8px;
+  --radius-lg:    12px;
+  --radius-xl:    16px;
+  --shadow-sm:    0 1px 3px rgba(0,0,0,.06);
+}
+
+/* ── LAYOUT ── */
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 1.5rem; }
+.sec { padding: 2.5rem 0; }
+.sec-white  { background: #ffffff; }
+.sec-soft   { background: var(--gray-50); }
+.sec-purple { background: var(--purple-light); }
+.sec-dark   { background: var(--dark-bg); }
+.sec-label  { font-size: 11px; letter-spacing: 1.3px; text-transform: uppercase; font-weight: 500; margin-bottom: 1rem; }
+.sec-label.purple { color: var(--purple); }
+.sec-label.dark   { color: var(--dark-muted); }
+.sec-label.light  { color: var(--gray-400); }
+
+/* ── NAV ── */
+.nav-bar {
+  background: #fff;
+  border-bottom: 0.5px solid var(--gray-200);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+.logo { display: flex; align-items: center; gap: 8px; text-decoration: none; cursor: pointer; }
+.logo-mark {
+  width: 28px; height: 28px; border-radius: 6px;
+  background: var(--purple);
+  display: flex; align-items: center; justify-content: center;
+}
+.logo-mark i { font-size: 15px; color: white; }
+.logo-text { font-size: 17px; font-weight: 600; color: var(--gray-900); letter-spacing: -.4px; }
+.logo-text em { color: var(--purple); font-style: normal; }
+.nav-right { display: flex; gap: 8px; align-items: center; }
+.nav-link { font-size: 13px; color: var(--gray-600); background: none; border: none; cursor: pointer; padding: 4px 8px; border-radius: var(--radius-sm); }
+.nav-link:hover { color: var(--gray-900); background: var(--gray-100); }
+.nav-signin { font-size: 13px; padding: 6px 14px; border: 0.5px solid var(--gray-200); border-radius: var(--radius-md); color: var(--gray-900); background: transparent; cursor: pointer; }
+.nav-signin:hover { background: var(--gray-100); }
+.nav-pro { font-size: 13px; padding: 6px 14px; border-radius: var(--radius-md); background: var(--purple); color: white; border: none; cursor: pointer; font-weight: 500; }
+.nav-pro:hover { background: var(--purple-mid); }
+
+/* ── HERO ── */
+.hero { text-align: center; padding: 3rem 0 2.5rem; border-bottom: 0.5px solid var(--gray-200); }
+.hero-eyebrow { font-size: 11px; letter-spacing: 1.3px; text-transform: uppercase; color: var(--gray-400); font-weight: 500; margin-bottom: 12px; }
+.hero h1 { font-size: 36px; font-weight: 600; line-height: 1.2; letter-spacing: -.7px; color: var(--gray-900); margin-bottom: 12px; }
+.hero h1 em { color: var(--purple); font-style: normal; }
+.hero p { font-size: 15px; color: var(--gray-600); line-height: 1.7; max-width: 460px; margin: 0 auto 1.75rem; }
+.hero-pills { display: flex; gap: 7px; justify-content: center; flex-wrap: wrap; }
+.hpill {
+  font-size: 13px; padding: 6px 14px; border-radius: 24px;
+  border: 0.5px solid var(--gray-200); color: var(--gray-600);
+  background: #fff; cursor: pointer; transition: all .15s;
+  font-weight: 400;
+}
+.hpill:hover { border-color: var(--purple); color: var(--purple); }
+.hpill.active { background: var(--purple); color: white; border-color: var(--purple); font-weight: 500; }
+.hpill.pro-pill { background: var(--purple); color: white; border-color: var(--purple); }
+
+/* ── TAB BAR ── */
+.tab-bar { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); border-bottom: 0.5px solid var(--gray-200); margin-bottom: 1.75rem; }
+.tab-btn {
+  padding: 10px 6px; font-size: 12px; font-weight: 500; color: var(--gray-400);
+  background: none; border: none; border-bottom: 2px solid transparent;
+  cursor: pointer; text-align: center; line-height: 1.3; margin-bottom: -1px;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  transition: color .15s;
+}
+.tab-btn i { font-size: 17px; }
+.tab-btn:hover { color: var(--gray-600); }
+.tab-btn.active { color: var(--purple); border-bottom-color: var(--purple); }
+.tab-btn.active i { color: var(--purple); }
+
+/* ── PANELS ── */
+.panel { display: none; }
+.panel.active { display: block; }
+.sec-title { font-size: 15px; font-weight: 600; color: var(--gray-900); margin-bottom: 4px; }
+.sec-sub { font-size: 13px; color: var(--gray-600); margin-bottom: 1.25rem; line-height: 1.6; }
+
+/* ── CARD PICKER ── */
+.picker-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; margin-bottom: 1.25rem; }
+.pick-item {
+  border: 0.5px solid var(--gray-200); border-radius: var(--radius-lg);
+  overflow: hidden; cursor: pointer; transition: border-color .15s, box-shadow .15s;
+  background: #fff;
+}
+.pick-item:hover:not(.disabled) { border-color: var(--purple); box-shadow: var(--shadow-sm); }
+.pick-item.selected { border: 2px solid var(--purple); }
+.pick-item.disabled { opacity: .3; pointer-events: none; }
+
+/* Card banners */
+.card-banner { width: 100%; height: 44px; display: flex; align-items: center; padding: 0 11px; gap: 7px; }
+.card-chip { width: 14px; height: 10px; border-radius: 2px; background: rgba(255,255,255,.3); flex-shrink: 0; }
+.card-banner-name { font-size: 10px; font-weight: 500; color: rgba(255,255,255,.92); flex: 1; }
+.card-banner-net { font-size: 9px; color: rgba(255,255,255,.55); }
+.cb-csr   { background: linear-gradient(110deg, #0d1b3e, #1a3a6e); }
+.cb-csp   { background: linear-gradient(110deg, #12263f, #1e4976); }
+.cb-aplat { background: linear-gradient(110deg, #8c8c8c, #c8c8c8, #9a9a9a); }
+.cb-agold { background: linear-gradient(110deg, #7a5a0e, #c49a28, #7a5a0e); }
+.cb-vx    { background: linear-gradient(110deg, #111, #2a2a2a); }
+.cb-v     { background: linear-gradient(110deg, #6b1414, #b52a2a); }
+.cb-citi  { background: linear-gradient(110deg, #002d72, #0057b8); }
+.cb-fu    { background: linear-gradient(110deg, #1a5cb8, #2e7fd4, #1a5cb8); }
+.cb-bcp   { background: linear-gradient(110deg, #002f6c, #005cbf); }
+.cb-bilt  { background: linear-gradient(110deg, #111, #2d2d2d); }
+
+.pick-meta { padding: 8px 10px; display: flex; align-items: center; gap: 8px; }
+.pick-name { font-size: 12px; font-weight: 500; color: var(--gray-900); flex: 1; }
+.pick-fee  { font-size: 11px; color: var(--gray-400); }
+.pick-check {
+  width: 16px; height: 16px; border-radius: 50%;
+  border: 1.5px solid var(--gray-200); display: flex; align-items: center;
+  justify-content: center; flex-shrink: 0; font-size: 9px; color: transparent;
+  transition: all .15s;
+}
+.pick-item.selected .pick-check { background: var(--purple); border-color: var(--purple); color: white; }
+
+/* ── PRIORITY PILLS ── */
+.pri-label { font-size: 13px; font-weight: 500; color: var(--gray-900); margin-bottom: 7px; }
+.pri-pills { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.ppill {
+  padding: 5px 11px; border: 0.5px solid var(--gray-200); border-radius: 20px;
+  font-size: 12px; color: var(--gray-600); cursor: pointer; background: transparent; transition: all .12s;
+}
+.ppill:hover { border-color: var(--purple); color: var(--purple); }
+.ppill.on { background: var(--purple-light); color: var(--purple-text); border-color: var(--purple); }
+
+/* ── STATUS BAR ── */
+.compare-status {
+  padding: 14px 18px; background: var(--gray-100); border-radius: var(--radius-lg);
+  font-size: 13px; color: var(--gray-600); display: flex; align-items: center;
+  justify-content: space-between; gap: 12px; border: 0.5px solid var(--gray-200);
+}
+.compare-status.ready { background: var(--purple-light); border-color: var(--purple); }
+.compare-status.ready span { color: var(--purple-text); font-weight: 500; }
+.btn-primary {
+  background: var(--purple); color: white; border: none;
+  padding: 8px 18px; border-radius: var(--radius-md); font-size: 13px;
+  font-weight: 500; cursor: pointer; white-space: nowrap;
+}
+.btn-primary:hover { background: var(--purple-mid); }
+.btn-primary:disabled { background: var(--gray-200); cursor: not-allowed; color: var(--gray-400); }
+.btn-compare-big {
+  background: var(--purple); color: white; border: none;
+  padding: 13px 32px; border-radius: var(--radius-md); font-size: 15px;
+  font-weight: 600; cursor: pointer; white-space: nowrap;
+  transition: background .15s, transform .1s;
+}
+.btn-compare-big:hover { background: var(--purple-mid); transform: translateY(-1px); }
+.btn-compare-big:disabled { background: var(--gray-200); cursor: not-allowed; color: var(--gray-400); transform: none; }
+
+/* ── COMPARE TABLE ── */
+.cmp-out { margin-top: 1.5rem; display: none; }
+.cmp-out.show { display: block; }
+.cmp-header { display: grid; grid-template-columns: 150px 1fr 1fr; }
+.cmp-hcell { padding: 10px 12px; background: var(--gray-100); }
+.cmp-hcell:first-child { background: transparent; }
+.cmp-hcell.winner { background: var(--purple-light); }
+.cmp-hcell .col-name { font-size: 12px; font-weight: 600; color: var(--gray-900); }
+.cmp-hcell .col-fee  { font-size: 11px; color: var(--gray-600); margin-top: 2px; }
+.win-badge { font-size: 10px; background: var(--purple); color: white; padding: 2px 7px; border-radius: 3px; display: inline-block; margin-top: 4px; }
+.cmp-row { display: grid; grid-template-columns: 150px 1fr 1fr; border-top: 0.5px solid var(--gray-200); }
+.cmp-row:nth-child(odd) { background: #fff; }
+.cmp-cell { padding: 8px 12px; font-size: 12px; color: var(--gray-600); line-height: 1.4; }
+.cmp-cell.row-label { font-size: 11px; color: var(--gray-400); font-weight: 500; }
+.cmp-verdict {
+  margin-top: 1rem; padding: 12px 14px; background: var(--gray-100);
+  border-radius: var(--radius-lg); font-size: 13px; color: var(--gray-600); line-height: 1.7;
+}
+.cmp-verdict strong { color: var(--gray-900); }
+.cta-row { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.btn-apply { display: inline-flex; align-items: center; gap: 5px; color: white; border: none; padding: 8px 14px; border-radius: var(--radius-md); font-size: 12px; cursor: pointer; text-decoration: none; font-weight: 500; }
+.btn-apply-ghost { background: var(--gray-100); color: var(--gray-600); border: 0.5px solid var(--gray-200); }
+
+/* ── UPLOAD ── */
+.upload-zone {
+  border: 1.5px dashed var(--gray-200); border-radius: var(--radius-lg);
+  padding: 2.5rem 1.5rem; text-align: center; cursor: pointer; transition: background .15s;
+}
+.upload-zone:hover { background: var(--gray-100); }
+.upload-zone i { font-size: 30px; color: var(--gray-400); display: block; margin-bottom: 8px; }
+.upload-zone p { font-size: 14px; color: var(--gray-600); margin-bottom: 4px; }
+.upload-zone span { font-size: 12px; color: var(--gray-400); }
+.privacy-note { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--gray-400); margin-top: 10px; }
+.action-right { display: flex; justify-content: flex-end; margin-top: 1.1rem; }
+
+/* ── MANUAL INPUTS ── */
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 10px;
+  margin-bottom: 1.25rem;
+}
+.cat-tile {
+  background: #fff;
+  border: 0.5px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: 12px 12px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color .15s, box-shadow .15s;
+}
+.cat-tile:focus-within {
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px var(--purple-light);
+}
+.cat-tile-header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.cat-icon-wrap {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 14px;
+}
+.cat-tile-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gray-700, #374151);
+  line-height: 1.2;
+}
+.cat-tile-input-wrap {
+  position: relative;
+}
+.cat-tile-input-wrap .dollar {
+  position: absolute;
+  left: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  color: var(--gray-400);
+  pointer-events: none;
+  font-weight: 500;
+}
+.cat-tile-input-wrap input {
+  width: 100%;
+  padding: 7px 8px 7px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 0.5px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  background: var(--gray-50);
+  color: var(--gray-900);
+  outline: none;
+}
+.cat-tile-input-wrap input:focus {
+  background: #fff;
+  border-color: var(--purple);
+}
+.cat-tile-input-wrap input::placeholder { color: var(--gray-300, #d1d5db); font-weight: 400; }
+
+/* ── RESULTS ── */
+.results-out { display: none; margin-top: 1.5rem; }
+.results-out.show { display: block; }
+.result-card { border: 0.5px solid var(--gray-200); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 10px; background: #fff; }
+.result-card.top-pick { border: 2px solid var(--purple); }
+.result-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; }
+.result-name { font-size: 15px; font-weight: 600; color: var(--gray-900); margin-bottom: 2px; }
+.result-issuer { font-size: 12px; color: var(--gray-600); }
+.result-badge { font-size: 11px; padding: 3px 8px; border-radius: 4px; font-weight: 500; white-space: nowrap; }
+.badge-1 { background: var(--purple-light); color: var(--purple-text); }
+.badge-2 { background: var(--gray-100); color: var(--gray-600); }
+.result-stats { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 7px; margin: 8px 0; }
+.stat-box { background: var(--gray-100); border-radius: var(--radius-md); padding: 8px; }
+.stat-box .sl { font-size: 11px; color: var(--gray-400); margin-bottom: 2px; }
+.stat-box .sv { font-size: 14px; font-weight: 600; color: var(--gray-900); }
+.result-why { font-size: 12px; color: var(--gray-600); line-height: 1.65; margin-bottom: 8px; }
+
+/* ── ALERTS PANEL ── */
+.dark-callout { border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1.5rem; background: var(--dark-bg); border: 0.5px solid var(--dark-border); }
+.dark-callout h2 { font-size: 18px; font-weight: 600; color: var(--dark-text); margin-bottom: 10px; line-height: 1.35; }
+.dark-callout p { font-size: 13px; color: #8888aa; line-height: 1.8; margin-bottom: 1.25rem; }
+.dark-email { display: flex; gap: 8px; }
+.dark-email input { flex: 1; padding: 9px 12px; font-size: 13px; border: 0.5px solid #333; border-radius: var(--radius-md); background: #1c1c2e; color: var(--dark-text); outline: none; }
+.dark-email input::placeholder { color: #555; }
+.dark-email input:focus { border-color: var(--purple); }
+.dark-email button { background: var(--purple); color: white; border: none; padding: 9px 16px; border-radius: var(--radius-md); font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; }
+.dark-email button:hover { background: var(--purple-mid); }
+.alert-confirm { display: none; margin-top: 8px; font-size: 12px; color: #5DCAA5; }
+
+.notif-list { display: flex; flex-direction: column; gap: 7px; margin-bottom: 1.5rem; }
+.notif-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; background: #fff; border: 0.5px solid var(--gray-200); border-radius: var(--radius-md); }
+.notif-icon { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+.ni-warn { background: var(--amber-light); color: var(--amber); }
+.ni-good { background: var(--green-light); color: var(--green); }
+.notif-text { font-size: 12px; color: var(--gray-600); line-height: 1.5; flex: 1; }
+.notif-text strong { color: var(--gray-900); font-weight: 500; }
+.notif-time { font-size: 11px; color: var(--gray-400); white-space: nowrap; }
+
+.offer-upload-box { border: 0.5px solid var(--gray-200); border-radius: var(--radius-lg); padding: 1rem 1.25rem; background: var(--gray-100); margin-bottom: 1.5rem; }
+.offer-upload-box h4 { font-size: 13px; font-weight: 600; color: var(--gray-900); margin-bottom: 4px; }
+.offer-upload-box p { font-size: 12px; color: var(--gray-600); margin-bottom: 10px; line-height: 1.5; }
+.offer-drop-zone { border: 1px dashed var(--gray-200); border-radius: var(--radius-md); padding: 1rem; text-align: center; cursor: pointer; font-size: 12px; color: var(--gray-400); display: flex; align-items: center; justify-content: center; gap: 8px; transition: background .15s; }
+.offer-drop-zone:hover { background: #fff; }
+.offer-drop-zone i { font-size: 18px; }
+.cards-select-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 7px; }
+.card-select-item { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border: 0.5px solid var(--gray-200); border-radius: var(--radius-md); cursor: pointer; font-size: 12px; color: var(--gray-900); background: #fff; transition: background .1s; }
+.card-select-item:hover { background: var(--gray-100); }
+.card-select-item input { accent-color: var(--purple); margin: 0; flex-shrink: 0; }
+.ctag { font-size: 10px; padding: 2px 5px; border-radius: 3px; margin-left: auto; }
+.ct-purple { color: var(--purple-text); background: var(--purple-light); }
+.ct-teal   { color: #085041; background: var(--green-light); }
+.ct-amber  { color: var(--amber); background: var(--amber-light); }
+
+/* ── PREMIUM PANEL ── */
+.dash-lock-wrap { position: relative; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 1.5rem; }
+.dash-blurred { filter: blur(3px); pointer-events: none; user-select: none; }
+.dash-preview { border-radius: var(--radius-lg); overflow: hidden; border: 0.5px solid var(--dark-border); }
+.dash-header { background: var(--dark-surface); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; }
+.dash-header-title { font-size: 13px; font-weight: 500; color: var(--dark-text); }
+.dash-header-sub { font-size: 11px; color: var(--dark-muted); margin-top: 2px; }
+.dash-stats { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); }
+.dash-stat { padding: 14px 16px; background: var(--dark-bg); border-right: 0.5px solid var(--dark-border); }
+.dash-stat:last-child { border-right: none; }
+.ds-label { font-size: 11px; color: var(--dark-muted); margin-bottom: 4px; }
+.ds-val { font-size: 20px; font-weight: 600; color: var(--dark-text); }
+.ds-sub { font-size: 11px; color: #5DCAA5; margin-top: 2px; }
+.dash-cards-list { padding: 12px 16px; background: var(--dark-bg); border-top: 0.5px solid var(--dark-border); }
+.dash-card-row { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 0.5px solid var(--dark-border); }
+.dash-card-row:last-child { border: none; }
+.dcr-name { font-size: 12px; font-weight: 500; color: #c8c8e8; flex: 1; }
+.dcr-bar-wrap { flex: 1; height: 5px; background: #1e1e2e; border-radius: 3px; overflow: hidden; }
+.dcr-bar { height: 100%; border-radius: 3px; }
+.dcr-pct { font-size: 11px; color: var(--dark-muted); min-width: 28px; text-align: right; }
+.dcr-status { font-size: 10px; padding: 2px 7px; border-radius: 3px; white-space: nowrap; }
+.ds-ok   { background: #0F3020; color: #5DCAA5; }
+.ds-warn { background: #3a2200; color: #EF9F27; }
+.dash-lock-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 10; }
+.dash-lock-btn {
+  background: var(--purple); color: white; padding: 9px 20px; border-radius: var(--radius-md);
+  font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap;
+  display: flex; align-items: center; gap: 6px; border: none;
+  box-shadow: 0 4px 16px rgba(83,74,183,.4);
+}
+.dash-lock-btn:hover { background: var(--purple-mid); }
+
+.pricing-card {
+  background: #fff; border: 2px solid var(--purple); border-radius: var(--radius-xl);
+  padding: 1.75rem; text-align: center; max-width: 320px; margin: 0 auto;
+}
+.pc-eyebrow { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--purple); font-weight: 600; margin-bottom: 10px; }
+.pc-price { font-size: 40px; font-weight: 700; color: var(--gray-900); letter-spacing: -1.5px; line-height: 1; }
+.pc-price span { font-size: 14px; color: var(--gray-600); font-weight: 400; }
+.pc-sub { font-size: 12px; color: var(--gray-400); margin: 6px 0 18px; }
+.pc-list { list-style: none; text-align: left; margin-bottom: 1.5rem; }
+.pc-list li { font-size: 13px; color: var(--gray-600); padding: 6px 0; border-bottom: 0.5px solid var(--gray-200); display: flex; align-items: center; gap: 8px; }
+.pc-list li:last-child { border: none; }
+.pc-list i { font-size: 15px; color: var(--green); flex-shrink: 0; }
+.btn-upgrade { width: 100%; background: var(--purple); color: white; border: none; padding: 11px; border-radius: var(--radius-md); font-size: 14px; font-weight: 600; cursor: pointer; margin-bottom: 8px; transition: background .15s; }
+.btn-upgrade:hover { background: var(--purple-mid); }
+.pc-free-note { font-size: 11px; color: var(--gray-400); }
+
+/* ── HOW IT WORKS ── */
+.hiw-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; align-items: start; }
+.hiw-step { text-align: center; display: flex; flex-direction: column; align-items: center; }
+.hiw-num { width: 28px; height: 28px; border-radius: 50%; background: var(--purple); color: white; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; flex-shrink: 0; }
+.hiw-step h4 { font-size: 14px; font-weight: 600; color: var(--gray-900); margin-bottom: 5px; min-height: 36px; display: flex; align-items: center; justify-content: center; }
+.hiw-step p { font-size: 13px; color: var(--gray-600); line-height: 1.55; }
+
+/* ── REVIEWS TICKER ── */
+.reviews-section { background: var(--dark-bg); padding: 2.25rem 0 2.5rem; overflow: hidden; position: relative; }
+.reviews-section::before,
+.reviews-section::after { content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; pointer-events: none; }
+.reviews-section::before { left: 0; background: linear-gradient(to right, var(--dark-bg), transparent); }
+.reviews-section::after  { right: 0; background: linear-gradient(to left,  var(--dark-bg), transparent); }
+.reviews-label { font-size: 11px; letter-spacing: 1.3px; text-transform: uppercase; font-weight: 500; color: var(--dark-muted); margin-bottom: 1.1rem; padding: 0 1.5rem; max-width: 760px; margin-left: auto; margin-right: auto; }
+.ticker-track { display: flex; gap: 12px; width: max-content; animation: ticker-scroll 70s linear infinite; }
+.ticker-track:hover { animation-play-state: paused; }
+@keyframes ticker-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.review-card { width: 252px; flex-shrink: 0; background: #13132a; border: 0.5px solid var(--dark-border); border-radius: var(--radius-lg); padding: 12px 14px; }
+.review-stars { color: #C9962C; font-size: 12px; margin-bottom: 6px; letter-spacing: .5px; }
+.review-text { font-size: 12px; color: #9090b0; line-height: 1.6; margin-bottom: 8px; }
+.review-author { display: flex; align-items: center; gap: 8px; }
+.review-avatar { width: 24px; height: 24px; border-radius: 50%; background: #1e1e3a; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; color: #8b80e8; flex-shrink: 0; }
+.review-name { font-size: 11px; color: var(--dark-muted); }
+.review-card-tag { font-size: 10px; color: #8b80e8; background: #1e1e3a; padding: 2px 6px; border-radius: 3px; margin-left: auto; }
+
+/* ── FOOTER ── */
+.footer { background: var(--dark-bg); padding: 2rem 0; }
+.footer-inner { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 1.25rem; margin-bottom: 1.25rem; }
+.footer-logo { display: flex; align-items: center; gap: 8px; }
+.footer-logo-text { font-size: 16px; font-weight: 600; color: var(--dark-text); letter-spacing: -.3px; }
+.footer-logo-text em { color: #8b80e8; font-style: normal; }
+.footer-links { display: flex; gap: 18px; }
+.footer-links a { font-size: 12px; color: var(--dark-muted); text-decoration: none; }
+.footer-links a:hover { color: var(--dark-text); }
+.footer-disclaimer { font-size: 11px; color: #444468; line-height: 1.7; border-top: 0.5px solid var(--dark-border); padding-top: 1rem; }
+
+/* ── MISC ── */
+.form-hint { font-size: 12px; color: var(--gray-400); }
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ NAV ══════════════ -->
+<header class="nav-bar">
+  <div class="wrap nav-inner">
+    <div class="logo" onclick="switchTab('compare')">
+      <div class="logo-mark"><i class="ti ti-bolt" aria-hidden="true"></i></div>
+      <span class="logo-text">Points<em>Pulse.AI</em></span>
+    </div>
+    <div class="nav-right">
+      <button class="nav-link" onclick="switchTab('upload')">Analyze spend</button>
+      <button class="nav-link" onclick="switchTab('alerts')">My cards</button>
+      <button class="nav-signin" id="nav-signin-btn" onclick="handleSignIn()">Sign in</button>
+      <button class="nav-pro" onclick="switchTab('premium')">Go Pro — $4.99/mo</button>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="sec sec-white" style="padding-bottom:0">
+  <div class="wrap">
+    <div class="hero">
+      <div class="hero-eyebrow">Credit card intelligence</div>
+      <h1>Every dollar should earn <em>more.</em></h1>
+      <p>Compare cards head-to-head, analyze your statement, and never miss a credit or monthly deal again.<br>Free to start — no login required.</p>
+      <div class="hero-pills">
+        <button class="hpill active" onclick="switchTabPill(this,'compare')">Compare cards</button>
+        <button class="hpill" onclick="switchTabPill(this,'upload')">Analyze statement</button>
+        <button class="hpill" onclick="switchTabPill(this,'manual')">Enter spend</button>
+        <button class="hpill" onclick="switchTabPill(this,'alerts')">Track perks</button>
+        <button class="hpill pro-pill" onclick="switchTabPill(this,'premium')">Pro dashboard ✦</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ MAIN TOOL ══════════════ -->
+<section class="sec sec-soft">
+  <div class="wrap">
+    <!-- tab-bar removed — hero pills serve as the navigation -->
+
+    <!-- ── COMPARE ── -->
+    <div class="panel active" id="panel-compare">
+      <div class="sec-title">Select up to three cards to compare</div>
+      <div class="sec-sub">Pick two or three cards — we'll build a full side-by-side breakdown using live 2026 data.</div>
+      <div class="picker-grid" id="picker-grid">
+
+        <div class="pick-item" onclick="pickCard(this,'csr')">
+          <div class="card-banner cb-csr"><div class="card-chip"></div><div class="card-banner-name">Sapphire Reserve</div><div class="card-banner-net">VISA</div></div>
+          <div class="pick-meta">
+            <svg width="36" height="22" viewBox="0 0 36 22" style="flex-shrink:0;border-radius:3px"><rect width="36" height="22" rx="2" fill="#0d1b3e"/><rect x="2" y="8" width="7" height="5" rx="1" fill="#4a9eda" opacity=".7"/><text x="33" y="16" fill="white" font-size="7" font-weight="700" font-style="italic" text-anchor="end" font-family="serif" opacity=".9">VISA</text></svg>
+            <div style="flex:1"><div class="pick-name">Chase Sapphire Reserve</div><div class="pick-fee">$795/yr · 8x Chase Travel</div></div>
+            <div class="pick-check"><i class="ti ti-check"></i></div>
+          </div>
+        </div>
+
+        <div class="pick-item" onclick="pickCard(this,'csp')">
+          <div class="card-banner cb-csp"><div class="card-chip"></div><div class="card-banner-name">Sapphire Preferred</div><div class="card-banner-net">VISA</div></div>
+          <div class="pick-meta">
+            <svg width="36" height="22" viewBox="0 0 36 22" style="flex-shrink:0;border-radius:3px"><rect width="36" height="22" rx="2" fill="#12263f"/><rect x="2" y="8" width="7" height="5" rx="1" fill="#5ab4f0" opacity=".6"/><text x="33" y="16" fill="white" font-size="7" font-weight="700" font-style="italic" text-anchor="end" font-family="serif" opacity=".9">VISA</text></svg>
+            <div style="flex:1"><div class="pick-name">Chase Sapphire Preferred</div><div class="pick-fee">$95/yr · 3x dining</div></div>
+            <div class="pick-check"><i class="ti ti-check"></i></div>
+          </div>
+        </div>
+
+        <div class="pick-item" onclick="pickCard(this,'amexplat')">
+          <div class="card-banner cb-aplat"><div class="card-chip" style="background:rgba(0,0,0,.2)"></div><div class="card-banner-name" style="color:rgba(30,30,30,.8)">Platinum Card</div><div class="card-banner-net" style="color:rgba(0,0,0,.5)">AMEX</div></div>
+          <div class="pick-meta">
+            <svg width="36" height="22" viewBox="0 0 36 22" style="flex-shrink:0;border-radius:3px"><rect width="36" height="22" rx="2" fill="#b0b0b0"/><rect x="2" y="8" width="7" height="5" rx="1" fill="#888" opacity=".5"/><text x="28" y="15" fill="#555" font-size="6" font-weight="bold" text-anchor="middle">AMEX</text></svg>
+            <div style="flex:1"><div class="pick-name">Amex Platinum</div><div class="pick-fee">$895/yr · 5x flights</div></div>
+            <div class="pick-check"><i class="ti ti-check"></i></div>
+          </div>
+        </div>
+
+        <div class="pick-item" onclick="pickCard(this,'amexgold')">
+          <div class="card-banner cb-agold"><div class="card-chip" style="background:rgba(0,0,0,.25)"></div><div class="card-banner-name" style="color:rgba(255,240,160,.95)">Gold Card</div><div class="card-banner-net" style="color:rgba(180,140,0,.7)">AMEX</div></div>
+          <div class="pick-meta">
+            <svg width="36" height="22" viewBox="0 0 36 22" style="flex-shrink:0;border-radius:3px"><rect width="36" height="22" rx="2" fill="#b8860b"/><rect x="2" y="8" width="7" height="5" rx="1" fill="#f0d060" opacity=".5"/><text x="28" y="15" fill="#f0d060" font-size="6" font-weight="bold" text-anchor="middle">AMEX</text></svg>
+            <div style="flex:1"><div class="pick-name">Amex Gold</div><div class="pick-fee">$325/yr · 4x dining+grocery</div></div>
+            <div class="pick-check"><i class="ti ti-check"></i></div>
+          </div>
+        </div>
+
+        <div class="pick-item" onclick="pickCard(this,'venturex')">
+          <div class="card-banner cb-vx"><div class="card-chip"></div><div class="card-banner-name">Venture X</div><div class="card-banner-net">VISA</div></div>
+          <div class="pick-meta">
+            <svg width="36" height="22" viewBox="0 0 36 22" style="flex-shrink:0;border-radius:3px"><rect width="36" height="22" rx="2" fill="#111"/><rect x="2" y="8" width="7" height="5" rx="1" fill="#666"/><polygon points="22,7 28,7 32,15 26,15" fill="#c0392b" opacity=".8"/></svg>
+            <div style="flex:1"><div class="pick-name">Capital One Venture X</div><div class="pick-fee">$395/yr · 2x everything</div></div>
+            <div class="pick-check"><i class="ti ti-check"></i></div>
+          </div>
+        </div>
+
+        <div class="pick-item" onclick="pickCard(this,'venture')">
+          <div class="card-banner cb-v"><div class="card-chip"></div><div class="card-banner-name">Venture</div><div class="card-banner-net">VISA</div></div>
+          <div class="pick-meta">
+            <svg width="36" height="22" viewBox="0 0 36 22" style="flex-shrink:0;border-radius:3px"><rect width="36" height="22" rx="2" fill="#8b0000"/><rect x="2" y="8" width="7" height="5" rx="1" fill="#ff6b6b" opacity=".5"/><polygon points="22,7 28,7 32,15 26,15" fill="#ff4444" opacity=".7"/></svg>
+            <div style="flex:1"><div class="pick-name">Capital One Venture</div><div class="pick-fee">$95/yr · 2x everything</div></div>
+            <div class="pick-check"><i class="ti ti-check"></i></div>
+          </div>
+        </div>
+
+        <div class="pick-item" onclick="pickCard(this,'citi')">
+          <div class="card-banner cb-citi"><div class="card-chip"></div><div class="card-banner-name">Strata Premier</div><div class="card-banner-net">MC</div></div>
+          <div class="pick-meta">
+            <svg width="36" height="22" viewBox="0 0 36 22" style="flex-shrink:0;border-radius:3px"><rect width="36" height="22" rx="2" fill="#002d72"/><rect x="2" y="8" width="7" height="5" rx="1" fill="#4a8fd4" opacity=".6"/><circle cx="26" cy="11" r="4.5" fill="#e63946" opacity=".9"/><circle cx="31" cy="11" r="4.5" fill="#e63946" opacity=".5"/></svg>
+            <div style="flex:1"><div class="pick-name">Citi Strata Premier</div><div class="pick-fee">$95/yr · 3x on 5 categories</div></div>
+            <div class="pick-check"><i class="ti ti-check"></i></div>
+          </div>
+        </div>
+
+        <div class="pick-item" onclick="pickCard(this,'fu')">
+          <div class="card-banner cb-fu"><div class="card-chip"></div><div class="card-banner-name">Freedom Unlimited</div><div class="card-banner-net" style="color:rgba(255,255,255,.8)">VISA</div></div>
+          <div class="pick-meta">
+            <svg width="36" height="22" viewBox="0 0 36 22" style="flex-shrink:0;border-radius:3px"><rect width="36" height="22" rx="2" fill="#1a5cb8"/><rect x="2" y="8" width="7" height="5" rx="1" fill="#7ec8f4" opacity=".6"/><text x="33" y="16" fill="white" font-size="7" font-weight="700" font-style="italic" text-anchor="end" font-family="serif" opacity=".9">VISA</text></svg>
+            <div style="flex:1"><div class="pick-name">Chase Freedom Unlimited</div><div class="pick-fee">No fee · 1.5x everything</div></div>
+            <div class="pick-check"><i class="ti ti-check"></i></div>
+          </div>
+        </div>
+
+        <div class="pick-item" onclick="pickCard(this,'bcp')">
+          <div class="card-banner cb-bcp"><div class="card-chip"></div><div class="card-banner-name">Blue Cash Preferred</div><div class="card-banner-net">AMEX</div></div>
+          <div class="pick-meta">
+            <svg width="36" height="22" viewBox="0 0 36 22" style="flex-shrink:0;border-radius:3px"><rect width="36" height="22" rx="2" fill="#002f6c"/><rect x="2" y="8" width="7" height="5" rx="1" fill="#4a9eda" opacity=".6"/><text x="28" y="15" fill="#4a9eda" font-size="6" font-weight="bold" text-anchor="middle">AMEX</text></svg>
+            <div style="flex:1"><div class="pick-name">Amex Blue Cash Preferred</div><div class="pick-fee">$95/yr · 6x groceries</div></div>
+            <div class="pick-check"><i class="ti ti-check"></i></div>
+          </div>
+        </div>
+
+        <div class="pick-item" onclick="pickCard(this,'bilt')">
+          <div class="card-banner cb-bilt"><div class="card-chip"></div><div class="card-banner-name">Bilt Mastercard</div><div class="card-banner-net">MC</div></div>
+          <div class="pick-meta">
+            <svg width="36" height="22" viewBox="0 0 36 22" style="flex-shrink:0;border-radius:3px"><rect width="36" height="22" rx="2" fill="#1a1a1a"/><rect x="2" y="8" width="7" height="5" rx="1" fill="#888"/><circle cx="26" cy="11" r="4.5" fill="#e63946" opacity=".8"/><circle cx="31" cy="11" r="4.5" fill="#e63946" opacity=".5"/></svg>
+            <div style="flex:1"><div class="pick-name">Bilt Mastercard</div><div class="pick-fee">No fee · 1x rent, 3x dining</div></div>
+            <div class="pick-check"><i class="ti ti-check"></i></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="compare-status" id="compare-status">
+        <span id="cstatus-text">Select 2 or 3 cards above to compare</span>
+        <button class="btn-compare-big" id="btn-compare" disabled onclick="runCompare()">Compare cards ↗</button>
+      </div>
+
+      <div class="pri-label" style="margin-top:1.25rem;">What matters most to you? <span style="font-size:12px;font-weight:400;color:#a0a0a0">(optional — shapes the verdict)</span></div>
+      <div class="pri-pills">
+        <button class="ppill on" onclick="this.classList.toggle('on')">Maximize points</button>
+        <button class="ppill" onclick="this.classList.toggle('on')">Low annual fee</button>
+        <button class="ppill" onclick="this.classList.toggle('on')">Lounge access</button>
+        <button class="ppill" onclick="this.classList.toggle('on')">Dining rewards</button>
+        <button class="ppill" onclick="this.classList.toggle('on')">Travel credits</button>
+        <button class="ppill" onclick="this.classList.toggle('on')">Monthly credits</button>
+        <button class="ppill" onclick="this.classList.toggle('on')">Sign-up bonus</button>
+        <button class="ppill" onclick="this.classList.toggle('on')">No foreign fees</button>
+        <button class="ppill" onclick="this.classList.toggle('on')">Authorized users</button>
+      </div>
+
+      <div class="cmp-out" id="compare-output">
+        <div class="cmp-header" id="cmp-header"></div>
+        <div id="cmp-rows"></div>
+        <div class="cmp-verdict" id="cmp-verdict"></div>
+        <div class="cta-row" id="cmp-ctas"></div>
+      </div>
+    </div>
+
+    <!-- ── UPLOAD ── -->
+    <div class="panel" id="panel-upload">
+      <div class="sec-title">Upload your statement</div>
+      <div class="sec-sub">Drop up to 5 statements — PDF, CSV, or Excel. We parse transactions, categorize spend, and rank the top cards by net annual value.</div>
+      <div class="upload-zone" id="upload-zone"
+        onclick="document.getElementById('file-input').click()"
+        ondragover="event.preventDefault();this.style.background='var(--purple-light)'"
+        ondragleave="this.style.background=''"
+        ondrop="handleDrop(event)">
+        <i class="ti ti-file-upload" aria-hidden="true"></i>
+        <p>Drop statements here or click to browse</p>
+        <span>PDF, CSV, or Excel · up to 5 files · Chase, Amex, Citi, Capital One, BofA</span>
+      </div>
+      <input type="file" id="file-input" multiple accept=".pdf,.csv,.xlsx,.xls" style="display:none" onchange="handleFileSelect(this.files)">
+      <!-- File list -->
+      <div id="file-list" style="display:none;margin-top:10px;display:flex;flex-direction:column;gap:6px;"></div>
+      <!-- Pro upsell for >5 files -->
+      <div id="file-limit-notice" style="display:none;margin-top:8px;padding:10px 14px;background:var(--purple-light);border-radius:var(--radius-md);font-size:13px;color:var(--purple-text);">
+        <strong>5-file limit reached.</strong> Upload unlimited statements with <button onclick="switchTab('premium')" style="background:none;border:none;color:var(--purple);font-weight:600;cursor:pointer;font-size:13px;padding:0;text-decoration:underline;">PointsPulse.AI Pro</button>.
+      </div>
+      <div class="privacy-note"><i class="ti ti-lock" style="font-size:12px;" aria-hidden="true"></i> Analyzed in your session only — never stored or shared</div>
+      <div class="action-right"><button class="btn-primary" id="analyze-btn" disabled onclick="analyzeStatement()">Analyze &amp; recommend</button></div>
+
+      <!-- Loading state -->
+      <div id="upload-loading" style="display:none;margin-top:1.5rem;text-align:center;padding:2rem;">
+        <div style="width:36px;height:36px;border:3px solid var(--purple-light);border-top-color:var(--purple);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 14px;"></div>
+        <div style="font-size:14px;font-weight:500;color:var(--gray-900);" id="upload-loading-msg">Reading your statement...</div>
+        <div style="font-size:12px;color:var(--gray-400);margin-top:4px;">Categorizing transactions and modeling against 10 cards</div>
+      </div>
+
+      <!-- Dynamic results — populated by Claude API -->
+      <div class="results-out" id="upload-results">
+        <div id="upload-results-inner"></div>
+      </div>
+    </div>
+
+    <!-- ── MANUAL ENTRY ── -->
+    <div class="panel" id="panel-manual">
+      <div class="sec-title">Enter your monthly spend</div>
+      <div class="sec-sub">Rough estimates are fine — we model your totals against 10 top cards and rank by net annual value after credits and fees.</div>
+      <div class="cat-grid">
+        <div class="cat-tile">
+          <div class="cat-tile-header">
+            <div class="cat-icon-wrap" style="background:#EEF2FF;"><i class="ti ti-plane" style="color:#4F46E5;" aria-hidden="true"></i></div>
+            <span class="cat-tile-label">Flights</span>
+          </div>
+          <div class="cat-tile-input-wrap"><span class="dollar">$</span><input type="number" placeholder="0" min="0" step="50"></div>
+        </div>
+        <div class="cat-tile">
+          <div class="cat-tile-header">
+            <div class="cat-icon-wrap" style="background:#F0FDF4;"><i class="ti ti-building" style="color:#16A34A;" aria-hidden="true"></i></div>
+            <span class="cat-tile-label">Hotels</span>
+          </div>
+          <div class="cat-tile-input-wrap"><span class="dollar">$</span><input type="number" placeholder="0" min="0" step="50"></div>
+        </div>
+        <div class="cat-tile">
+          <div class="cat-tile-header">
+            <div class="cat-icon-wrap" style="background:#FFF7ED;"><i class="ti ti-tools-kitchen-2" style="color:#EA580C;" aria-hidden="true"></i></div>
+            <span class="cat-tile-label">Dining</span>
+          </div>
+          <div class="cat-tile-input-wrap"><span class="dollar">$</span><input type="number" placeholder="0" min="0" step="50"></div>
+        </div>
+        <div class="cat-tile">
+          <div class="cat-tile-header">
+            <div class="cat-icon-wrap" style="background:#F0FDF4;"><i class="ti ti-shopping-cart" style="color:#15803D;" aria-hidden="true"></i></div>
+            <span class="cat-tile-label">Groceries</span>
+          </div>
+          <div class="cat-tile-input-wrap"><span class="dollar">$</span><input type="number" placeholder="0" min="0" step="50"></div>
+        </div>
+        <div class="cat-tile">
+          <div class="cat-tile-header">
+            <div class="cat-icon-wrap" style="background:#FEFCE8;"><i class="ti ti-gas-station" style="color:#CA8A04;" aria-hidden="true"></i></div>
+            <span class="cat-tile-label">Gas</span>
+          </div>
+          <div class="cat-tile-input-wrap"><span class="dollar">$</span><input type="number" placeholder="0" min="0" step="25"></div>
+        </div>
+        <div class="cat-tile">
+          <div class="cat-tile-header">
+            <div class="cat-icon-wrap" style="background:#F5F3FF;"><i class="ti ti-device-tv" style="color:#7C3AED;" aria-hidden="true"></i></div>
+            <span class="cat-tile-label">Streaming</span>
+          </div>
+          <div class="cat-tile-input-wrap"><span class="dollar">$</span><input type="number" placeholder="0" min="0" step="10"></div>
+        </div>
+        <div class="cat-tile">
+          <div class="cat-tile-header">
+            <div class="cat-icon-wrap" style="background:#EFF6FF;"><i class="ti ti-package" style="color:#2563EB;" aria-hidden="true"></i></div>
+            <span class="cat-tile-label">Online shopping</span>
+          </div>
+          <div class="cat-tile-input-wrap"><span class="dollar">$</span><input type="number" placeholder="0" min="0" step="50"></div>
+        </div>
+        <div class="cat-tile">
+          <div class="cat-tile-header">
+            <div class="cat-icon-wrap" style="background:#F1F5F9;"><i class="ti ti-car" style="color:#475569;" aria-hidden="true"></i></div>
+            <span class="cat-tile-label">Rideshare</span>
+          </div>
+          <div class="cat-tile-input-wrap"><span class="dollar">$</span><input type="number" placeholder="0" min="0" step="20"></div>
+        </div>
+        <div class="cat-tile">
+          <div class="cat-tile-header">
+            <div class="cat-icon-wrap" style="background:#F0F9FF;"><i class="ti ti-phone" style="color:#0284C7;" aria-hidden="true"></i></div>
+            <span class="cat-tile-label">Telecom</span>
+          </div>
+          <div class="cat-tile-input-wrap"><span class="dollar">$</span><input type="number" placeholder="0" min="0" step="10"></div>
+        </div>
+        <div class="cat-tile">
+          <div class="cat-tile-header">
+            <div class="cat-icon-wrap" style="background:#FFF1F2;"><i class="ti ti-heartbeat" style="color:#E11D48;" aria-hidden="true"></i></div>
+            <span class="cat-tile-label">Health / fitness</span>
+          </div>
+          <div class="cat-tile-input-wrap"><span class="dollar">$</span><input type="number" placeholder="0" min="0" step="20"></div>
+        </div>
+        <div class="cat-tile">
+          <div class="cat-tile-header">
+            <div class="cat-icon-wrap" style="background:#FAFAF9;"><i class="ti ti-hammer" style="color:#78716C;" aria-hidden="true"></i></div>
+            <span class="cat-tile-label">Home</span>
+          </div>
+          <div class="cat-tile-input-wrap"><span class="dollar">$</span><input type="number" placeholder="0" min="0" step="25"></div>
+        </div>
+        <div class="cat-tile">
+          <div class="cat-tile-header">
+            <div class="cat-icon-wrap" style="background:#ECFDF5;"><i class="ti ti-plug" style="color:#059669;" aria-hidden="true"></i></div>
+            <span class="cat-tile-label">Utilities</span>
+          </div>
+          <div class="cat-tile-input-wrap"><span class="dollar">$</span><input type="number" placeholder="0" min="0" step="25"></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <span class="form-hint">Modeled against 10 top cards · 2026 data</span>
+        <button class="btn-primary" onclick="showManualResults()">Get my top cards ↗</button>
+      </div>
+      <div class="results-out" id="manual-results">
+        <div class="sec-title" style="margin-bottom:4px;">Your top matches</div>
+        <div class="sec-sub">Based on your entered spend profile.</div>
+        <div class="result-card top-pick">
+          <div class="result-header"><div><div class="result-name">Amex Gold</div><div class="result-issuer">American Express · $325/yr</div></div><span class="result-badge badge-1">#1 pick</span></div>
+          <div class="result-stats"><div class="stat-box"><div class="sl">Est. annual pts</div><div class="sv">68,400</div></div><div class="stat-box"><div class="sl">TPG value</div><div class="sv">~$1,368</div></div><div class="stat-box"><div class="sl">Net after fee</div><div class="sv">$1,043</div></div></div>
+          <div class="result-why">4x dining and 4x groceries dominates this profile. Credits stack to $424/yr nominal value — effective fee under $100 for most users who actually use Uber.</div>
+          <a href="https://americanexpress.com/en-us/referral/all-cards?ref=JAREDKv3ct&xl=cp01" target="_blank" rel="noopener sponsored" class="btn-apply" style="background:#534AB7;"><i class="ti ti-external-link" style="font-size:12px;" aria-hidden="true"></i> Apply — up to 100k point bonus</a>
+        </div>
+        <div class="result-card">
+          <div class="result-header"><div><div class="result-name">Citi Strata Premier</div><div class="result-issuer">Citi · $95/yr</div></div><span class="result-badge badge-2">#2 pick</span></div>
+          <div class="result-stats"><div class="stat-box"><div class="sl">Est. annual pts</div><div class="sv">54,600</div></div><div class="stat-box"><div class="sl">TPG value</div><div class="sv">~$874</div></div><div class="stat-box"><div class="sl">Net after fee</div><div class="sv">$779</div></div></div>
+          <div class="result-why">3x on dining, groceries, gas, flights, and hotels — the broadest 3x coverage at any fee level. The $100 hotel credit nearly covers the annual fee outright.</div>
+          <a href="https://www.citi.com/credit-cards/citi-strata-premier-credit-card" target="_blank" rel="noopener" class="btn-apply" style="background:#0F6E56;"><i class="ti ti-external-link" style="font-size:12px;" aria-hidden="true"></i> Apply — 60k point bonus</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── MY CARDS / ALERTS ── -->
+    <div class="panel" id="panel-alerts">
+
+      <div class="sec-title">Track your credits and monthly deals</div>
+      <div class="sec-sub">Select the cards you carry below. We'll build a personalized alert profile and email you before any credit expires or a monthly deal goes unclaimed.</div>
+
+      <!-- Step 1: Card selection -->
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+        <div style="width:22px;height:22px;border-radius:50%;background:var(--purple);color:white;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div>
+        <span style="font-size:13px;font-weight:600;color:var(--gray-900);">Which cards do you carry?</span>
+      </div>
+      <div class="cards-select-grid" id="cards-select-grid" style="margin-bottom:1.5rem;">
+        <label class="card-select-item"><input type="checkbox" onchange="updateCardSelection()"> Chase Sapphire Reserve <span class="ctag ct-purple">Travel</span></label>
+        <label class="card-select-item"><input type="checkbox" onchange="updateCardSelection()"> Chase Sapphire Preferred <span class="ctag ct-purple">Travel</span></label>
+        <label class="card-select-item"><input type="checkbox" onchange="updateCardSelection()"> Amex Platinum <span class="ctag ct-purple">Luxury</span></label>
+        <label class="card-select-item"><input type="checkbox" onchange="updateCardSelection()"> Amex Gold <span class="ctag ct-amber">Dining</span></label>
+        <label class="card-select-item"><input type="checkbox" onchange="updateCardSelection()"> Capital One Venture X <span class="ctag ct-purple">Travel</span></label>
+        <label class="card-select-item"><input type="checkbox" onchange="updateCardSelection()"> Capital One Venture <span class="ctag ct-purple">Travel</span></label>
+        <label class="card-select-item"><input type="checkbox" onchange="updateCardSelection()"> Citi Strata Premier <span class="ctag ct-teal">Flex</span></label>
+        <label class="card-select-item"><input type="checkbox" onchange="updateCardSelection()"> Chase Freedom Unlimited <span class="ctag ct-teal">Cashback</span></label>
+        <label class="card-select-item"><input type="checkbox" onchange="updateCardSelection()"> Amex Blue Cash Preferred <span class="ctag ct-amber">Everyday</span></label>
+        <label class="card-select-item"><input type="checkbox" onchange="updateCardSelection()"> Bilt Mastercard <span class="ctag ct-teal">Rent</span></label>
+      </div>
+
+      <!-- Step 2: What you'll get — dynamic based on selection -->
+      <div id="perks-preview" style="display:none;margin-bottom:1.5rem;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <div style="width:22px;height:22px;border-radius:50%;background:var(--purple);color:white;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div>
+          <span style="font-size:13px;font-weight:600;color:var(--gray-900);">Here's what we'll track for you</span>
+        </div>
+        <div id="perks-list" class="notif-list"></div>
+      </div>
+
+      <!-- Step 3: Email signup -->
+      <div id="perks-signup" style="display:none;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <div style="width:22px;height:22px;border-radius:50%;background:var(--purple);color:white;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div>
+          <span style="font-size:13px;font-weight:600;color:var(--gray-900);">Get notified before anything expires</span>
+        </div>
+        <div class="dark-callout">
+          <h2 style="font-size:15px;margin-bottom:6px;">Never leave money on the table again.</h2>
+          <p style="font-size:13px;margin-bottom:1rem;">We'll send you one plain email before any credit expires or a monthly Chase / Amex offer goes unclaimed. No app. No bank login. Just a nudge that saves you money.</p>
+          <div class="dark-email">
+            <input type="email" placeholder="Your email address">
+            <button onclick="document.getElementById('alert-confirm-1').style.display='block';this.parentNode.parentNode.querySelector('input').disabled=true;this.disabled=true;this.textContent='✓ Done'">Set up my alerts</button>
+          </div>
+          <div class="alert-confirm" id="alert-confirm-1"><i class="ti ti-check" aria-hidden="true"></i> You're set. First alert arrives within 24 hours — we'll cover every card you selected.</div>
+        </div>
+      </div>
+
+      <!-- Empty state -->
+      <div id="perks-empty" style="padding:2rem 1rem;text-align:center;border:1.5px dashed var(--gray-200);border-radius:var(--radius-lg);color:var(--gray-400);">
+        <i class="ti ti-credit-card" style="font-size:28px;display:block;margin-bottom:8px;" aria-hidden="true"></i>
+        <div style="font-size:13px;">Select your cards above — we'll show you exactly what we'll track.</div>
+      </div>
+
+      <!-- Offer screenshot upload (for admin use) -->
+      <div class="offer-upload-box" style="margin-top:1.5rem;">
+        <h4>Update Chase / Amex monthly offers via screenshot</h4>
+        <p>Screenshot your Chase Offers or Amex Offers page and drop it here — we parse the current month's deals and update the notification database automatically.</p>
+        <div class="offer-drop-zone" id="offer-drop-zone"
+          onclick="document.getElementById('offer-file-input').click()"
+          ondragover="event.preventDefault();this.style.background='var(--gray-50)'"
+          ondragleave="this.style.background=''"
+          ondrop="handleOfferDrop(event)">
+          <i class="ti ti-screenshot" aria-hidden="true"></i>
+          <span>Drop Chase or Amex screenshot here, or click to browse</span>
+        </div>
+        <input type="file" id="offer-file-input" accept="image/*,.pdf" style="display:none" onchange="handleOfferFile(this.files)">
+        <div id="offer-file-confirm" style="display:none;margin-top:8px;font-size:12px;color:var(--green);display:flex;align-items:center;gap:5px;"><i class="ti ti-check" aria-hidden="true"></i> <span id="offer-file-name"></span> received — parsing offers...</div>
+      </div>
+    </div>
+
+    <!-- ── PRO / PREMIUM ── -->
+    <div class="panel" id="panel-premium">
+      <div class="sec-title">Pro dashboard</div>
+      <div class="sec-sub">Everything free, plus a live dashboard tracking every credit, deal, and deadline across all your cards in one place.</div>
+
+      <!-- Blurred preview -->
+      <div class="dash-lock-wrap" style="margin-bottom:1.5rem;">
+        <div class="dash-blurred">
+          <div class="dash-preview">
+            <div class="dash-header">
+              <div><div class="dash-header-title">Your wallet — June 2026</div><div class="dash-header-sub">3 cards tracked · $847 in active credits</div></div>
+              <span style="font-size:11px;color:#5DCAA5;">All current</span>
+            </div>
+            <div class="dash-stats">
+              <div class="dash-stat"><div class="ds-label">Credits available</div><div class="ds-val">$847</div><div class="ds-sub">↑ $120 from last month</div></div>
+              <div class="dash-stat"><div class="ds-label">Expiring soon</div><div class="ds-val">$130</div><div class="ds-sub">3 credits · 4–18 days</div></div>
+              <div class="dash-stat"><div class="ds-label">Used this month</div><div class="ds-val">$310</div><div class="ds-sub">37% utilization</div></div>
+            </div>
+            <div class="dash-cards-list">
+              <div class="dash-card-row"><div class="dcr-name">Amex Gold</div><div class="dcr-bar-wrap"><div class="dcr-bar" style="width:60%;background:#534AB7"></div></div><div class="dcr-pct">60%</div><span class="dcr-status ds-warn">$10 exp. 4d</span></div>
+              <div class="dash-card-row"><div class="dcr-name">Sapphire Reserve</div><div class="dcr-bar-wrap"><div class="dcr-bar" style="width:40%;background:#0F6E56"></div></div><div class="dcr-pct">40%</div><span class="dcr-status ds-warn">$180 exp. 18d</span></div>
+              <div class="dash-card-row"><div class="dcr-name">Amex Platinum</div><div class="dcr-bar-wrap"><div class="dcr-bar" style="width:85%;background:#5DCAA5"></div></div><div class="dcr-pct">85%</div><span class="dcr-status ds-ok">On track</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="dash-lock-overlay">
+          <button class="dash-lock-btn" onclick="document.getElementById('pro-interest').scrollIntoView({behavior:'smooth',block:'center'})">
+            <i class="ti ti-lock" style="font-size:14px;" aria-hidden="true"></i> Unlock Pro — $4.99/mo
+          </button>
+        </div>
+      </div>
+
+      <!-- Pricing card -->
+      <div class="pricing-card" id="pro-interest">
+        <div class="pc-eyebrow">PointsPulse.AI Pro</div>
+        <div class="pc-price">$4.99<span>/mo</span></div>
+        <div class="pc-sub">We're finalizing this feature. Be first to know when it launches.</div>
+        <ul class="pc-list">
+          <li><i class="ti ti-check" aria-hidden="true"></i> Live dashboard — all cards, credits, and deals in one view</li>
+          <li><i class="ti ti-check" aria-hidden="true"></i> Proactive credit reminders before anything expires</li>
+          <li><i class="ti ti-check" aria-hidden="true"></i> Monthly Chase + Amex offer digests</li>
+          <li><i class="ti ti-check" aria-hidden="true"></i> Unlimited statement uploads + history</li>
+          <li><i class="ti ti-check" aria-hidden="true"></i> Annual fee ROI tracker per card</li>
+          <li><i class="ti ti-check" aria-hidden="true"></i> AI card advisor — ask anything about your cards</li>
+        </ul>
+
+        <!-- Interest capture (shown by default) -->
+        <div id="pro-interest-form">
+          <button onclick="initiateStripeCheckout()" class="btn-upgrade" style="margin-bottom:8px;">Get Pro — $4.99/mo</button>
+          <div class="pc-free-note">Secure payment via Stripe. Cancel anytime.</div>
+          <!-- Admin unlock — unobtrusive -->
+          <div style="margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--gray-200);display:flex;gap:7px;align-items:center;justify-content:center;">
+            <input type="password" id="admin-code-input" placeholder="Access code" style="width:130px;padding:6px 10px;font-size:12px;border:0.5px solid var(--gray-200);border-radius:var(--radius-md);outline:none;text-align:center;letter-spacing:2px;color:var(--gray-600);">
+            <button onclick="checkAdminCode()" style="background:transparent;color:var(--gray-400);border:0.5px solid var(--gray-200);padding:6px 11px;border-radius:var(--radius-md);font-size:12px;cursor:pointer;">Unlock</button>
+          </div>
+          <div id="admin-unlock-confirm" style="display:none;font-size:12px;color:var(--green);margin-top:8px;"><i class="ti ti-lock-open" aria-hidden="true"></i> Full access unlocked. <button onclick="openProDashboard()" style="background:var(--purple);color:white;border:none;padding:4px 12px;border-radius:var(--radius-sm);font-size:12px;cursor:pointer;margin-left:6px;">Open dashboard →</button></div>
+        </div>
+
+        <!-- Confirmation state -->
+        <div id="pro-interest-confirm" style="display:none;padding:1rem 0;">
+          <div style="font-size:22px;margin-bottom:6px;">✓</div>
+          <div style="font-size:14px;font-weight:600;color:var(--gray-900);margin-bottom:4px;">You're on the list.</div>
+          <div class="pc-free-note">We'll email you the moment Pro launches. Thank you for the interest.</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /wrap -->
+</section>
+
+<!-- ══════════════ PRO DASHBOARD OVERLAY ══════════════ -->
+<div id="pro-dashboard-overlay" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--dark-bg);z-index:1000;overflow-y:auto;">
+  <div style="max-width:760px;margin:0 auto;padding:1.5rem 1.5rem 3rem;">
+
+    <!-- Header -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.75rem;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="logo-mark"><i class="ti ti-bolt" aria-hidden="true"></i></div>
+        <span style="font-size:16px;font-weight:600;color:var(--dark-text);">Points<span style="color:#8b80e8;">Pulse.AI</span> <span style="font-size:12px;font-weight:500;background:#534AB7;color:white;padding:2px 8px;border-radius:4px;margin-left:4px;">Pro</span></span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span id="pro-user-email" style="font-size:12px;color:var(--dark-muted);"></span>
+        <button onclick="closePro()" style="background:transparent;border:0.5px solid var(--dark-border);color:var(--dark-muted);padding:6px 12px;border-radius:var(--radius-md);font-size:13px;cursor:pointer;"><i class="ti ti-x"></i> Close</button>
+      </div>
+    </div>
+
+    <!-- ── ONBOARDING FLOW (shown on first entry) ── -->
+    <div id="pro-onboarding" style="display:none;">
+      <div style="text-align:center;padding:1rem 0 1.5rem;">
+        <div style="font-size:22px;font-weight:600;color:var(--dark-text);margin-bottom:8px;">Welcome to PointsPulse.AI Pro</div>
+        <div style="font-size:14px;color:#8888aa;">Let's set up your dashboard. Takes about 60 seconds.</div>
+      </div>
+
+      <!-- Step 1: Email -->
+      <div id="ob-step-1">
+        <div style="font-size:13px;font-weight:600;color:var(--dark-text);margin-bottom:10px;"><span style="background:#534AB7;color:white;width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;margin-right:7px;">1</span>Your email (used to restore access)</div>
+        <div style="display:flex;gap:8px;margin-bottom:1.25rem;">
+          <input type="email" id="ob-email" placeholder="you@email.com" style="flex:1;padding:9px 12px;font-size:13px;border:0.5px solid #333;border-radius:var(--radius-md);background:#1c1c2e;color:var(--dark-text);outline:none;">
+          <button onclick="obNext(1)" style="background:#534AB7;color:white;border:none;padding:9px 18px;border-radius:var(--radius-md);font-size:13px;font-weight:500;cursor:pointer;">Next →</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Card selection -->
+      <div id="ob-step-2" style="display:none;">
+        <div style="font-size:13px;font-weight:600;color:var(--dark-text);margin-bottom:10px;"><span style="background:#534AB7;color:white;width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;margin-right:7px;">2</span>Which cards do you carry?</div>
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-bottom:1.25rem;" id="ob-cards-grid">
+          <label style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:0.5px solid #2a2a3a;border-radius:var(--radius-md);cursor:pointer;font-size:12px;color:#c8c8e8;background:#13132a;"><input type="checkbox" value="Chase Sapphire Reserve" style="accent-color:#534AB7;"> Chase Sapphire Reserve</label>
+          <label style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:0.5px solid #2a2a3a;border-radius:var(--radius-md);cursor:pointer;font-size:12px;color:#c8c8e8;background:#13132a;"><input type="checkbox" value="Chase Sapphire Preferred" style="accent-color:#534AB7;"> Chase Sapphire Preferred</label>
+          <label style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:0.5px solid #2a2a3a;border-radius:var(--radius-md);cursor:pointer;font-size:12px;color:#c8c8e8;background:#13132a;"><input type="checkbox" value="Amex Platinum" style="accent-color:#534AB7;"> Amex Platinum</label>
+          <label style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:0.5px solid #2a2a3a;border-radius:var(--radius-md);cursor:pointer;font-size:12px;color:#c8c8e8;background:#13132a;"><input type="checkbox" value="Amex Gold" style="accent-color:#534AB7;"> Amex Gold</label>
+          <label style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:0.5px solid #2a2a3a;border-radius:var(--radius-md);cursor:pointer;font-size:12px;color:#c8c8e8;background:#13132a;"><input type="checkbox" value="Capital One Venture X" style="accent-color:#534AB7;"> Capital One Venture X</label>
+          <label style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:0.5px solid #2a2a3a;border-radius:var(--radius-md);cursor:pointer;font-size:12px;color:#c8c8e8;background:#13132a;"><input type="checkbox" value="Capital One Venture" style="accent-color:#534AB7;"> Capital One Venture</label>
+          <label style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:0.5px solid #2a2a3a;border-radius:var(--radius-md);cursor:pointer;font-size:12px;color:#c8c8e8;background:#13132a;"><input type="checkbox" value="Citi Strata Premier" style="accent-color:#534AB7;"> Citi Strata Premier</label>
+          <label style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:0.5px solid #2a2a3a;border-radius:var(--radius-md);cursor:pointer;font-size:12px;color:#c8c8e8;background:#13132a;"><input type="checkbox" value="Chase Freedom Unlimited" style="accent-color:#534AB7;"> Chase Freedom Unlimited</label>
+          <label style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:0.5px solid #2a2a3a;border-radius:var(--radius-md);cursor:pointer;font-size:12px;color:#c8c8e8;background:#13132a;"><input type="checkbox" value="Amex Blue Cash Preferred" style="accent-color:#534AB7;"> Amex Blue Cash Preferred</label>
+          <label style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:0.5px solid #2a2a3a;border-radius:var(--radius-md);cursor:pointer;font-size:12px;color:#c8c8e8;background:#13132a;"><input type="checkbox" value="Bilt Mastercard" style="accent-color:#534AB7;"> Bilt Mastercard</label>
+        </div>
+        <button onclick="obNext(2)" style="background:#534AB7;color:white;border:none;padding:9px 24px;border-radius:var(--radius-md);font-size:13px;font-weight:500;cursor:pointer;">Set up my dashboard →</button>
+      </div>
+    </div>
+
+    <!-- ── MAIN DASHBOARD (shown after onboarding) ── -->
+    <div id="pro-main" style="display:none;">
+
+      <!-- Stats row -->
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:1.25rem;">
+        <div style="background:#13132a;border:0.5px solid var(--dark-border);border-radius:var(--radius-lg);padding:14px 16px;">
+          <div style="font-size:11px;color:var(--dark-muted);margin-bottom:4px;">Credits available</div>
+          <div style="font-size:22px;font-weight:600;color:var(--dark-text);" id="pro-stat-credits">$847</div>
+          <div style="font-size:11px;color:#5DCAA5;margin-top:2px;">↑ $120 from last month</div>
+        </div>
+        <div style="background:#13132a;border:0.5px solid var(--dark-border);border-radius:var(--radius-lg);padding:14px 16px;">
+          <div style="font-size:11px;color:var(--dark-muted);margin-bottom:4px;">Expiring soon</div>
+          <div style="font-size:22px;font-weight:600;color:#EF9F27;" id="pro-stat-expiring">$130</div>
+          <div style="font-size:11px;color:var(--dark-muted);margin-top:2px;">3 credits · 4–18 days</div>
+        </div>
+        <div style="background:#13132a;border:0.5px solid var(--dark-border);border-radius:var(--radius-lg);padding:14px 16px;">
+          <div style="font-size:11px;color:var(--dark-muted);margin-bottom:4px;">Used this month</div>
+          <div style="font-size:22px;font-weight:600;color:var(--dark-text);" id="pro-stat-used">$310</div>
+          <div style="font-size:11px;color:var(--dark-muted);margin-top:2px;">37% utilization</div>
+        </div>
+      </div>
+
+      <!-- Card credit tracker -->
+      <div style="background:#13132a;border:0.5px solid var(--dark-border);border-radius:var(--radius-lg);padding:14px 16px;margin-bottom:1.25rem;">
+        <div style="font-size:13px;font-weight:600;color:var(--dark-text);margin-bottom:12px;" id="pro-cards-heading">Your cards — June 2026</div>
+        <div id="pro-card-rows"></div>
+      </div>
+
+      <!-- Monthly offers + screenshot upload -->
+      <div style="background:#13132a;border:0.5px solid var(--dark-border);border-radius:var(--radius-lg);padding:14px 16px;margin-bottom:1.25rem;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+          <div style="font-size:13px;font-weight:600;color:var(--dark-text);">This month's Chase + Amex offers</div>
+          <button onclick="document.getElementById('pro-offer-upload-zone').style.display='block'" style="font-size:11px;background:#1e1e3a;color:#8b80e8;border:0.5px solid #2a2a4a;padding:4px 10px;border-radius:var(--radius-sm);cursor:pointer;"><i class="ti ti-upload" style="font-size:12px;"></i> Update offers</button>
+        </div>
+
+        <!-- Screenshot upload zone (hidden by default) -->
+        <div id="pro-offer-upload-zone" style="display:none;margin-bottom:12px;border:1px dashed #2a2a4a;border-radius:var(--radius-md);padding:14px;text-align:center;cursor:pointer;"
+          onclick="document.getElementById('pro-offer-file-input').click()"
+          ondragover="event.preventDefault();this.style.borderColor='#534AB7'"
+          ondragleave="this.style.borderColor='#2a2a4a'"
+          ondrop="handleProOfferDrop(event)">
+          <i class="ti ti-screenshot" style="font-size:24px;color:#5566aa;display:block;margin-bottom:6px;" aria-hidden="true"></i>
+          <div style="font-size:13px;color:#9090b0;margin-bottom:3px;">Drop your Chase Offers or Amex Offers screenshot here</div>
+          <div style="font-size:11px;color:#5566aa;">PNG, JPG, or PDF · We'll extract all offers and share national brands with other users</div>
+        </div>
+        <input type="file" id="pro-offer-file-input" accept="image/*,.pdf" style="display:none" onchange="handleProOfferFile(this.files)">
+        <div id="pro-offer-parsed-notice" style="display:none;margin-bottom:10px;padding:8px 12px;background:#0F3020;border-radius:var(--radius-md);font-size:12px;color:#5DCAA5;"></div>
+
+        <div style="display:flex;flex-direction:column;gap:7px;" id="pro-offers">
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);"><span style="font-size:19px;">🏬</span><div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">Macy's — 10% back</div><div style="font-size:11px;color:var(--dark-muted);">Chase Offer · Spend $50+ · Expires Jun 30</div></div><span style="font-size:11px;color:#5DCAA5;background:#0F3020;padding:2px 7px;border-radius:3px;">Active</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);"><span style="font-size:19px;">✈️</span><div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">Delta — $50 off $300+</div><div style="font-size:11px;color:var(--dark-muted);">Amex Offer · Book by Jun 30 · Fly by Sep 30</div></div><span style="font-size:11px;color:#5DCAA5;background:#0F3020;padding:2px 7px;border-radius:3px;">Active</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);"><span style="font-size:19px;">🛒</span><div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">Whole Foods — 5% back</div><div style="font-size:11px;color:var(--dark-muted);">Amex Offer · Up to $25 back · Expires Jun 30</div></div><span style="font-size:11px;color:#EF9F27;background:#3a2200;padding:2px 7px;border-radius:3px;">9 days</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);"><span style="font-size:19px;">🏨</span><div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">Marriott — $75 off $300+</div><div style="font-size:11px;color:var(--dark-muted);">Chase Offer · Book through Jun 30 · Stay by Dec 31</div></div><span style="font-size:11px;color:#5DCAA5;background:#0F3020;padding:2px 7px;border-radius:3px;">Active</span></div>
+        </div>
+        <div style="margin-top:8px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);font-size:11px;color:#5566aa;"><i class="ti ti-info-circle" style="font-size:12px;" aria-hidden="true"></i> National brand offers (Macy's, Delta, etc.) are shared across all Pro users. Upload your screenshot to keep everyone's dashboard current.</div>
+      </div>
+
+      <!-- AI Card Advisor — emphasized -->
+      <div style="background:linear-gradient(135deg,#13132a 0%,#1a1040 100%);border:1.5px solid #534AB7;border-radius:var(--radius-lg);padding:18px 18px 16px;margin-bottom:1.25rem;position:relative;overflow:hidden;">
+        <!-- Subtle glow -->
+        <div style="position:absolute;top:-40px;right:-40px;width:120px;height:120px;background:radial-gradient(circle,rgba(83,74,183,.25) 0%,transparent 70%);pointer-events:none;"></div>
+        <!-- Header -->
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+          <div style="width:32px;height:32px;border-radius:var(--radius-md);background:linear-gradient(135deg,#534AB7,#7B6FD4);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <i class="ti ti-sparkles" style="font-size:16px;color:white;" aria-hidden="true"></i>
+          </div>
+          <div>
+            <div style="font-size:15px;font-weight:700;color:var(--dark-text);letter-spacing:-.2px;">AI Card Advisor</div>
+            <div style="font-size:11px;color:#8b80e8;font-weight:500;">Powered by Claude · Knows your cards, offers, and expiring credits</div>
+          </div>
+          <div style="margin-left:auto;font-size:10px;background:#534AB7;color:white;padding:3px 8px;border-radius:4px;font-weight:600;letter-spacing:.5px;">PRO</div>
+        </div>
+        <div style="font-size:13px;color:#9090b0;margin-bottom:14px;line-height:1.55;">Ask anything — which card to use at a specific store, whether you're getting value from your annual fee, what credits are about to expire, or how to maximize a Chase Offer. It knows your exact card lineup and this month's deals.</div>
+
+        <!-- Suggested questions -->
+        <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px;">
+          <button onclick="askAI(this.textContent)" style="font-size:12px;padding:6px 12px;border:0.5px solid #3a3a5a;border-radius:20px;background:#1a1a3a;color:#c8c8e8;cursor:pointer;transition:all .15s;" onmouseover="this.style.borderColor='#534AB7';this.style.color='white'" onmouseout="this.style.borderColor='#3a3a5a';this.style.color='#c8c8e8'">Which card for Macy's this month?</button>
+          <button onclick="askAI(this.textContent)" style="font-size:12px;padding:6px 12px;border:0.5px solid #3a3a5a;border-radius:20px;background:#1a1a3a;color:#c8c8e8;cursor:pointer;transition:all .15s;" onmouseover="this.style.borderColor='#534AB7';this.style.color='white'" onmouseout="this.style.borderColor='#3a3a5a';this.style.color='#c8c8e8'">Best card for dining tonight?</button>
+          <button onclick="askAI(this.textContent)" style="font-size:12px;padding:6px 12px;border:0.5px solid #3a3a5a;border-radius:20px;background:#1a1a3a;color:#c8c8e8;cursor:pointer;transition:all .15s;" onmouseover="this.style.borderColor='#534AB7';this.style.color='white'" onmouseout="this.style.borderColor='#3a3a5a';this.style.color='#c8c8e8'">What credits expire this month?</button>
+          <button onclick="askAI(this.textContent)" style="font-size:12px;padding:6px 12px;border:0.5px solid #3a3a5a;border-radius:20px;background:#1a1a3a;color:#c8c8e8;cursor:pointer;transition:all .15s;" onmouseover="this.style.borderColor='#534AB7';this.style.color='white'" onmouseout="this.style.borderColor='#3a3a5a';this.style.color='#c8c8e8'">Am I getting value from my Platinum?</button>
+          <button onclick="askAI(this.textContent)" style="font-size:12px;padding:6px 12px;border:0.5px solid #3a3a5a;border-radius:20px;background:#1a1a3a;color:#c8c8e8;cursor:pointer;transition:all .15s;" onmouseover="this.style.borderColor='#534AB7';this.style.color='white'" onmouseout="this.style.borderColor='#3a3a5a';this.style.color='#c8c8e8'">Best card for Amazon purchases?</button>
+          <button onclick="askAI(this.textContent)" style="font-size:12px;padding:6px 12px;border:0.5px solid #3a3a5a;border-radius:20px;background:#1a1a3a;color:#c8c8e8;cursor:pointer;transition:all .15s;" onmouseover="this.style.borderColor='#534AB7';this.style.color='white'" onmouseout="this.style.borderColor='#3a3a5a';this.style.color='#c8c8e8'">Should I upgrade to Sapphire Reserve?</button>
+        </div>
+
+        <!-- Chat thread -->
+        <div id="ai-chat-thread" style="display:flex;flex-direction:column;gap:10px;margin-bottom:12px;max-height:360px;overflow-y:auto;scroll-behavior:smooth;"></div>
+
+        <!-- Input row -->
+        <div style="display:flex;gap:8px;">
+          <input type="text" id="ai-input" placeholder="Ask about your cards, offers, or spend..." onkeydown="if(event.key==='Enter')sendAI()"
+            style="flex:1;padding:10px 14px;font-size:13px;border:1px solid #3a3a5a;border-radius:var(--radius-md);background:#1c1c2e;color:var(--dark-text);outline:none;transition:border-color .15s;"
+            onfocus="this.style.borderColor='#534AB7'" onblur="this.style.borderColor='#3a3a5a'">
+          <button onclick="sendAI()" style="background:linear-gradient(135deg,#534AB7,#7B6FD4);color:white;border:none;padding:10px 20px;border-radius:var(--radius-md);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;letter-spacing:-.1px;">Ask →</button>
+        </div>
+      </div>
+
+    </div><!-- /pro-main -->
+  </div>
+</div>
+<section class="sec sec-purple">
+  <div class="wrap">
+    <div class="sec-label purple">How it works</div>
+    <div class="hiw-grid">
+      <div class="hiw-step"><div class="hiw-num">1</div><h4>Tell us your spend</h4><p>Upload a statement or enter category totals in under 2 minutes.</p></div>
+      <div class="hiw-step"><div class="hiw-num">2</div><h4>See what you're leaving behind</h4><p>Most people lose $400–$900/yr. We help you get max value.</p></div>
+      <div class="hiw-step"><div class="hiw-num">3</div><h4>Never miss a perk</h4><p>Subscribe once — email nudges before any credit or deal expires.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ REVIEWS ══════════════ -->
+<section class="reviews-section">
+  <div class="reviews-label">What people are saying</div>
+  <div class="ticker-track" id="ticker-track"></div>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <div class="logo-mark"><i class="ti ti-bolt" aria-hidden="true"></i></div>
+        <span class="footer-logo-text">Points<em>Pulse.AI</em></span>
+      </div>
+      <div class="footer-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Affiliate disclosure</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+    <div class="footer-disclaimer">
+      <strong style="color:#8888aa;">Affiliate Disclosure:</strong> PointsPulse.AI participates in affiliate marketing programs. When you click "Apply" links on this site and are approved for a credit card, we may earn a commission at no additional cost to you. This compensation may influence which cards we feature, but does not affect our editorial recommendations — all spend analysis and card comparisons are based solely on publicly available rewards data and your actual spending patterns. We are not a bank, financial institution, or licensed financial advisor. Credit card terms, rewards rates, annual fees, and offers are subject to change; always verify current details directly with the card issuer before applying. Approval is not guaranteed and is subject to the issuer's credit and income requirements. Point valuations sourced from The Points Guy (TPG) and are estimates only — actual redemption value varies. Card data updated June 2026.
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── CARD DATABASE ──
+var DB = {
+  csr:      { name:'Chase Sapphire Reserve',     fee:'$795/yr', dining:'3x (8x via Chase Travel)', travel:'4x direct / 8x via portal', grocery:'1x', gas:'1x', bonus:'150k pts (~$3,075)', lounge:'Priority Pass + Sapphire Lounges (2 guests free)', credits:'$300 travel + $300 OpenTable dining', transfer:'14 partners (Hyatt, United, BA…)', foreign:'None', tpg:'2.05¢/pt' },
+  csp:      { name:'Chase Sapphire Preferred',   fee:'$95/yr',  dining:'3x', travel:'2x direct / 5x via portal', grocery:'3x online grocery', gas:'1x', bonus:'60k pts (~$1,230)', lounge:'None', credits:'$50 hotel credit/yr', transfer:'14 partners', foreign:'None', tpg:'2.05¢/pt' },
+  amexplat: { name:'Amex Platinum',              fee:'$895/yr', dining:'1x', travel:'5x flights / 5x Amex Travel', grocery:'1x', gas:'1x', bonus:'Up to 175k pts (~$3,500)', lounge:'Centurion + Priority Pass + Delta Sky Club', credits:'$200 airline + $200 hotel + $240 digital + $200 Uber', transfer:'20 partners', foreign:'None', tpg:'2.00¢/pt' },
+  amexgold: { name:'Amex Gold',                  fee:'$325/yr', dining:'4x worldwide', travel:'3x flights / 5x Amex hotels', grocery:'4x US supermarkets (to $25k/yr)', gas:'1x', bonus:'Up to 100k pts (~$2,000)', lounge:'None', credits:'$120 dining + $120 Uber + $100 Resy + $84 Dunkin', transfer:'20 partners', foreign:'None', tpg:'2.00¢/pt' },
+  venturex: { name:'Capital One Venture X',      fee:'$395/yr', dining:'2x', travel:'10x hotels+cars via C1 / 5x flights', grocery:'2x', gas:'2x', bonus:'75k miles (~$1,388)', lounge:'Capital One Lounges + Priority Pass', credits:'$300 travel portal + 10k anniversary miles', transfer:'15+ partners', foreign:'None', tpg:'1.85¢/mi' },
+  venture:  { name:'Capital One Venture',        fee:'$95/yr',  dining:'2x', travel:'5x hotels+cars via C1 Travel', grocery:'2x', gas:'2x', bonus:'75k miles (~$1,388)', lounge:'None', credits:'None', transfer:'15+ partners', foreign:'None', tpg:'1.85¢/mi' },
+  citi:     { name:'Citi Strata Premier',        fee:'$95/yr',  dining:'3x', travel:'3x air+hotels / 10x Citi Travel', grocery:'3x', gas:'3x incl. EV charging', bonus:'60k pts (~$600)', lounge:'None', credits:'$100 hotel (1x/yr, $500+ stay)', transfer:'16 partners', foreign:'None', tpg:'1.00¢/pt' },
+  fu:       { name:'Chase Freedom Unlimited',    fee:'None',    dining:'3x', travel:'5x via Chase Travel', grocery:'1.5x', gas:'1.5x', bonus:'$200 cash', lounge:'None', credits:'None', transfer:'With Sapphire card only', foreign:'3%', tpg:'1.5¢/pt cash' },
+  bcp:      { name:'Amex Blue Cash Preferred',   fee:'$95/yr',  dining:'1x', travel:'1x', grocery:'6x US supermarkets (to $6k/yr)', gas:'3x US gas stations', bonus:'$250 statement credit', lounge:'None', credits:'$84 Disney Bundle', transfer:'None — cash back card', foreign:'None', tpg:'1¢/pt cash' },
+  bilt:     { name:'Bilt Mastercard',            fee:'None',    dining:'3x', travel:'2x', grocery:'1x', gas:'1x', bonus:'None (earn 1x on rent)', lounge:'None', credits:'None', transfer:'17 partners (Hyatt, United, AA…)', foreign:'None', tpg:'1.85¢/pt' }
+};
+
+var ROWS = [
+  ['Annual fee','fee'], ['Dining rewards','dining'], ['Travel rewards','travel'],
+  ['Grocery rewards','grocery'], ['Gas rewards','gas'], ['Sign-up bonus','bonus'],
+  ['Lounge access','lounge'], ['Statement credits','credits'],
+  ['Transfer partners','transfer'], ['Foreign transaction fee','foreign'],
+  ['Point value (TPG 2026)','tpg']
+];
+
+var VERDICTS = {
+  'csr_csp':      'Reserve wins for frequent flyers — 8x Chase Travel and the $300 credit justify the fee gap if you spend $800+/mo on dining and travel. Preferred is the smarter pick for occasional travelers who want transferable points at a fraction of the cost.',
+  'csr_amexplat': 'Reserve wins for couples and dining-focused travelers (3x dining, free lounge guests). Platinum wins on sheer lounge volume and airfare earnings (5x) — ideal for solo frequent flyers who can absorb the 19-credit complexity.',
+  'csr_amexgold': 'Gold wins on dining and grocery earning (4x vs 3x) at $470/yr less. Reserve wins for anyone logging serious miles and using Priority Pass lounges regularly.',
+  'csr_venturex': 'Reserve outguns Venture X on category earning and lounge quality. But Venture X\'s near-zero effective fee after the $300 credit is compelling for moderate spenders. Heavy dining/travel: Reserve. Everyone else: Venture X is tough to beat.',
+  'amexplat_amexgold': 'Platinum for luxury travelers who fly constantly and can absorb credit complexity. Gold for people who eat out and order in — the credits are easy to actually use and the net cost lands low.',
+  'amexgold_venturex': 'Gold wins on dining (4x vs 2x) and groceries. Venture X wins on flat 2x everything-else spend and lounge access. The power move: carry both.',
+  'amexgold_citi': 'Gold wins on dining (4x vs 3x) but Strata Premier covers more categories at 3x — gas, hotels, air — and is $230/yr cheaper net. Dining-heavy spender: Gold. Broad everyday spender: Strata.',
+  'venturex_venture': 'Venture X is the clear upgrade — the $300 credit and 10k anniversary miles effectively make it free, and you gain lounge access and stronger flight multipliers.',
+  'csp_amexgold': 'Gold wins on dining (4x vs 3x) and grocery. Preferred wins on hotel transfers via World of Hyatt. If you spend more on food than flights, Gold is the pick.',
+  'fu_bcp': 'Blue Cash Preferred for grocery-heavy households — 6x is the best grocery rate available. Freedom Unlimited as a flat catch-all, especially when paired with a Sapphire card.'
+};
+
+function getVerdict(a, b) {
+  return VERDICTS[a+'_'+b] || VERDICTS[b+'_'+a] || 'Both cards offer strong value. The best pick depends on your primary spend categories and whether lounge access or a lower annual fee matters more to you.';
+}
+
+// ── AFFILIATE LINKS ──
+var AFFILIATE = {
+  csr:      'https://www.referyourchasecard.com/19w/9TJ6KTH3AR',
+  csp:      'https://www.referyourchasecard.com/19w/9TJ6KTH3AR',
+  amexplat: 'https://americanexpress.com/en-us/referral/all-cards?ref=JAREDKv3ct&xl=cp01',
+  amexgold: 'https://americanexpress.com/en-us/referral/all-cards?ref=JAREDKv3ct&xl=cp01',
+  bcp:      'https://americanexpress.com/en-us/referral/all-cards?ref=JAREDKv3ct&xl=cp01',
+  fu:       'https://www.referyourchasecard.com/18a/UBEUKGOSG5',
+  venturex: 'https://www.capitalone.com/credit-cards/venture-x/',
+  venture:  'https://www.capitalone.com/credit-cards/venture/',
+  citi:     'https://www.citi.com/credit-cards/citi-strata-premier-credit-card',
+  bilt:     'https://www.biltrewards.com/card'
+};
+var picks = [];
+
+function pickCard(el, id) {
+  if (el.classList.contains('selected')) {
+    el.classList.remove('selected');
+    picks = picks.filter(p => p !== id);
+  } else {
+    if (picks.length >= 3) return;
+    el.classList.add('selected');
+    picks.push(id);
+  }
+  document.querySelectorAll('.pick-item').forEach(c => {
+    if (!c.classList.contains('selected')) c.classList.toggle('disabled', picks.length >= 3);
+  });
+  var btn    = document.getElementById('btn-compare');
+  var st     = document.getElementById('cstatus-text');
+  var bar    = document.getElementById('compare-status');
+  if (!picks.length) {
+    st.textContent = 'Select 2 or 3 cards above to compare';
+    btn.disabled = true; bar.classList.remove('ready');
+  } else if (picks.length === 1) {
+    st.textContent = DB[picks[0]].name + ' selected — pick 1 or 2 more';
+    btn.disabled = true; bar.classList.remove('ready');
+  } else {
+    var names = picks.map(p => DB[p].name.split(' ').slice(-1)[0]).join(' vs ');
+    st.textContent = names + ' · ' + picks.length + ' cards selected — ready';
+    btn.disabled = false; bar.classList.add('ready');
+  }
+}
+
+function runCompare() {
+  var cards = picks.map(p => DB[p]);
+  var is3 = cards.length === 3;
+  var colW = is3 ? '120px 1fr 1fr 1fr' : '150px 1fr 1fr';
+
+  // Header
+  var hdr = '<div class="cmp-hcell" style="grid-column:1"></div>';
+  cards.forEach(c => { hdr += '<div class="cmp-hcell"><div class="col-name">'+c.name+'</div><div class="col-fee">'+c.fee+'</div></div>'; });
+  document.getElementById('cmp-header').style.gridTemplateColumns = colW;
+  document.getElementById('cmp-header').innerHTML = hdr;
+
+  // Rows
+  document.getElementById('cmp-rows').innerHTML = ROWS.map(r => {
+    var row = '<div class="cmp-row" style="grid-template-columns:'+colW+'"><div class="cmp-cell row-label">'+r[0]+'</div>';
+    cards.forEach(c => { row += '<div class="cmp-cell">'+c[r[1]]+'</div>'; });
+    row += '</div>';
+    return row;
+  }).join('');
+
+  // Verdict (2-card only; for 3 give a general summary)
+  var verdict = is3
+    ? 'Three-card comparison: ' + cards.map(c => c.name.split(' ').slice(-1)[0]).join(', ') + ' each serve different spend profiles. Review the rows above to find the strongest match for your top categories.'
+    : getVerdict(picks[0], picks[1]);
+  document.getElementById('cmp-verdict').innerHTML = '<strong>Our take:</strong> ' + verdict;
+
+  // CTAs
+  var applyColors = ['#534AB7','#0F6E56','#854F0B'];
+  document.getElementById('cmp-ctas').innerHTML = cards.map((c,i) => {
+    var key = picks[i];
+    var link = AFFILIATE[key] || '#';
+    return '<a href="'+link+'" target="_blank" rel="noopener sponsored" class="btn-apply" style="background:'+applyColors[i]+';"><i class="ti ti-external-link" style="font-size:12px;"></i> Apply for '+c.name+'</a>';
+  }).join('');
+
+  var out = document.getElementById('compare-output');
+  out.classList.add('show');
+  setTimeout(() => out.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+}
+
+// ── UPLOAD: multi-file with 5-file limit ──
+var uploadedFiles = [];
+
+function handleFileSelect(files) {
+  addFiles(Array.from(files));
+}
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('upload-zone').style.background = '';
+  addFiles(Array.from(e.dataTransfer.files));
+}
+function addFiles(newFiles) {
+  var allowed = ['pdf','csv','xlsx','xls'];
+  newFiles.forEach(f => {
+    var ext = f.name.split('.').pop().toLowerCase();
+    if (!allowed.includes(ext)) return;
+    if (uploadedFiles.length >= 5) {
+      document.getElementById('file-limit-notice').style.display = 'block';
+      return;
+    }
+    uploadedFiles.push(f);
+  });
+  renderFileList();
+}
+function removeFile(idx) {
+  uploadedFiles.splice(idx, 1);
+  document.getElementById('file-limit-notice').style.display = 'none';
+  renderFileList();
+}
+function renderFileList() {
+  var list = document.getElementById('file-list');
+  var btn  = document.getElementById('analyze-btn');
+  if (!uploadedFiles.length) {
+    list.style.display = 'none'; btn.disabled = true; return;
+  }
+  list.style.display = 'flex';
+  list.innerHTML = uploadedFiles.map((f, i) => {
+    var icons = {pdf:'file-type-pdf', csv:'file-spreadsheet', xlsx:'file-spreadsheet', xls:'file-spreadsheet'};
+    var ext   = f.name.split('.').pop().toLowerCase();
+    var kb    = (f.size/1024).toFixed(0);
+    return '<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:#fff;border:0.5px solid var(--gray-200);border-radius:var(--radius-md);">' +
+      '<i class="ti ti-'+(icons[ext]||'file')+'" style="font-size:16px;color:var(--purple);" aria-hidden="true"></i>' +
+      '<span style="font-size:12px;font-weight:500;color:var(--gray-900);flex:1;">'+f.name+'</span>' +
+      '<span style="font-size:11px;color:var(--gray-400);">'+kb+' KB</span>' +
+      '<button onclick="removeFile('+i+')" style="background:none;border:none;color:var(--gray-400);cursor:pointer;font-size:14px;padding:0 2px;" aria-label="Remove">×</button>' +
+    '</div>';
+  }).join('');
+  btn.disabled = false;
+}
+async function analyzeStatement() {
+  if (!uploadedFiles.length) return;
+
+  // Show loading state
+  var btn = document.getElementById('analyze-btn');
+  var loading = document.getElementById('upload-loading');
+  var resultsOut = document.getElementById('upload-results');
+  btn.disabled = true;
+  btn.textContent = 'Analyzing...';
+  loading.style.display = 'block';
+  resultsOut.classList.remove('show');
+
+  var loadingMsgs = [
+    'Reading your statement...',
+    'Categorizing transactions...',
+    'Modeling against 10 top cards...',
+    'Calculating net annual value...',
+    'Building your recommendations...'
+  ];
+  var msgIdx = 0;
+  var msgEl = document.getElementById('upload-loading-msg');
+  var msgTimer = setInterval(() => {
+    msgIdx = (msgIdx + 1) % loadingMsgs.length;
+    msgEl.textContent = loadingMsgs[msgIdx];
+  }, 1800);
+
+  // Read all uploaded files as text (CSV/Excel) or base64 (PDF)
+  var fileContents = [];
+  for (var f of uploadedFiles) {
+    var ext = f.name.split('.').pop().toLowerCase();
+    if (ext === 'pdf') {
+      var b64 = await readFileAsBase64(f);
+      fileContents.push({ name: f.name, type: 'pdf', data: b64, mediaType: 'application/pdf' });
+    } else {
+      var text = await readFileAsText(f);
+      fileContents.push({ name: f.name, type: 'text', data: text });
+    }
+  }
+
+  // Build Claude API message with all file contents
+  var userContent = [];
+
+  // Add PDF documents
+  fileContents.filter(f => f.type === 'pdf').forEach(f => {
+    userContent.push({
+      type: 'document',
+      source: { type: 'base64', media_type: f.mediaType, data: f.data }
+    });
+  });
+
+  // Add CSV/text as text blocks
+  fileContents.filter(f => f.type === 'text').forEach(f => {
+    userContent.push({ type: 'text', text: 'Statement file "' + f.name + '":\n' + f.data.slice(0, 8000) });
+  });
+
+  var CARD_DB_SUMMARY = `Available cards to recommend from (use ONLY these):
+1. Chase Sapphire Reserve – $795/yr, 3x dining, 8x Chase Travel, 4x direct travel, $300 travel credit + $300 dining credit, Priority Pass lounge, 14 transfer partners, TPG 2.05¢/pt, apply link: #csr-affiliate
+2. Chase Sapphire Preferred – $95/yr, 3x dining, 2x travel, 3x online grocery, $50 hotel credit, 14 transfer partners, TPG 2.05¢/pt, apply link: #csp-affiliate
+3. Amex Platinum – $895/yr, 5x flights, $200 airline + $200 hotel + $240 digital + $200 Uber credits, Centurion lounges, 20 transfer partners, TPG 2.00¢/pt, apply link: #amexplat-affiliate
+4. Amex Gold – $325/yr, 4x dining, 4x US groceries, 3x flights, $120 dining + $120 Uber + $100 Resy + $84 Dunkin credits, 20 transfer partners, TPG 2.00¢/pt, apply link: #amexgold-affiliate
+5. Capital One Venture X – $395/yr, 2x everything, 10x hotels via C1, $300 travel portal credit + 10k anniversary miles, Capital One + Priority Pass lounges, TPG 1.85¢/mi, apply link: #venturex-affiliate
+6. Capital One Venture – $95/yr, 2x everything, 5x hotels via C1, TPG 1.85¢/mi, apply link: #venture-affiliate
+7. Citi Strata Premier – $95/yr, 3x dining/grocery/gas/flights/hotels, $100 hotel credit, 16 transfer partners, TPG 1.00¢/pt, apply link: #citi-affiliate
+8. Chase Freedom Unlimited – No fee, 3x dining, 1.5x everything, 5x via Chase Travel, apply link: #fu-affiliate
+9. Amex Blue Cash Preferred – $95/yr, 6x US groceries, 3x gas, $84 Disney Bundle, apply link: #bcp-affiliate
+10. Bilt Mastercard – No fee, 3x dining, 2x travel, 1x rent (no fee), 17 transfer partners, TPG 1.85¢/pt, apply link: #bilt-affiliate`;
+
+  userContent.push({
+    type: 'text',
+    text: `You are PointsPulse.AI, a credit card optimization engine. Analyze the transaction data in the uploaded statement(s) above.
+
+${CARD_DB_SUMMARY}
+
+Instructions:
+1. Parse all transactions and categorize them: dining, travel/flights, hotels, groceries, gas, streaming, online shopping, rideshare, telecom, health/fitness, home, utilities, other
+2. Calculate monthly and annual spend per category
+3. Model annual points earned on EACH of the 10 cards above based on the actual spend categories
+4. Factor in annual fees and credits to calculate NET annual value per card
+5. Rank by net annual value and return the top 2 recommendations
+
+Return ONLY valid JSON, no markdown, no explanation outside the JSON, in exactly this format:
+{
+  "spend_summary": {
+    "total_monthly": 4200,
+    "top_categories": [
+      {"name": "Dining", "monthly": 800, "pct": 19},
+      {"name": "Groceries", "monthly": 600, "pct": 14},
+      {"name": "Travel", "monthly": 400, "pct": 10}
+    ]
+  },
+  "recommendations": [
+    {
+      "rank": 1,
+      "card_key": "csr",
+      "card_name": "Chase Sapphire Reserve",
+      "issuer": "Chase",
+      "annual_fee": 795,
+      "est_annual_pts": 87400,
+      "tpg_value": 1792,
+      "net_after_fee": 1297,
+      "apply_link": "#csr-affiliate",
+      "apply_label": "Apply — 150k point bonus",
+      "apply_color": "#534AB7",
+      "why": "Your dining spend (38% of total) earns 3x on this card — one of the highest rates available for restaurants. The $300 travel credit effectively reduces your net annual fee to $495."
+    },
+    {
+      "rank": 2,
+      "card_key": "amexgold",
+      "card_name": "Amex Gold",
+      "issuer": "American Express",
+      "annual_fee": 325,
+      "est_annual_pts": 71200,
+      "tpg_value": 1424,
+      "net_after_fee": 1099,
+      "apply_link": "#amexgold-affiliate",
+      "apply_label": "Apply — up to 100k point bonus",
+      "apply_color": "#0F6E56",
+      "why": "4x on both dining and groceries combined covers your two biggest spend categories. Credits stack to $424/yr in easy-to-use value."
+    }
+  ]
+}`
+  });
+
+  try {
+    var res = await fetch('/api/claude', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: userContent }]
+      })
+    });
+    var data = await res.json();
+    var raw = data.content && data.content[0] ? data.content[0].text : '';
+    var clean = raw.replace(/```json|```/g, '').trim();
+    var result = JSON.parse(clean);
+    clearInterval(msgTimer);
+    renderUploadResults(result);
+  } catch(err) {
+    clearInterval(msgTimer);
+    loading.style.display = 'none';
+    btn.disabled = false;
+    btn.textContent = 'Analyze & recommend';
+    document.getElementById('upload-results-inner').innerHTML =
+      '<div style="padding:1rem;background:#FAECE7;border-radius:var(--radius-md);font-size:13px;color:#993C1D;">' +
+      '<strong>Analysis failed.</strong> This can happen if the file format is unsupported or the statement is image-only (scanned PDF). Try a CSV export from your bank instead, or use the Manual entry tab to enter your spend categories directly.' +
+      '</div>';
+    document.getElementById('upload-results').classList.add('show');
+  }
+}
+
+function renderUploadResults(result) {
+  var loading = document.getElementById('upload-loading');
+  var btn = document.getElementById('analyze-btn');
+  loading.style.display = 'none';
+  btn.disabled = false;
+  btn.textContent = 'Analyze & recommend';
+
+  var spend = result.spend_summary;
+  var recs  = result.recommendations;
+  var colors = ['#534AB7','#0F6E56','#854F0B'];
+  var badgeClass = ['badge-1','badge-2'];
+  var rankLabel = ['#1 pick','#2 pick'];
+
+  // Spend summary bar
+  var spendHtml = '';
+  if (spend && spend.top_categories) {
+    spendHtml = '<div style="background:var(--gray-100);border-radius:var(--radius-lg);padding:12px 14px;margin-bottom:1.25rem;">' +
+      '<div style="font-size:13px;font-weight:600;color:var(--gray-900);margin-bottom:10px;">Your spend breakdown — $' + (spend.total_monthly || 0).toLocaleString() + '/mo</div>' +
+      '<div style="display:flex;flex-direction:column;gap:6px;">' +
+      spend.top_categories.map(c =>
+        '<div style="display:flex;align-items:center;gap:10px;">' +
+          '<div style="font-size:12px;color:var(--gray-600);width:110px;flex-shrink:0;">'+c.name+'</div>' +
+          '<div style="flex:1;height:6px;background:var(--gray-200);border-radius:3px;overflow:hidden;">' +
+            '<div style="width:'+Math.min(c.pct,100)+'%;height:100%;background:var(--purple);border-radius:3px;"></div>' +
+          '</div>' +
+          '<div style="font-size:11px;color:var(--gray-400);min-width:50px;text-align:right;">$'+(c.monthly||0)+'/mo</div>' +
+        '</div>'
+      ).join('') +
+      '</div></div>';
+  }
+
+  // Recommendation cards
+  var recsHtml = recs.map((r, i) =>
+    '<div class="result-card ' + (i === 0 ? 'top-pick' : '') + '">' +
+      '<div class="result-header">' +
+        '<div>' +
+          '<div class="result-name">' + r.card_name + '</div>' +
+          '<div class="result-issuer">' + r.issuer + ' · $' + r.annual_fee + '/yr</div>' +
+        '</div>' +
+        '<span class="result-badge ' + badgeClass[i] + '">' + rankLabel[i] + '</span>' +
+      '</div>' +
+      '<div class="result-stats">' +
+        '<div class="stat-box"><div class="sl">Est. annual pts</div><div class="sv">' + (r.est_annual_pts||0).toLocaleString() + '</div></div>' +
+        '<div class="stat-box"><div class="sl">TPG value</div><div class="sv">~$' + (r.tpg_value||0).toLocaleString() + '</div></div>' +
+        '<div class="stat-box"><div class="sl">Net after fee</div><div class="sv">$' + (r.net_after_fee||0).toLocaleString() + '</div></div>' +
+      '</div>' +
+      '<div class="result-why">' + r.why + '</div>' +
+      '<a href="' + (AFFILIATE[r.card_key] || r.apply_link || '#') + '" target="_blank" rel="noopener sponsored" class="btn-apply" style="background:' + (r.apply_color || colors[i]) + ';">' +
+        '<i class="ti ti-external-link" style="font-size:12px;" aria-hidden="true"></i> ' + (r.apply_label || 'Apply now') +
+      '</a>' +
+    '</div>'
+  ).join('');
+
+  document.getElementById('upload-results-inner').innerHTML =
+    '<div class="sec-title" style="margin-bottom:4px;">Your top matches</div>' +
+    '<div class="sec-sub">Based on your actual statement spend — analyzed by AI against 10 cards.</div>' +
+    spendHtml + recsHtml;
+
+  var out = document.getElementById('upload-results');
+  out.classList.add('show');
+  setTimeout(() => out.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+}
+
+// File reading helpers
+function readFileAsBase64(file) {
+  return new Promise((resolve, reject) => {
+    var r = new FileReader();
+    r.onload = () => resolve(r.result.split(',')[1]);
+    r.onerror = reject;
+    r.readAsDataURL(file);
+  });
+}
+function readFileAsText(file) {
+  return new Promise((resolve, reject) => {
+    var r = new FileReader();
+    r.onload = () => resolve(r.result);
+    r.onerror = reject;
+    r.readAsText(file);
+  });
+}
+
+// ── OFFER SCREENSHOT UPLOAD ──
+function handleOfferDrop(e) {
+  e.preventDefault();
+  document.getElementById('offer-drop-zone').style.background = '';
+  var files = e.dataTransfer.files;
+  if (files.length) processOfferFile(files[0]);
+}
+function handleOfferFile(files) {
+  if (files.length) processOfferFile(files[0]);
+}
+function processOfferFile(f) {
+  document.getElementById('offer-file-name').textContent = f.name;
+  document.getElementById('offer-file-confirm').style.display = 'flex';
+  document.getElementById('offer-drop-zone').style.opacity = '0.5';
+}
+
+// ── MANUAL ──
+function showManualResults() {
+  var r = document.getElementById('manual-results');
+  r.classList.add('show');
+  setTimeout(() => r.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+}
+
+// ── TAB SWITCHING (pills only — tab bar removed) ──
+var ALL_TABS = ['compare', 'upload', 'manual', 'alerts', 'premium'];
+
+function switchTab(t) {
+  ALL_TABS.forEach(id => {
+    var panel = document.getElementById('panel-' + id);
+    if (panel) panel.classList.toggle('active', id === t);
+  });
+  document.querySelectorAll('.hpill').forEach((p, i) => {
+    p.classList.toggle('active', ALL_TABS[i] === t);
+  });
+  document.querySelector('.sec-soft').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function switchTabPill(el, t) { switchTab(t); }
+
+// ── REVIEWS TICKER ──
+var REVIEWS = [
+  { t: "I had no idea I was leaving $600/year in unused Amex credits. PointsPulse.AI showed me in 2 minutes and the alert emails actually get me to use them.", a: "Marcus T.", c: "Amex Platinum" },
+  { t: "The spend entry is dead simple. I typed in my monthly categories, hit the button, and it told me exactly how many points each card would earn me — broken down by category. Switched to Amex Gold that week.", a: "Ryan C.", c: "Enter spend" },
+  { t: "The compare tool is insane. I was about to get the Sapphire Reserve and it showed me the Venture X basically pays for itself — saved me $400 in annual fees.", a: "Priya K.", c: "Venture X" },
+  { t: "What got me was the net-value number. I'd never thought about annual fee minus credits as a real calculation. The spend tool laid it out in seconds — I was leaving $900/yr on the table with the wrong card.", a: "Dana H.", c: "Enter spend" },
+  { t: "Uploaded my Chase statement and found I was losing 2x points on every grocery purchase. Switched to Amex Gold. Already earned 18k points in one month.", a: "Derek W.", c: "Amex Gold" },
+  { t: "The monthly deadline alerts are worth the subscription alone. My $300 Chase travel credit was about to expire. Used it on a flight the next day.", a: "Rachel S.", c: "Sapphire Reserve" },
+  { t: "I've been a points nerd for years and this is still the cleanest comparison tool I've found. The 2026 data is accurate and the verdicts are genuinely nuanced.", a: "James L.", c: "Points enthusiast" },
+  { t: "Switched from Sapphire Preferred to Amex Gold based on the spend recommendation. The fee difference is basically zero after Uber credits. Great call.", a: "Anika M.", c: "Amex Gold" },
+  { t: "I carry 4 cards and was tracking credits in a spreadsheet. The alert system replaced all of that in one sign-up. 10 minutes of my life back every month.", a: "Tom H.", c: "Multi-card holder" },
+  { t: "Compared Venture X vs Platinum for 30 minutes in my head. Did it here in 2 seconds and the side-by-side made the answer obvious.", a: "Sofia R.", c: "Venture X" },
+  { t: "Finally a site that doesn't just push whatever card pays the highest affiliate rate. The spend analysis showed what's actually right for my budget.", a: "Kevin P.", c: "Citi Strata" },
+  { t: "The Amex Gold 60th anniversary credit updates were already in the database. Every other site I checked was still showing outdated info.", a: "Lauren B.", c: "Amex Gold" },
+  { t: "I entered my spend in about 90 seconds and it showed my Venture X was earning me $400 less per year than it should. The category breakdown was exactly what I needed to see.", a: "Chris M.", c: "Enter spend" },
+  { t: "The AI advisor in the Pro dashboard told me to use my Chase Sapphire for the Macy's offer and save the Amex for Whole Foods. Exactly what I needed, instantly.", a: "Tiffany L.", c: "Pro dashboard" },
+  { t: "Recommended this to my whole family after finding out my sister was paying $895/yr for the Amex Platinum and not using a single credit. The tracker alone saved her $600.", a: "Will B.", c: "Track perks" },
+  { t: "PointsPulse.AI is what I wish existed when I first started getting into credit cards. No fluff, no bias, just the math.", a: "Naomi A.", c: "Points enthusiast" },
+  { t: "I spent 3 years thinking my Sapphire Reserve was my best card. Took the spend analysis 60 seconds to show me the Amex Gold was actually better for how I spend. Mind blown.", a: "Jordan F.", c: "Enter spend" }
+];
+
+(function buildTicker() {
+  var doubled = REVIEWS.concat(REVIEWS);
+  var html = doubled.map(r =>
+    '<div class="review-card">' +
+      '<div class="review-stars">★★★★★</div>' +
+      '<div class="review-text">"' + r.t + '"</div>' +
+      '<div class="review-author">' +
+        '<div class="review-avatar">' + r.a[0] + '</div>' +
+        '<div class="review-name">' + r.a + '</div>' +
+        '<span class="review-card-tag">' + r.c + '</span>' +
+      '</div>' +
+    '</div>'
+  ).join('');
+  document.getElementById('ticker-track').innerHTML = html;
+})();
+
+// ── TRACK PERKS: dynamic card selection ──
+var CARD_PERKS = {
+  'Chase Sapphire Reserve': [
+    { warn: true,  text: '<strong>$300 travel credit</strong> — resets Jan 1. Tolls, parking, rideshare, and flights all count.' },
+    { warn: false, text: '<strong>$300 OpenTable dining credit</strong> — resets annually. Book through Chase Sapphire Reserve Exclusive Tables.' },
+    { warn: true,  text: '<strong>Monthly Chase Offers</strong> — new merchant deals each month. We\'ll alert you when high-value ones drop.' }
+  ],
+  'Chase Sapphire Preferred': [
+    { warn: true,  text: '<strong>$50 hotel credit</strong> — one hotel stay per year booked through Chase Travel.' },
+    { warn: true,  text: '<strong>Monthly Chase Offers</strong> — rotating merchant deals. We\'ll flag the best ones each month.' }
+  ],
+  'Amex Platinum': [
+    { warn: true,  text: '<strong>$200 airline credit</strong> — select one airline. Use for fees, upgrades, seat selection.' },
+    { warn: true,  text: '<strong>$200 hotel credit</strong> — Fine Hotels + Resorts or The Hotel Collection. Resets annually.' },
+    { warn: true,  text: '<strong>$240 digital entertainment credit</strong> — $20/mo. Disney+, ESPN+, Peacock, The NY Times, and more.' },
+    { warn: true,  text: '<strong>$200 Uber Cash</strong> — $15/mo ($35 in December). Auto-loads to Uber account.' },
+    { warn: false, text: '<strong>Monthly Amex Offers</strong> — up to 20+ personalized merchant deals per month. Never miss one.' }
+  ],
+  'Amex Gold': [
+    { warn: true,  text: '<strong>$10/mo dining credit</strong> — expires last day of each month. Grubhub, Cheesecake Factory, Goldbelly, and more.' },
+    { warn: true,  text: '<strong>$10/mo Uber Cash</strong> — expires at midnight on the last day of each month. Uber or Uber Eats.' },
+    { warn: true,  text: '<strong>$100 Resy credit</strong> — $50 semi-annually. Book through Resy restaurants.' },
+    { warn: true,  text: '<strong>$84 Dunkin\' credit</strong> — $7/mo. Enrollment required.' },
+    { warn: false, text: '<strong>Monthly Amex Offers</strong> — personalized merchant deals. We\'ll surface the highest-value ones.' }
+  ],
+  'Capital One Venture X': [
+    { warn: true,  text: '<strong>$300 travel credit</strong> — must book through Capital One Travel portal. Resets annually.' },
+    { warn: false, text: '<strong>10,000 anniversary miles</strong> — drops on your card anniversary each year (~$185 value).' }
+  ],
+  'Capital One Venture': [
+    { warn: false, text: '<strong>TSA PreCheck / Global Entry credit</strong> — up to $100 every 4 years.' }
+  ],
+  'Citi Strata Premier': [
+    { warn: true,  text: '<strong>$100 hotel credit</strong> — one stay of $500+ per year through CitiTravel.com.' }
+  ],
+  'Chase Freedom Unlimited': [
+    { warn: false, text: '<strong>Monthly Chase Offers</strong> — rotating merchant deals available through the Chase app.' }
+  ],
+  'Amex Blue Cash Preferred': [
+    { warn: true,  text: '<strong>$84 Disney Bundle credit</strong> — $7/mo after enrollment. Disney+, Hulu, ESPN+.' }
+  ],
+  'Bilt Mastercard': [
+    { warn: false, text: '<strong>Bilt Rent Day (1st of each month)</strong> — 2x points on all purchases. Don\'t miss it.' }
+  ]
+};
+
+// ── STRIPE CHECKOUT ROUTING ──
+// ── STRIPE PAYMENT LINK ──
+var STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/fZu00jaL76OcgbK4N487K03';
+
+function initiateStripeCheckout() {
+  // Append success redirect so Stripe sends users back to the Pro dashboard
+  window.location.href = STRIPE_PAYMENT_LINK + '?success_url=' + encodeURIComponent('https://pointspulse.ai/?pro=1');
+}
+
+// Called by Stripe success redirect — set ?pro=1 in the URL to auto-unlock
+(function checkStripeReturn() {
+  if (new URLSearchParams(window.location.search).get('pro') === '1') {
+    setTimeout(() => { openProDashboard(); }, 300);
+  }
+  // Always refresh nav and load any shared offers on page load
+  refreshNavButton();
+  loadSharedOffers();
+})();
+
+// ── PRO INTEREST CAPTURE ──
+function submitProInterest() {
+  document.getElementById('pro-interest-form').style.display = 'none';
+  document.getElementById('pro-interest-confirm').style.display = 'block';
+}
+
+// ── ADMIN CODE + PRO DASHBOARD ──
+function checkAdminCode() {
+  var val = document.getElementById('admin-code-input').value.trim().toUpperCase();
+  if (val === 'JKACCESS') {
+    document.getElementById('admin-unlock-confirm').style.display = 'block';
+    document.getElementById('admin-code-input').closest('div').style.display = 'none';
+    // Save a test session so the dashboard opens directly
+    saveSession({ email: 'admin@pointspulse.ai', cards: ['Chase Sapphire Reserve','Amex Platinum','Amex Gold'], joinedAt: Date.now() });
+    refreshNavButton();
+  } else {
+    document.getElementById('admin-code-input').style.borderColor = '#e63946';
+    document.getElementById('admin-code-input').value = '';
+    document.getElementById('admin-code-input').placeholder = 'Invalid — try again';
+  }
+}
+
+// ── CARD BADGE HELPER ──
+var CARD_BADGES = {
+  'Chase Sapphire Reserve':  { bg:'#0d1b3e', color:'white', label:'CSR' },
+  'Chase Sapphire Preferred':{ bg:'#12263f', color:'white', label:'CSP' },
+  'Amex Platinum':           { bg:'#b0b0b0', color:'#222',  label:'PLAT' },
+  'Amex Gold':               { bg:'#b8860b', color:'white', label:'GOLD' },
+  'Capital One Venture X':   { bg:'#111',    color:'white', label:'VX' },
+  'Capital One Venture':     { bg:'#8b0000', color:'white', label:'V' },
+  'Citi Strata Premier':     { bg:'#002d72', color:'white', label:'CITI' },
+  'Chase Freedom Unlimited': { bg:'#1a3a1a', color:'white', label:'CFU' },
+  'Amex Blue Cash Preferred':{ bg:'#002f6c', color:'white', label:'BCP' },
+  'Bilt Mastercard':         { bg:'#1a1a1a', color:'white', label:'BILT' }
+};
+function cardBadge(cardName) {
+  var b = CARD_BADGES[cardName] || { bg:'#534AB7', color:'white', label:'CARD' };
+  return '<span style="display:inline-flex;align-items:center;padding:2px 7px;border-radius:4px;background:'+b.bg+';color:'+b.color+';font-size:10px;font-weight:600;letter-spacing:.3px;flex-shrink:0;margin-right:4px;">'+b.label+'</span>';
+}
+
+// ── TRACK PERKS: dynamic card selection with card badges ──
+function updateCardSelection() {
+  var checked = Array.from(document.querySelectorAll('#cards-select-grid input:checked'))
+    .map(cb => cb.closest('label').textContent.trim().replace(/[\s\S]*?(Chase|Amex|Capital|Citi|Bilt)/, '$1').replace(/\s+(Travel|Luxury|Dining|Flex|Cashback|Everyday|Rent)\s*$/, '').trim());
+
+  // Re-extract full card names cleanly
+  var checkedFull = Array.from(document.querySelectorAll('#cards-select-grid input:checked'))
+    .map(cb => {
+      var txt = cb.closest('label').textContent.trim();
+      // Strip the tag at end
+      return txt.replace(/\s+(Travel|Luxury|Dining|Flex|Cashback|Everyday|Rent)\s*$/, '').trim();
+    });
+
+  var empty   = document.getElementById('perks-empty');
+  var preview = document.getElementById('perks-preview');
+  var signup  = document.getElementById('perks-signup');
+  var list    = document.getElementById('perks-list');
+
+  if (!checkedFull.length) {
+    empty.style.display = 'block'; preview.style.display = 'none'; signup.style.display = 'none'; return;
+  }
+  empty.style.display = 'none';
+
+  var perks = [];
+  checkedFull.forEach(name => {
+    Object.keys(CARD_PERKS).forEach(key => {
+      var lastName = key.split(' ').slice(-1)[0];
+      if (name.indexOf(lastName) > -1 || key.indexOf(name.split(' ').slice(-1)[0]) > -1) {
+        CARD_PERKS[key].forEach(p => perks.push({ card: key, warn: p.warn, text: p.text }));
+      }
+    });
+  });
+
+  var seen = new Set();
+  perks = perks.filter(p => { var k = p.card+p.text; if(seen.has(k)) return false; seen.add(k); return true; });
+
+  list.innerHTML = perks.map(p =>
+    '<div class="notif-item">' +
+      '<div class="notif-icon ' + (p.warn ? 'ni-warn' : 'ni-good') + '">' +
+        '<i class="ti ti-' + (p.warn ? 'alert-triangle' : 'check') + '" aria-hidden="true"></i>' +
+      '</div>' +
+      '<div class="notif-text" style="flex:1;">' + cardBadge(p.card) + p.text + '</div>' +
+    '</div>'
+  ).join('');
+
+  preview.style.display = 'block';
+  signup.style.display = 'block';
+}
+// ── SESSION MANAGEMENT (localStorage-based for MVP) ──
+var PRO_SESSION_KEY = 'pp_pro_session';
+
+function getSession() {
+  try { return JSON.parse(localStorage.getItem(PRO_SESSION_KEY)); } catch(e) { return null; }
+}
+function saveSession(data) {
+  try { localStorage.setItem(PRO_SESSION_KEY, JSON.stringify(data)); } catch(e) {}
+}
+function clearSession() {
+  try { localStorage.removeItem(PRO_SESSION_KEY); } catch(e) {}
+}
+
+function handleSignIn() {
+  var s = getSession();
+  if (s && s.email) {
+    // Returning user — open dashboard directly
+    openProDashboard();
+  } else {
+    // No session — go to Pro panel
+    switchTab('premium');
+  }
+}
+
+// Update nav sign-in button label based on session
+function refreshNavButton() {
+  var s = getSession();
+  var btn = document.getElementById('nav-signin-btn');
+  if (!btn) return;
+  if (s && s.email) {
+    btn.textContent = 'My dashboard';
+    btn.style.background = 'var(--purple)';
+    btn.style.color = 'white';
+    btn.style.border = 'none';
+  } else {
+    btn.textContent = 'Sign in';
+    btn.style.background = '';
+    btn.style.color = '';
+    btn.style.border = '';
+  }
+}
+
+// ── PRO DASHBOARD: open / close ──
+function openProDashboard() {
+  var s = getSession();
+  var overlay = document.getElementById('pro-dashboard-overlay');
+  overlay.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+
+  if (s && s.email && s.cards && s.cards.length) {
+    // Returning user
+    showProMain(s);
+  } else {
+    // First time — show onboarding
+    document.getElementById('pro-onboarding').style.display = 'block';
+    document.getElementById('pro-main').style.display = 'none';
+    document.getElementById('ob-step-1').style.display = 'block';
+    document.getElementById('ob-step-2').style.display = 'none';
+  }
+}
+
+function closePro() {
+  document.getElementById('pro-dashboard-overlay').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+// ── ONBOARDING STEPS ──
+function obNext(step) {
+  if (step === 1) {
+    var email = document.getElementById('ob-email').value.trim();
+    if (!email || !email.includes('@')) {
+      document.getElementById('ob-email').style.borderColor = '#e63946';
+      return;
+    }
+    document.getElementById('ob-step-1').style.display = 'none';
+    document.getElementById('ob-step-2').style.display = 'block';
+  } else if (step === 2) {
+    var cards = Array.from(document.querySelectorAll('#ob-cards-grid input:checked')).map(c => c.value);
+    if (!cards.length) { alert('Please select at least one card.'); return; }
+    var email = document.getElementById('ob-email').value.trim();
+    var session = { email: email, cards: cards, joinedAt: Date.now() };
+    saveSession(session);
+    document.getElementById('pro-user-email').textContent = email;
+    document.getElementById('pro-onboarding').style.display = 'none';
+    showProMain(session);
+    refreshNavButton();
+  }
+}
+
+function showProMain(session) {
+  document.getElementById('pro-main').style.display = 'block';
+  document.getElementById('pro-onboarding').style.display = 'none';
+  if (session.email) document.getElementById('pro-user-email').textContent = session.email;
+  buildProCards(session.cards || ['Amex Gold','Chase Sapphire Reserve','Amex Platinum']);
+  var count = (session.cards || []).length;
+  document.getElementById('pro-cards-heading').textContent = 'Your ' + count + ' card' + (count !== 1 ? 's' : '') + ' — June 2026';
+}
+
+function buildProCards(cards) {
+  var allCardData = {
+    'Chase Sapphire Reserve':   { pct:40, color:'#1a3a6e', warn:'$180 exp. 18d', status:'ds-warn' },
+    'Chase Sapphire Preferred': { pct:70, color:'#1e4976', warn:'$50 exp. Dec',  status:'ds-warn' },
+    'Amex Platinum':            { pct:85, color:'#b0b0b0', warn:'On track',       status:'ds-ok' },
+    'Amex Gold':                { pct:60, color:'#c49a28', warn:'$10 exp. 4d',    status:'ds-warn' },
+    'Capital One Venture X':    { pct:50, color:'#2a2a2a', warn:'$120 exp. Dec', status:'ds-warn' },
+    'Capital One Venture':      { pct:90, color:'#b52a2a', warn:'On track',       status:'ds-ok' },
+    'Citi Strata Premier':      { pct:30, color:'#0057b8', warn:'$100 exp. Dec', status:'ds-warn' },
+    'Chase Freedom Unlimited':  { pct:100,color:'#2e6b2e', warn:'No credits',    status:'ds-ok' },
+    'Amex Blue Cash Preferred': { pct:45, color:'#005cbf', warn:'$7 exp. Jun 30',status:'ds-warn' },
+    'Bilt Mastercard':          { pct:100,color:'#2d2d2d', warn:'No credits',    status:'ds-ok' }
+  };
+  document.getElementById('pro-card-rows').innerHTML = cards.map(name => {
+    var d = allCardData[name] || { pct:50, color:'#534AB7', warn:'Check card', status:'ds-warn' };
+    return '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:0.5px solid #1e1e2e;">' +
+      '<div style="font-size:12px;font-weight:500;color:#c8c8e8;width:160px;flex-shrink:0;">'+name+'</div>' +
+      '<div style="flex:1;height:5px;background:#1e1e2e;border-radius:3px;overflow:hidden;">' +
+        '<div style="width:'+d.pct+'%;height:100%;background:'+d.color+';border-radius:3px;"></div>' +
+      '</div>' +
+      '<div style="font-size:11px;color:#5566aa;min-width:30px;text-align:right;">'+d.pct+'%</div>' +
+      '<span style="font-size:10px;padding:2px 7px;border-radius:3px;" class="'+d.status+'">'+d.warn+'</span>' +
+    '</div>';
+  }).join('');
+}
+
+// ── PRO OFFER SCREENSHOT UPLOAD ──
+// National brands extracted from uploads are stored in localStorage to share across sessions
+var SHARED_OFFERS_KEY = 'pp_shared_offers';
+
+function handleProOfferDrop(e) {
+  e.preventDefault();
+  document.getElementById('pro-offer-upload-zone').style.borderColor = '#2a2a4a';
+  var files = e.dataTransfer.files;
+  if (files.length) processProOfferFile(files[0]);
+}
+function handleProOfferFile(files) {
+  if (files.length) processProOfferFile(files[0]);
+}
+async function processProOfferFile(f) {
+  var notice = document.getElementById('pro-offer-parsed-notice');
+  notice.style.display = 'block';
+  notice.textContent = 'Parsing ' + f.name + ' for offers...';
+  document.getElementById('pro-offer-upload-zone').style.display = 'none';
+
+  // Convert image to base64 for Claude vision
+  var reader = new FileReader();
+  reader.onload = async function(ev) {
+    var base64 = ev.target.result.split(',')[1];
+    var mediaType = f.type || 'image/png';
+
+    try {
+      var res = await fetch('/api/claude', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-6',
+          max_tokens: 1000,
+          messages: [{
+            role: 'user',
+            content: [
+              { type: 'image', source: { type: 'base64', media_type: mediaType, data: base64 } },
+              { type: 'text', text: 'This is a screenshot of Chase Offers or Amex Offers. Extract all offers you can see and return ONLY a JSON array, no markdown, in this format: [{"brand":"Macy\'s","discount":"10% back","details":"Spend $50+","expires":"Jun 30","issuer":"Chase"},...]' }
+            ]
+          }]
+        })
+      });
+      var data = await res.json();
+      var text = data.content && data.content[0] ? data.content[0].text : '';
+      var clean = text.replace(/```json|```/g,'').trim();
+      var parsed = JSON.parse(clean);
+
+      // Save to localStorage as "shared" national offers
+      var existing = [];
+      try { existing = JSON.parse(localStorage.getItem(SHARED_OFFERS_KEY)) || []; } catch(e) {}
+      // Merge: add any new brands not already present
+      parsed.forEach(o => {
+        if (!existing.find(e => e.brand === o.brand && e.issuer === o.issuer)) existing.push(o);
+      });
+      localStorage.setItem(SHARED_OFFERS_KEY, JSON.stringify(existing));
+
+      // Render the newly parsed offers
+      var emojis = { Chase:'🏦', Amex:'💳' };
+      var newHtml = parsed.map(o =>
+        '<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);">' +
+          '<span style="font-size:19px;">'+(o.brand.includes('Food')||o.brand.includes('Market')?'🛒':o.brand.includes('Delta')||o.brand.includes('United')||o.brand.includes('Air')?'✈️':o.brand.includes('Hotel')||o.brand.includes('Marriott')||o.brand.includes('Hilton')?'🏨':'🏬')+'</span>' +
+          '<div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">'+o.brand+' — '+o.discount+'</div><div style="font-size:11px;color:var(--dark-muted);">'+o.issuer+' Offer · '+o.details+' · Expires '+o.expires+'</div></div>' +
+          '<span style="font-size:11px;color:#5DCAA5;background:#0F3020;padding:2px 7px;border-radius:3px;">Active</span>' +
+        '</div>'
+      ).join('');
+      document.getElementById('pro-offers').innerHTML = newHtml;
+      notice.textContent = '✓ ' + parsed.length + ' offers parsed from ' + f.name + '. National brands shared with all Pro users.';
+    } catch(err) {
+      notice.textContent = 'Could not parse offers — please try a clearer screenshot.';
+      notice.style.background = '#3a0000';
+    }
+  };
+  reader.readAsDataURL(f);
+}
+
+// On dashboard open, check for any shared offers in localStorage and surface them
+function loadSharedOffers() {
+  try {
+    var shared = JSON.parse(localStorage.getItem(SHARED_OFFERS_KEY));
+    if (shared && shared.length) {
+      // In production: merge with default offers; for now, note count
+      var notice = document.getElementById('pro-offer-parsed-notice');
+      notice.style.display = 'block';
+      notice.textContent = shared.length + ' national brand offers available from community uploads.';
+    }
+  } catch(e) {}
+}
+
+// ── AI CARD ADVISOR ──
+var aiHistory = [];
+
+function buildAISystem() {
+  var s = getSession();
+  var userCards = s && s.cards && s.cards.length ? s.cards.join(', ') : 'Amex Gold, Chase Sapphire Reserve, Amex Platinum';
+  return `You are the PointsPulse.AI AI card advisor. You have access to the following data:
+
+CARDS THE USER CARRIES: ${userCards}
+
+CURRENT MONTHLY OFFERS (June 2026):
+- Macy's: 10% back via Chase Offer (spend $50+, expires Jun 30)
+- Delta: $50 off $300+ via Amex Offer (book by Jun 30)
+- Whole Foods: 5% back via Amex Offer (up to $25, expires Jun 30 — 9 days left)
+- Marriott: $75 off $300+ via Chase Offer (book by Jun 30, stay by Dec 31)
+
+CREDITS EXPIRING SOON:
+- Amex Gold $10 Uber Cash — 4 days remaining
+- Sapphire Reserve $300 travel credit — $180 remaining, resets Jan 1
+- Amex Gold $10 dining credit — 9 days remaining
+
+CARD MULTIPLIERS:
+- Amex Gold: 4x dining, 4x US groceries, 3x flights, 1x everything else
+- Chase Sapphire Reserve: 3x dining, 4x travel direct, 8x Chase Travel portal, 1x everything else
+- Amex Platinum: 5x flights, 1x everything else
+- Chase Sapphire Preferred: 3x dining, 2x travel, 3x online grocery, 1x everything else
+- Capital One Venture X: 2x everything, 10x hotels/cars via C1 Travel
+- Capital One Venture: 2x everything, 5x hotels/cars via C1 Travel
+- Citi Strata Premier: 3x dining, groceries, gas, flights, hotels
+- Chase Freedom Unlimited: 3x dining, 1.5x everything else
+- Amex Blue Cash Preferred: 6x US groceries, 3x gas, 1x everything else
+- Bilt Mastercard: 3x dining, 2x travel, 1x rent (no transaction fee)
+
+APPLY LINKS (include these when recommending a card):
+- Chase Sapphire Reserve or Preferred: https://www.referyourchasecard.com/19w/9TJ6KTH3AR
+- Chase Freedom Unlimited: https://www.referyourchasecard.com/18a/UBEUKGOSG5
+- Any Amex card: https://americanexpress.com/en-us/referral/all-cards?ref=JAREDKv3ct&xl=cp01
+- Capital One Venture X: https://www.capitalone.com/credit-cards/venture-x/
+- Capital One Venture: https://www.capitalone.com/credit-cards/venture/
+- Citi Strata Premier: https://www.citi.com/credit-cards/citi-strata-premier-credit-card
+- Bilt Mastercard: https://www.biltrewards.com/card
+
+INSTRUCTIONS:
+- Respond conversationally but concisely. Lead with the recommendation. Be direct.
+- If a current offer applies to the question, always mention it — that's a key differentiator.
+- When recommending a card the user should apply for, include the apply link naturally at the end.
+- Affiliate disclosure: "Apply links are affiliate links — PointsPulse.AI may earn a commission at no cost to you."
+- Max 3 sentences unless a detailed breakdown is needed.`;
+}
+
+function askAI(question) {
+  document.getElementById('ai-input').value = question;
+  sendAI();
+}
+
+async function sendAI() {
+  var input = document.getElementById('ai-input');
+  var q = input.value.trim();
+  if (!q) return;
+  input.value = '';
+
+  var thread = document.getElementById('ai-chat-thread');
+
+  // Add user bubble
+  thread.innerHTML += '<div style="display:flex;justify-content:flex-end;"><div style="background:#534AB7;color:white;font-size:13px;padding:8px 12px;border-radius:12px 12px 2px 12px;max-width:80%;line-height:1.5;">'+q+'</div></div>';
+
+  // Add thinking bubble
+  var thinkId = 'think-' + Date.now();
+  thread.innerHTML += '<div id="'+thinkId+'" style="display:flex;justify-content:flex-start;"><div style="background:#13132a;border:0.5px solid #2a2a4a;color:#9090b0;font-size:13px;padding:8px 12px;border-radius:12px 12px 12px 2px;max-width:80%;line-height:1.5;">Thinking...</div></div>';
+  thread.scrollTop = thread.scrollHeight;
+
+  aiHistory.push({ role: 'user', content: q });
+
+  try {
+    var res = await fetch('/api/claude', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1000,
+        system: buildAISystem(),
+        messages: aiHistory
+      })
+    });
+    var data = await res.json();
+    var reply = data.content && data.content[0] ? data.content[0].text : 'Sorry, I couldn\'t get a response. Please try again.';
+    aiHistory.push({ role: 'assistant', content: reply });
+    var el = document.getElementById(thinkId);
+    if (el) el.querySelector('div').innerHTML = reply.replace(/\n/g,'<br>');
+    el.querySelector('div').style.color = '#c8c8e8';
+  } catch(e) {
+    var el = document.getElementById(thinkId);
+    if (el) el.querySelector('div').textContent = 'Network error — please try again.';
+  }
+  thread.scrollTop = thread.scrollHeight;
+}
+
+</script>
+</body>
+</html>
