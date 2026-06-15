@@ -165,10 +165,10 @@ body {
 .pick-name { font-size: 12px; font-weight: 500; color: var(--gray-900); flex: 1; }
 .pick-fee  { font-size: 11px; color: var(--gray-400); }
 .pick-check {
-  width: 16px; height: 16px; border-radius: 50%;
+  width: 18px; height: 18px; border-radius: 50%;
   border: 1.5px solid var(--gray-200); display: flex; align-items: center;
-  justify-content: center; flex-shrink: 0; font-size: 9px; color: transparent;
-  transition: all .15s;
+  justify-content: center; flex-shrink: 0; font-size: 11px; color: transparent;
+  transition: all .15s; font-weight: 700; line-height: 1;
 }
 .pick-item.selected .pick-check { background: var(--purple); border-color: var(--purple); color: white; }
 
@@ -456,6 +456,15 @@ body {
 </style>
 </head>
 <body>
+<!-- Netlify Forms detectors — required for form capture to work -->
+<form name="alerts-signup" netlify netlify-honeypot="bot-field" hidden>
+  <input type="email" name="email">
+  <input type="text" name="cards">
+  <input type="text" name="source">
+</form>
+<form name="pro-interest" netlify netlify-honeypot="bot-field" hidden>
+  <input type="email" name="email">
+</form>
 
 <!-- ══════════════ NAV ══════════════ -->
 <header class="nav-bar">
@@ -507,7 +516,7 @@ body {
           <div class="pick-meta">
             <svg width="36" height="22" viewBox="0 0 36 22" style="flex-shrink:0;border-radius:3px"><rect width="36" height="22" rx="2" fill="#0d1b3e"/><rect x="2" y="8" width="7" height="5" rx="1" fill="#4a9eda" opacity=".7"/><text x="33" y="16" fill="white" font-size="7" font-weight="700" font-style="italic" text-anchor="end" font-family="serif" opacity=".9">VISA</text></svg>
             <div style="flex:1"><div class="pick-name">Chase Sapphire Reserve</div><div class="pick-fee">$795/yr · 8x Chase Travel</div></div>
-            <div class="pick-check"><i class="ti ti-check"></i></div>
+            <div class="pick-check">✓</div>
           </div>
         </div>
 
@@ -516,7 +525,7 @@ body {
           <div class="pick-meta">
             <svg width="36" height="22" viewBox="0 0 36 22" style="flex-shrink:0;border-radius:3px"><rect width="36" height="22" rx="2" fill="#12263f"/><rect x="2" y="8" width="7" height="5" rx="1" fill="#5ab4f0" opacity=".6"/><text x="33" y="16" fill="white" font-size="7" font-weight="700" font-style="italic" text-anchor="end" font-family="serif" opacity=".9">VISA</text></svg>
             <div style="flex:1"><div class="pick-name">Chase Sapphire Preferred</div><div class="pick-fee">$95/yr · 3x dining</div></div>
-            <div class="pick-check"><i class="ti ti-check"></i></div>
+            <div class="pick-check">✓</div>
           </div>
         </div>
 
@@ -525,7 +534,7 @@ body {
           <div class="pick-meta">
             <svg width="36" height="22" viewBox="0 0 36 22" style="flex-shrink:0;border-radius:3px"><rect width="36" height="22" rx="2" fill="#b0b0b0"/><rect x="2" y="8" width="7" height="5" rx="1" fill="#888" opacity=".5"/><text x="28" y="15" fill="#555" font-size="6" font-weight="bold" text-anchor="middle">AMEX</text></svg>
             <div style="flex:1"><div class="pick-name">Amex Platinum</div><div class="pick-fee">$895/yr · 5x flights</div></div>
-            <div class="pick-check"><i class="ti ti-check"></i></div>
+            <div class="pick-check">✓</div>
           </div>
         </div>
 
@@ -534,7 +543,7 @@ body {
           <div class="pick-meta">
             <svg width="36" height="22" viewBox="0 0 36 22" style="flex-shrink:0;border-radius:3px"><rect width="36" height="22" rx="2" fill="#b8860b"/><rect x="2" y="8" width="7" height="5" rx="1" fill="#f0d060" opacity=".5"/><text x="28" y="15" fill="#f0d060" font-size="6" font-weight="bold" text-anchor="middle">AMEX</text></svg>
             <div style="flex:1"><div class="pick-name">Amex Gold</div><div class="pick-fee">$325/yr · 4x dining+grocery</div></div>
-            <div class="pick-check"><i class="ti ti-check"></i></div>
+            <div class="pick-check">✓</div>
           </div>
         </div>
 
@@ -543,7 +552,7 @@ body {
           <div class="pick-meta">
             <svg width="36" height="22" viewBox="0 0 36 22" style="flex-shrink:0;border-radius:3px"><rect width="36" height="22" rx="2" fill="#111"/><rect x="2" y="8" width="7" height="5" rx="1" fill="#666"/><polygon points="22,7 28,7 32,15 26,15" fill="#c0392b" opacity=".8"/></svg>
             <div style="flex:1"><div class="pick-name">Capital One Venture X</div><div class="pick-fee">$395/yr · 2x everything</div></div>
-            <div class="pick-check"><i class="ti ti-check"></i></div>
+            <div class="pick-check">✓</div>
           </div>
         </div>
 
@@ -552,7 +561,7 @@ body {
           <div class="pick-meta">
             <svg width="36" height="22" viewBox="0 0 36 22" style="flex-shrink:0;border-radius:3px"><rect width="36" height="22" rx="2" fill="#8b0000"/><rect x="2" y="8" width="7" height="5" rx="1" fill="#ff6b6b" opacity=".5"/><polygon points="22,7 28,7 32,15 26,15" fill="#ff4444" opacity=".7"/></svg>
             <div style="flex:1"><div class="pick-name">Capital One Venture</div><div class="pick-fee">$95/yr · 2x everything</div></div>
-            <div class="pick-check"><i class="ti ti-check"></i></div>
+            <div class="pick-check">✓</div>
           </div>
         </div>
 
@@ -561,7 +570,7 @@ body {
           <div class="pick-meta">
             <svg width="36" height="22" viewBox="0 0 36 22" style="flex-shrink:0;border-radius:3px"><rect width="36" height="22" rx="2" fill="#002d72"/><rect x="2" y="8" width="7" height="5" rx="1" fill="#4a8fd4" opacity=".6"/><circle cx="26" cy="11" r="4.5" fill="#e63946" opacity=".9"/><circle cx="31" cy="11" r="4.5" fill="#e63946" opacity=".5"/></svg>
             <div style="flex:1"><div class="pick-name">Citi Strata Premier</div><div class="pick-fee">$95/yr · 3x on 5 categories</div></div>
-            <div class="pick-check"><i class="ti ti-check"></i></div>
+            <div class="pick-check">✓</div>
           </div>
         </div>
 
@@ -570,7 +579,7 @@ body {
           <div class="pick-meta">
             <svg width="36" height="22" viewBox="0 0 36 22" style="flex-shrink:0;border-radius:3px"><rect width="36" height="22" rx="2" fill="#1a5cb8"/><rect x="2" y="8" width="7" height="5" rx="1" fill="#7ec8f4" opacity=".6"/><text x="33" y="16" fill="white" font-size="7" font-weight="700" font-style="italic" text-anchor="end" font-family="serif" opacity=".9">VISA</text></svg>
             <div style="flex:1"><div class="pick-name">Chase Freedom Unlimited</div><div class="pick-fee">No fee · 1.5x everything</div></div>
-            <div class="pick-check"><i class="ti ti-check"></i></div>
+            <div class="pick-check">✓</div>
           </div>
         </div>
 
@@ -579,7 +588,7 @@ body {
           <div class="pick-meta">
             <svg width="36" height="22" viewBox="0 0 36 22" style="flex-shrink:0;border-radius:3px"><rect width="36" height="22" rx="2" fill="#002f6c"/><rect x="2" y="8" width="7" height="5" rx="1" fill="#4a9eda" opacity=".6"/><text x="28" y="15" fill="#4a9eda" font-size="6" font-weight="bold" text-anchor="middle">AMEX</text></svg>
             <div style="flex:1"><div class="pick-name">Amex Blue Cash Preferred</div><div class="pick-fee">$95/yr · 6x groceries</div></div>
-            <div class="pick-check"><i class="ti ti-check"></i></div>
+            <div class="pick-check">✓</div>
           </div>
         </div>
 
@@ -588,7 +597,7 @@ body {
           <div class="pick-meta">
             <svg width="36" height="22" viewBox="0 0 36 22" style="flex-shrink:0;border-radius:3px"><rect width="36" height="22" rx="2" fill="#1a1a1a"/><rect x="2" y="8" width="7" height="5" rx="1" fill="#888"/><circle cx="26" cy="11" r="4.5" fill="#e63946" opacity=".8"/><circle cx="31" cy="11" r="4.5" fill="#e63946" opacity=".5"/></svg>
             <div style="flex:1"><div class="pick-name">Bilt Mastercard</div><div class="pick-fee">No fee · 1x rent, 3x dining</div></div>
-            <div class="pick-check"><i class="ti ti-check"></i></div>
+            <div class="pick-check">✓</div>
           </div>
         </div>
 
@@ -623,7 +632,7 @@ body {
     <!-- ── UPLOAD ── -->
     <div class="panel" id="panel-upload">
       <div class="sec-title">Upload your statement</div>
-      <div class="sec-sub">Drop up to 5 statements — PDF, CSV, or Excel. We parse transactions, categorize spend, and rank the top cards by net annual value.</div>
+      <div class="sec-sub">Drop up to 2 statements — PDF, CSV, or Excel. We parse transactions, categorize spend, and rank the top cards by net annual value. <span style="color:var(--purple);font-weight:500;cursor:pointer;" onclick="switchTab('premium')">Upload unlimited with Pro ✦</span></div>
       <div class="upload-zone" id="upload-zone"
         onclick="document.getElementById('file-input').click()"
         ondragover="event.preventDefault();this.style.background='var(--purple-light)'"
@@ -631,14 +640,13 @@ body {
         ondrop="handleDrop(event)">
         <i class="ti ti-file-upload" aria-hidden="true"></i>
         <p>Drop statements here or click to browse</p>
-        <span>PDF, CSV, or Excel · up to 5 files · Chase, Amex, Citi, Capital One, BofA</span>
+        <span>PDF, CSV, or Excel · up to 2 files free · Chase, Amex, Citi, Capital One, BofA</span>
       </div>
       <input type="file" id="file-input" multiple accept=".pdf,.csv,.xlsx,.xls" style="display:none" onchange="handleFileSelect(this.files)">
       <!-- File list -->
       <div id="file-list" style="display:none;margin-top:10px;display:flex;flex-direction:column;gap:6px;"></div>
-      <!-- Pro upsell for >5 files -->
       <div id="file-limit-notice" style="display:none;margin-top:8px;padding:10px 14px;background:var(--purple-light);border-radius:var(--radius-md);font-size:13px;color:var(--purple-text);">
-        <strong>5-file limit reached.</strong> Upload unlimited statements with <button onclick="switchTab('premium')" style="background:none;border:none;color:var(--purple);font-weight:600;cursor:pointer;font-size:13px;padding:0;text-decoration:underline;">PointsPulse.AI Pro</button>.
+        <strong>Free limit: 2 statements.</strong> <button onclick="switchTab('premium')" style="background:none;border:none;color:var(--purple);font-weight:600;cursor:pointer;font-size:13px;padding:0;text-decoration:underline;">Upgrade to Pro</button> to upload unlimited statements and get full analysis history.
       </div>
       <div class="privacy-note"><i class="ti ti-lock" style="font-size:12px;" aria-hidden="true"></i> Analyzed in your session only — never stored or shared</div>
       <div class="action-right"><button class="btn-primary" id="analyze-btn" disabled onclick="analyzeStatement()">Analyze &amp; recommend</button></div>
@@ -663,84 +671,84 @@ body {
       <div class="cat-grid">
         <div class="cat-tile">
           <div class="cat-tile-header">
-            <div class="cat-icon-wrap" style="background:#EEF2FF;"><i class="ti ti-plane" style="color:#4F46E5;" aria-hidden="true"></i></div>
+            <div class="cat-icon-wrap" style="background:#EEF2FF;font-size:15px;">✈️</div>
             <span class="cat-tile-label">Flights</span>
           </div>
           <div class="cat-tile-input-wrap"><span class="dollar">$</span><input type="number" placeholder="0" min="0" step="50"></div>
         </div>
         <div class="cat-tile">
           <div class="cat-tile-header">
-            <div class="cat-icon-wrap" style="background:#F0FDF4;"><i class="ti ti-building" style="color:#16A34A;" aria-hidden="true"></i></div>
+            <div class="cat-icon-wrap" style="background:#F0FDF4;font-size:15px;">🏨</div>
             <span class="cat-tile-label">Hotels</span>
           </div>
           <div class="cat-tile-input-wrap"><span class="dollar">$</span><input type="number" placeholder="0" min="0" step="50"></div>
         </div>
         <div class="cat-tile">
           <div class="cat-tile-header">
-            <div class="cat-icon-wrap" style="background:#FFF7ED;"><i class="ti ti-tools-kitchen-2" style="color:#EA580C;" aria-hidden="true"></i></div>
+            <div class="cat-icon-wrap" style="background:#FFF7ED;font-size:15px;">🍽️</div>
             <span class="cat-tile-label">Dining</span>
           </div>
           <div class="cat-tile-input-wrap"><span class="dollar">$</span><input type="number" placeholder="0" min="0" step="50"></div>
         </div>
         <div class="cat-tile">
           <div class="cat-tile-header">
-            <div class="cat-icon-wrap" style="background:#F0FDF4;"><i class="ti ti-shopping-cart" style="color:#15803D;" aria-hidden="true"></i></div>
+            <div class="cat-icon-wrap" style="background:#F0FDF4;font-size:15px;">🛒</div>
             <span class="cat-tile-label">Groceries</span>
           </div>
           <div class="cat-tile-input-wrap"><span class="dollar">$</span><input type="number" placeholder="0" min="0" step="50"></div>
         </div>
         <div class="cat-tile">
           <div class="cat-tile-header">
-            <div class="cat-icon-wrap" style="background:#FEFCE8;"><i class="ti ti-gas-station" style="color:#CA8A04;" aria-hidden="true"></i></div>
+            <div class="cat-icon-wrap" style="background:#FEFCE8;font-size:15px;">⛽</div>
             <span class="cat-tile-label">Gas</span>
           </div>
           <div class="cat-tile-input-wrap"><span class="dollar">$</span><input type="number" placeholder="0" min="0" step="25"></div>
         </div>
         <div class="cat-tile">
           <div class="cat-tile-header">
-            <div class="cat-icon-wrap" style="background:#F5F3FF;"><i class="ti ti-device-tv" style="color:#7C3AED;" aria-hidden="true"></i></div>
+            <div class="cat-icon-wrap" style="background:#F5F3FF;font-size:15px;">📺</div>
             <span class="cat-tile-label">Streaming</span>
           </div>
           <div class="cat-tile-input-wrap"><span class="dollar">$</span><input type="number" placeholder="0" min="0" step="10"></div>
         </div>
         <div class="cat-tile">
           <div class="cat-tile-header">
-            <div class="cat-icon-wrap" style="background:#EFF6FF;"><i class="ti ti-package" style="color:#2563EB;" aria-hidden="true"></i></div>
+            <div class="cat-icon-wrap" style="background:#EFF6FF;font-size:15px;">📦</div>
             <span class="cat-tile-label">Online shopping</span>
           </div>
           <div class="cat-tile-input-wrap"><span class="dollar">$</span><input type="number" placeholder="0" min="0" step="50"></div>
         </div>
         <div class="cat-tile">
           <div class="cat-tile-header">
-            <div class="cat-icon-wrap" style="background:#F1F5F9;"><i class="ti ti-car" style="color:#475569;" aria-hidden="true"></i></div>
+            <div class="cat-icon-wrap" style="background:#F1F5F9;font-size:15px;">🚗</div>
             <span class="cat-tile-label">Rideshare</span>
           </div>
           <div class="cat-tile-input-wrap"><span class="dollar">$</span><input type="number" placeholder="0" min="0" step="20"></div>
         </div>
         <div class="cat-tile">
           <div class="cat-tile-header">
-            <div class="cat-icon-wrap" style="background:#F0F9FF;"><i class="ti ti-phone" style="color:#0284C7;" aria-hidden="true"></i></div>
+            <div class="cat-icon-wrap" style="background:#F0F9FF;font-size:15px;">📱</div>
             <span class="cat-tile-label">Telecom</span>
           </div>
           <div class="cat-tile-input-wrap"><span class="dollar">$</span><input type="number" placeholder="0" min="0" step="10"></div>
         </div>
         <div class="cat-tile">
           <div class="cat-tile-header">
-            <div class="cat-icon-wrap" style="background:#FFF1F2;"><i class="ti ti-heartbeat" style="color:#E11D48;" aria-hidden="true"></i></div>
+            <div class="cat-icon-wrap" style="background:#FFF1F2;font-size:15px;">❤️</div>
             <span class="cat-tile-label">Health / fitness</span>
           </div>
           <div class="cat-tile-input-wrap"><span class="dollar">$</span><input type="number" placeholder="0" min="0" step="20"></div>
         </div>
         <div class="cat-tile">
           <div class="cat-tile-header">
-            <div class="cat-icon-wrap" style="background:#FAFAF9;"><i class="ti ti-hammer" style="color:#78716C;" aria-hidden="true"></i></div>
+            <div class="cat-icon-wrap" style="background:#FAFAF9;font-size:15px;">🔨</div>
             <span class="cat-tile-label">Home</span>
           </div>
           <div class="cat-tile-input-wrap"><span class="dollar">$</span><input type="number" placeholder="0" min="0" step="25"></div>
         </div>
         <div class="cat-tile">
           <div class="cat-tile-header">
-            <div class="cat-icon-wrap" style="background:#ECFDF5;"><i class="ti ti-plug" style="color:#059669;" aria-hidden="true"></i></div>
+            <div class="cat-icon-wrap" style="background:#ECFDF5;font-size:15px;">🔌</div>
             <span class="cat-tile-label">Utilities</span>
           </div>
           <div class="cat-tile-input-wrap"><span class="dollar">$</span><input type="number" placeholder="0" min="0" step="25"></div>
@@ -748,23 +756,10 @@ body {
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;">
         <span class="form-hint">Modeled against 10 top cards · 2026 data</span>
-        <button class="btn-primary" onclick="showManualResults()">Get my top cards ↗</button>
+        <button class="btn-primary" onclick="calcManualResults()">Get my top cards ↗</button>
       </div>
       <div class="results-out" id="manual-results">
-        <div class="sec-title" style="margin-bottom:4px;">Your top matches</div>
-        <div class="sec-sub">Based on your entered spend profile.</div>
-        <div class="result-card top-pick">
-          <div class="result-header"><div><div class="result-name">Amex Gold</div><div class="result-issuer">American Express · $325/yr</div></div><span class="result-badge badge-1">#1 pick</span></div>
-          <div class="result-stats"><div class="stat-box"><div class="sl">Est. annual pts</div><div class="sv">68,400</div></div><div class="stat-box"><div class="sl">TPG value</div><div class="sv">~$1,368</div></div><div class="stat-box"><div class="sl">Net after fee</div><div class="sv">$1,043</div></div></div>
-          <div class="result-why">4x dining and 4x groceries dominates this profile. Credits stack to $424/yr nominal value — effective fee under $100 for most users who actually use Uber.</div>
-          <a href="https://americanexpress.com/en-us/referral/all-cards?ref=JAREDKv3ct&xl=cp01" target="_blank" rel="noopener sponsored" class="btn-apply" style="background:#534AB7;"><i class="ti ti-external-link" style="font-size:12px;" aria-hidden="true"></i> Apply — up to 100k point bonus</a>
-        </div>
-        <div class="result-card">
-          <div class="result-header"><div><div class="result-name">Citi Strata Premier</div><div class="result-issuer">Citi · $95/yr</div></div><span class="result-badge badge-2">#2 pick</span></div>
-          <div class="result-stats"><div class="stat-box"><div class="sl">Est. annual pts</div><div class="sv">54,600</div></div><div class="stat-box"><div class="sl">TPG value</div><div class="sv">~$874</div></div><div class="stat-box"><div class="sl">Net after fee</div><div class="sv">$779</div></div></div>
-          <div class="result-why">3x on dining, groceries, gas, flights, and hotels — the broadest 3x coverage at any fee level. The $100 hotel credit nearly covers the annual fee outright.</div>
-          <a href="https://www.citi.com/credit-cards/citi-strata-premier-credit-card" target="_blank" rel="noopener" class="btn-apply" style="background:#0F6E56;"><i class="ti ti-external-link" style="font-size:12px;" aria-hidden="true"></i> Apply — 60k point bonus</a>
-        </div>
+        <div id="manual-results-inner"></div>
       </div>
     </div>
 
@@ -812,7 +807,7 @@ body {
           <p style="font-size:13px;margin-bottom:1rem;">We'll send you one plain email before any credit expires or a monthly Chase / Amex offer goes unclaimed. No app. No bank login. Just a nudge that saves you money.</p>
           <div class="dark-email">
             <input type="email" placeholder="Your email address">
-            <button onclick="document.getElementById('alert-confirm-1').style.display='block';this.parentNode.parentNode.querySelector('input').disabled=true;this.disabled=true;this.textContent='✓ Done'">Set up my alerts</button>
+            <button onclick="submitAlertsEmail(this)">Set up my alerts</button>
           </div>
           <div class="alert-confirm" id="alert-confirm-1"><i class="ti ti-check" aria-hidden="true"></i> You're set. First alert arrives within 24 hours — we'll cover every card you selected.</div>
         </div>
@@ -877,8 +872,9 @@ body {
       <div class="pricing-card" id="pro-interest">
         <div class="pc-eyebrow">PointsPulse.AI Pro</div>
         <div class="pc-price">$4.99<span>/mo</span></div>
-        <div class="pc-sub">We're finalizing this feature. Be first to know when it launches.</div>
+        <div class="pc-sub">AI Dashboard and Advisor for those that want to max their benefits.</div>
         <ul class="pc-list">
+          <li><i class="ti ti-check" aria-hidden="true"></i> AI Card Advisor — ask anything about your cards, and get the best answer</li>
           <li><i class="ti ti-check" aria-hidden="true"></i> Live dashboard — all cards, credits, and deals in one view</li>
           <li><i class="ti ti-check" aria-hidden="true"></i> Proactive credit reminders before anything expires</li>
           <li><i class="ti ti-check" aria-hidden="true"></i> Monthly Chase + Amex offer digests</li>
@@ -1236,7 +1232,7 @@ function addFiles(newFiles) {
   newFiles.forEach(f => {
     var ext = f.name.split('.').pop().toLowerCase();
     if (!allowed.includes(ext)) return;
-    if (uploadedFiles.length >= 5) {
+    if (uploadedFiles.length >= 2) {
       document.getElementById('file-limit-notice').style.display = 'block';
       return;
     }
@@ -1518,11 +1514,200 @@ function processOfferFile(f) {
   document.getElementById('offer-drop-zone').style.opacity = '0.5';
 }
 
-// ── MANUAL ──
-function showManualResults() {
-  var r = document.getElementById('manual-results');
-  r.classList.add('show');
-  setTimeout(() => r.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+// ── MANUAL SPEND CALCULATION ENGINE ──
+// Full multiplier table: [flights, hotels, dining, groceries, gas, streaming, shopping, rideshare, telecom, health, home, utilities]
+var CARD_ENGINE = {
+  csr: {
+    name: 'Chase Sapphire Reserve', issuer: 'Chase', fee: 795,
+    mult: [4, 4, 3, 1, 1, 1, 1, 3, 1, 1, 1, 1],
+    credits: 600, tpg: 0.0205, color: '#534AB7',
+    bonus: '150k point bonus', applyColor: '#534AB7',
+    why: function(s) {
+      var top = topCats(s, ['flights','hotels','dining','rideshare']);
+      return 'Earns 3x–4x on your biggest categories (' + top + '). $300 travel + $300 dining credits offset most of the annual fee.';
+    }
+  },
+  csp: {
+    name: 'Chase Sapphire Preferred', issuer: 'Chase', fee: 95,
+    mult: [2, 2, 3, 3, 1, 1, 1, 3, 1, 1, 1, 1],
+    credits: 50, tpg: 0.0205, color: '#1e4976',
+    bonus: '60k point bonus', applyColor: '#1e4976',
+    why: function(s) {
+      var top = topCats(s, ['dining','groceries','rideshare']);
+      return 'Strong 3x on ' + top + ' with transferable Ultimate Rewards points. Best value travel card at this fee level.';
+    }
+  },
+  amexplat: {
+    name: 'Amex Platinum', issuer: 'American Express', fee: 895,
+    mult: [5, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    credits: 840, tpg: 0.0200, color: '#888',
+    bonus: 'up to 175k point bonus', applyColor: '#888',
+    why: function(s) {
+      return '5x on flights and hotels is unmatched. $840 in annual credits covers most of the fee for frequent travelers.';
+    }
+  },
+  amexgold: {
+    name: 'Amex Gold', issuer: 'American Express', fee: 325,
+    mult: [3, 1, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1],
+    credits: 424, tpg: 0.0200, color: '#b8860b',
+    bonus: 'up to 100k point bonus', applyColor: '#b8860b',
+    why: function(s) {
+      var top = topCats(s, ['dining','groceries']);
+      return '4x on ' + top + ' is the best rate available in those categories. $424 in easy credits bring the effective fee well under $100.';
+    }
+  },
+  venturex: {
+    name: 'Capital One Venture X', issuer: 'Capital One', fee: 395,
+    mult: [5, 10, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    credits: 485, tpg: 0.0185, color: '#111',
+    bonus: '75k mile bonus', applyColor: '#111',
+    why: function(s) {
+      return '2x on every purchase means every dollar earns. $300 travel credit + 10k anniversary miles make the effective fee essentially $0.';
+    }
+  },
+  venture: {
+    name: 'Capital One Venture', issuer: 'Capital One', fee: 95,
+    mult: [5, 5, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    credits: 0, tpg: 0.0185, color: '#8b0000',
+    bonus: '75k mile bonus', applyColor: '#8b0000',
+    why: function(s) {
+      return 'Simple 2x on everything with no category tracking. Best for spenders who want flat-rate rewards without complexity.';
+    }
+  },
+  citi: {
+    name: 'Citi Strata Premier', issuer: 'Citi', fee: 95,
+    mult: [3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1],
+    credits: 100, tpg: 0.0100, color: '#002d72',
+    bonus: '60k point bonus', applyColor: '#002d72',
+    why: function(s) {
+      var top = topCats(s, ['flights','hotels','dining','groceries','gas']);
+      return 'Broadest 3x coverage at any fee level — earns top rate on ' + top + '. $100 hotel credit nearly covers the annual fee.';
+    }
+  },
+  fu: {
+    name: 'Chase Freedom Unlimited', issuer: 'Chase', fee: 0,
+    mult: [5, 5, 3, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5],
+    credits: 0, tpg: 0.015, color: '#1a5cb8',
+    bonus: '$200 cash bonus', applyColor: '#1a5cb8',
+    why: function(s) {
+      return 'No annual fee with 1.5x on everything and 3x dining. Ideal as a second card alongside a Sapphire, or as a simple no-cost earner.';
+    }
+  },
+  bcp: {
+    name: 'Amex Blue Cash Preferred', issuer: 'American Express', fee: 95,
+    mult: [1, 1, 1, 6, 3, 6, 1, 1, 1, 1, 1, 1],
+    credits: 84, tpg: 0.01, color: '#002f6c',
+    bonus: '$250 statement credit', applyColor: '#002f6c',
+    why: function(s) {
+      return '6x on groceries is the highest grocery rate available on any card. Best pick if groceries and gas dominate your monthly spend.';
+    }
+  },
+  bilt: {
+    name: 'Bilt Mastercard', issuer: 'Bilt', fee: 0,
+    mult: [2, 2, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    credits: 0, tpg: 0.0185, color: '#1a1a1a',
+    bonus: 'earn points on rent', applyColor: '#1a1a1a',
+    why: function(s) {
+      return '3x dining and 2x travel with no annual fee. Unique value: earn 1x on rent payments with no transaction fee — adds thousands of points annually.';
+    }
+  }
+};
+
+function topCats(spend, cats) {
+  var catNames = ['flights','hotels','dining','groceries','gas','streaming','shopping','rideshare','telecom','health','home','utilities'];
+  var filtered = cats.filter(c => spend[catNames.indexOf(c)] > 0);
+  if (!filtered.length) return 'your top categories';
+  return filtered.slice(0,2).join(' and ');
+}
+
+function calcManualResults() {
+  // Read all 12 input values
+  var inputs = document.querySelectorAll('#panel-manual .cat-tile-input-wrap input');
+  var spend = Array.from(inputs).map(i => parseFloat(i.value) || 0);
+  var totalMonthly = spend.reduce((a,b) => a+b, 0);
+
+  if (totalMonthly === 0) {
+    alert('Please enter at least one spending category to get a recommendation.');
+    return;
+  }
+
+  // Calculate annual score for each card
+  var catNames = ['Flights','Hotels','Dining','Groceries','Gas','Streaming','Online shopping','Rideshare','Telecom','Health/fitness','Home','Utilities'];
+  var results = Object.keys(CARD_ENGINE).map(key => {
+    var card = CARD_ENGINE[key];
+    // Annual points = sum of (monthly_spend × multiplier × 12)
+    var annualPts = spend.reduce((sum, s, i) => sum + (s * card.mult[i] * 12), 0);
+    var tpgValue  = Math.round(annualPts * card.tpg);
+    var netValue  = tpgValue + card.credits - card.fee;
+    return { key, card, annualPts: Math.round(annualPts), tpgValue, netValue };
+  });
+
+  // Sort by net value descending
+  results.sort((a, b) => b.netValue - a.netValue);
+  var top2 = results.slice(0, 2);
+
+  // Build spend breakdown
+  var topCatsForDisplay = spend
+    .map((v, i) => ({ name: catNames[i], monthly: v, pct: totalMonthly > 0 ? Math.round(v/totalMonthly*100) : 0 }))
+    .filter(c => c.monthly > 0)
+    .sort((a,b) => b.monthly - a.monthly)
+    .slice(0, 5);
+
+  var spendHtml = '<div style="background:var(--gray-100);border-radius:var(--radius-lg);padding:12px 14px;margin-bottom:1.25rem;">' +
+    '<div style="font-size:13px;font-weight:600;color:var(--gray-900);margin-bottom:10px;">Your spend breakdown — $' + totalMonthly.toLocaleString() + '/mo ($' + (totalMonthly*12).toLocaleString() + '/yr)</div>' +
+    '<div style="display:flex;flex-direction:column;gap:6px;">' +
+    topCatsForDisplay.map(c =>
+      '<div style="display:flex;align-items:center;gap:10px;">' +
+        '<div style="font-size:12px;color:var(--gray-600);width:120px;flex-shrink:0;">' + c.name + '</div>' +
+        '<div style="flex:1;height:6px;background:var(--gray-200);border-radius:3px;overflow:hidden;">' +
+          '<div style="width:' + Math.min(c.pct,100) + '%;height:100%;background:var(--purple);border-radius:3px;"></div>' +
+        '</div>' +
+        '<div style="font-size:11px;color:var(--gray-400);min-width:70px;text-align:right;">$' + c.monthly.toLocaleString() + '/mo · ' + c.pct + '%</div>' +
+      '</div>'
+    ).join('') +
+    '</div></div>';
+
+  var colors = ['badge-1','badge-2'];
+  var rankLabels = ['#1 pick','#2 pick'];
+
+  var recsHtml = top2.map((r, i) =>
+    '<div class="result-card ' + (i === 0 ? 'top-pick' : '') + '">' +
+      '<div class="result-header">' +
+        '<div><div class="result-name">' + r.card.name + '</div><div class="result-issuer">' + r.card.issuer + ' · $' + r.card.fee + '/yr</div></div>' +
+        '<span class="result-badge ' + colors[i] + '">' + rankLabels[i] + '</span>' +
+      '</div>' +
+      '<div class="result-stats">' +
+        '<div class="stat-box"><div class="sl">Est. annual pts</div><div class="sv">' + r.annualPts.toLocaleString() + '</div></div>' +
+        '<div class="stat-box"><div class="sl">TPG value</div><div class="sv">~$' + r.tpgValue.toLocaleString() + '</div></div>' +
+        '<div class="stat-box"><div class="sl">Net after fee</div><div class="sv" style="color:' + (r.netValue > 0 ? 'var(--green)' : 'var(--gray-600)') + ';">$' + r.netValue.toLocaleString() + '</div></div>' +
+      '</div>' +
+      '<div class="result-why">' + r.card.why(spend) + '</div>' +
+      '<a href="' + (AFFILIATE[r.key] || '#') + '" target="_blank" rel="noopener sponsored" class="btn-apply" style="background:' + r.card.applyColor + ';">' +
+        '<i class="ti ti-external-link" style="font-size:12px;" aria-hidden="true"></i> Apply — ' + r.card.bonus +
+      '</a>' +
+    '</div>'
+  ).join('');
+
+  // Show all 10 cards ranked (collapsed)
+  var allRankedHtml = '<div style="margin-top:1rem;padding:12px 14px;background:var(--gray-100);border-radius:var(--radius-lg);">' +
+    '<div style="font-size:12px;font-weight:600;color:var(--gray-900);margin-bottom:8px;">All 10 cards ranked by net annual value for your spend</div>' +
+    results.map((r, i) =>
+      '<div style="display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:0.5px solid var(--gray-200);">' +
+        '<div style="font-size:11px;color:var(--gray-400);width:16px;text-align:center;">' + (i+1) + '</div>' +
+        '<div style="font-size:12px;color:var(--gray-700);flex:1;">' + r.card.name + '</div>' +
+        '<div style="font-size:12px;font-weight:500;color:' + (r.netValue > 0 ? 'var(--green)' : 'var(--gray-400)') + ';">$' + r.netValue.toLocaleString() + '</div>' +
+      '</div>'
+    ).join('') +
+    '</div>';
+
+  document.getElementById('manual-results-inner').innerHTML =
+    '<div class="sec-title" style="margin-bottom:4px;">Your top matches</div>' +
+    '<div class="sec-sub">Based on real point calculations across all 10 cards using your exact spend profile.</div>' +
+    spendHtml + recsHtml + allRankedHtml;
+
+  var out = document.getElementById('manual-results');
+  out.classList.add('show');
+  setTimeout(() => out.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
 }
 
 // ── TAB SWITCHING (pills only — tab bar removed) ──
@@ -1580,46 +1765,89 @@ var REVIEWS = [
 // ── TRACK PERKS: dynamic card selection ──
 var CARD_PERKS = {
   'Chase Sapphire Reserve': [
-    { warn: true,  text: '<strong>$300 travel credit</strong> — resets Jan 1. Tolls, parking, rideshare, and flights all count.' },
-    { warn: false, text: '<strong>$300 OpenTable dining credit</strong> — resets annually. Book through Chase Sapphire Reserve Exclusive Tables.' },
-    { warn: true,  text: '<strong>Monthly Chase Offers</strong> — new merchant deals each month. We\'ll alert you when high-value ones drop.' }
+    { warn: true,  text: '<strong>$300 travel credit</strong> — resets Jan 1. Auto-applied to any travel purchase: flights, hotels, Uber, tolls, parking, trains.' },
+    { warn: true,  text: '<strong>$300 dining credit via Exclusive Tables</strong> — $150 Jan–Jun, $150 Jul–Dec. OpenTable Sapphire Reserve restaurants. Enrollment required.' },
+    { warn: true,  text: '<strong>$500 The Edit hotel credit</strong> — $250 per qualifying stay (2-night min, pre-paid via Chase Travel). Resets Jan 1.' },
+    { warn: true,  text: '<strong>$250 select hotels credit (2026)</strong> — IHG, Omni, Virgin, Montage, Pendry, Pan Pacific. Pre-paid via Chase Travel, 2-night min. Expires Dec 31, 2026.' },
+    { warn: true,  text: '<strong>$300 StubHub/viagogo credit</strong> — $150 Jan–Jun, $150 Jul–Dec. Activation required via card benefits page.' },
+    { warn: false, text: '<strong>$120 Global Entry / TSA PreCheck / NEXUS</strong> — once every 4 years. Auto-applied when fee is charged to card.' },
+    { warn: false, text: '<strong>Apple TV+ and Apple Music</strong> — complimentary through Jun 22, 2027 (~$288 value). Activate via Chase benefits page.' },
+    { warn: false, text: '<strong>Priority Pass + Chase Sapphire Lounges</strong> — 1,300+ lounges worldwide. Sapphire Lounges at LAX, JFK, BOS, PHX, LAS. 2 guests free.' },
+    { warn: false, text: '<strong>IHG Platinum Elite status</strong> — complimentary through Dec 31, 2027. Activate by linking IHG One Rewards in Chase app.' },
+    { warn: false, text: '<strong>DoorDash DashPass</strong> — complimentary membership (~$120 value). Activate via Chase benefits.' },
+    { warn: true,  text: '<strong>Monthly Chase Offers</strong> — rotating deals (Instacart, gas, retailers). Check Chase app under Offers each month.' }
   ],
   'Chase Sapphire Preferred': [
-    { warn: true,  text: '<strong>$50 hotel credit</strong> — one hotel stay per year booked through Chase Travel.' },
-    { warn: true,  text: '<strong>Monthly Chase Offers</strong> — rotating merchant deals. We\'ll flag the best ones each month.' }
+    { warn: true,  text: '<strong>$100 hotel credit via Chase Travel</strong> — one hotel booking per year. No activation, no minimum stay. (Doubled from $50 as of June 15, 2026.)' },
+    { warn: false, text: '<strong>$120 Global Entry / TSA PreCheck / NEXUS</strong> — once every 4 years. NEW June 15, 2026. Auto-applied when charged to card.' },
+    { warn: true,  text: '<strong>Apple TV — 1 year free</strong> — NEW June 15, 2026. Activate by Dec 31, 2026 (~$100 value).' },
+    { warn: false, text: '<strong>DoorDash DashPass</strong> — complimentary through Dec 31, 2027 (~$120 value). Activate via Chase benefits.' },
+    { warn: true,  text: '<strong>3x on gas, EV charging and vacation rentals</strong> — NEW June 15, 2026. Airbnb, Vrbo, and any gas station now earn 3x.' },
+    { warn: true,  text: '<strong>Monthly Chase Offers</strong> — rotating merchant deals. Check Chase app under Offers each month.' }
   ],
   'Amex Platinum': [
-    { warn: true,  text: '<strong>$200 airline credit</strong> — select one airline. Use for fees, upgrades, seat selection.' },
-    { warn: true,  text: '<strong>$200 hotel credit</strong> — Fine Hotels + Resorts or The Hotel Collection. Resets annually.' },
-    { warn: true,  text: '<strong>$240 digital entertainment credit</strong> — $20/mo. Disney+, ESPN+, Peacock, The NY Times, and more.' },
-    { warn: true,  text: '<strong>$200 Uber Cash</strong> — $15/mo ($35 in December). Auto-loads to Uber account.' },
-    { warn: false, text: '<strong>Monthly Amex Offers</strong> — up to 20+ personalized merchant deals per month. Never miss one.' }
+    { warn: true,  text: '<strong>$200 airline fee credit</strong> — select ONE airline at enrollment. Bags, seat upgrades, Wi-Fi. Resets Jan 1.' },
+    { warn: true,  text: '<strong>$200 Fine Hotels + Resorts credit</strong> — pre-paid bookings via AmexTravel.com. Resets Jan 1.' },
+    { warn: true,  text: '<strong>$300 digital entertainment credit</strong> — $25/mo. Disney+, Hulu, ESPN+, Peacock, NYT, WSJ, YouTube Premium, YouTube TV. Enrollment required.' },
+    { warn: true,  text: '<strong>$200 Uber Cash</strong> — $15/mo, $20 in December. Add Platinum to Uber account to activate.' },
+    { warn: true,  text: '<strong>$120 Uber One credit</strong> — when paying for auto-renewing Uber One membership with your Platinum. 2026 benefit.' },
+    { warn: true,  text: '<strong>$209 CLEAR Plus credit</strong> — pay for CLEAR+ with your Platinum for statement credit. Enrollment required.' },
+    { warn: false, text: '<strong>$120 Global Entry / TSA PreCheck / NEXUS</strong> — once every 4 years. Auto-applied when application fee is charged.' },
+    { warn: false, text: '<strong>Centurion + Priority Pass + Delta Sky Club access</strong> — most extensive lounge network of any card.' },
+    { warn: false, text: '<strong>Marriott Bonvoy Gold Elite status</strong> — complimentary. Enrollment required via Amex.' },
+    { warn: false, text: '<strong>Hilton Honors Gold status</strong> — complimentary. Enrollment required via Amex.' },
+    { warn: false, text: '<strong>Hertz President Circle + Avis Preferred Plus + National Emerald Executive</strong> — complimentary rental car elite status across all three.' },
+    { warn: false, text: '<strong>Monthly Amex Offers</strong> — 20+ personalized merchant deals per month. Check Amex app each month.' }
   ],
   'Amex Gold': [
-    { warn: true,  text: '<strong>$10/mo dining credit</strong> — expires last day of each month. Grubhub, Cheesecake Factory, Goldbelly, and more.' },
-    { warn: true,  text: '<strong>$10/mo Uber Cash</strong> — expires at midnight on the last day of each month. Uber or Uber Eats.' },
-    { warn: true,  text: '<strong>$100 Resy credit</strong> — $50 semi-annually. Book through Resy restaurants.' },
-    { warn: true,  text: '<strong>$84 Dunkin\' credit</strong> — $7/mo. Enrollment required.' },
-    { warn: false, text: '<strong>Monthly Amex Offers</strong> — personalized merchant deals. We\'ll surface the highest-value ones.' }
+    { warn: true,  text: '<strong>$10/mo dining credit</strong> — expires last day of month. Grubhub, Cheesecake Factory, Goldbelly, Wine.com, Milk Bar, select Shake Shack.' },
+    { warn: true,  text: '<strong>$10/mo Uber Cash</strong> — expires midnight last day of month. Uber or Uber Eats. Add Gold to Uber account to activate.' },
+    { warn: true,  text: '<strong>$100 Resy credit</strong> — $50 Jan–Jun, $50 Jul–Dec. Book through Resy app or website. Enrollment required.' },
+    { warn: true,  text: '<strong>$84 Dunkin credit</strong> — $7/mo. Enroll via Amex benefits. Works at locations and Dunkin app.' },
+    { warn: false, text: '<strong>$100 Hotel Collection property credit</strong> — per stay of 2+ nights via AmexTravel.com. Room upgrade if available.' },
+    { warn: false, text: '<strong>Monthly Amex Offers</strong> — personalized deals including grocery, dining, and retail. Check Amex app each month.' }
   ],
   'Capital One Venture X': [
-    { warn: true,  text: '<strong>$300 travel credit</strong> — must book through Capital One Travel portal. Resets annually.' },
-    { warn: false, text: '<strong>10,000 anniversary miles</strong> — drops on your card anniversary each year (~$185 value).' }
+    { warn: true,  text: '<strong>$300 travel portal credit</strong> — any booking on Capital One Travel. Resets on account anniversary.' },
+    { warn: false, text: '<strong>10,000 anniversary miles</strong> — ~$185 value. Deposited each account anniversary.' },
+    { warn: false, text: '<strong>$120 Global Entry / TSA PreCheck</strong> — once every 4 years. Auto-applied when charged to card.' },
+    { warn: false, text: '<strong>Capital One Lounge access</strong> — primary cardholder only as of Feb 1, 2026. DFW, DEN, IAD, LAS, MCO, ORD.' },
+    { warn: false, text: '<strong>Priority Pass lounge access</strong> — primary cardholder only (guest access ended Feb 1, 2026 unless $75k+ spend).' },
+    { warn: false, text: '<strong>$100 Premier Collection property credit</strong> — per hotel/vacation rental stay booked through Capital One Travel.' },
+    { warn: false, text: '<strong>Hertz President Circle status</strong> — complimentary car rental elite status.' },
+    { warn: false, text: '<strong>Free authorized user cards</strong> — add users at no cost (Priority Pass included for them).' }
   ],
   'Capital One Venture': [
-    { warn: false, text: '<strong>TSA PreCheck / Global Entry credit</strong> — up to $100 every 4 years.' }
+    { warn: false, text: '<strong>$120 Global Entry / TSA PreCheck</strong> — once every 4 years. Auto-applied when charged to card.' },
+    { warn: false, text: '<strong>2x miles on everything</strong> — every purchase earns 2x with zero category tracking.' },
+    { warn: false, text: '<strong>5x on hotels and rental cars via Capital One Travel</strong> — book through portal for max earning.' }
   ],
   'Citi Strata Premier': [
-    { warn: true,  text: '<strong>$100 hotel credit</strong> — one stay of $500+ per year through CitiTravel.com.' }
+    { warn: true,  text: '<strong>$100 hotel credit</strong> — one stay of $500+ per year via CitiTravel.com. Best used early in the year.' },
+    { warn: false, text: '<strong>3x on dining, groceries, gas, flights, and hotels</strong> — broadest 3x coverage at $95/yr.' },
+    { warn: false, text: '<strong>10x via Citi Travel portal</strong> — book hotels through Citi Travel for maximum hotel earning.' },
+    { warn: false, text: '<strong>16 transfer partners</strong> — American Airlines, Air France/KLM, Singapore Airlines, and more at 1:1.' }
   ],
   'Chase Freedom Unlimited': [
-    { warn: false, text: '<strong>Monthly Chase Offers</strong> — rotating merchant deals available through the Chase app.' }
+    { warn: false, text: '<strong>No annual fee</strong> — 1.5x on everything with no category tracking required.' },
+    { warn: false, text: '<strong>3x on dining</strong> — strong dining rate at zero annual cost.' },
+    { warn: false, text: '<strong>5x via Chase Travel portal</strong> — use Chase Travel for max rate on flights and hotels.' },
+    { warn: false, text: '<strong>Combine with Sapphire for transfer value</strong> — points pool into transferable Ultimate Rewards when paired with Sapphire.' },
+    { warn: true,  text: '<strong>Monthly Chase Offers</strong> — rotating merchant deals. Check Chase app under Offers monthly.' }
   ],
   'Amex Blue Cash Preferred': [
-    { warn: true,  text: '<strong>$84 Disney Bundle credit</strong> — $7/mo after enrollment. Disney+, Hulu, ESPN+.' }
+    { warn: true,  text: '<strong>$84 Disney Bundle credit</strong> — $7/mo after enrollment. Disney+, Hulu, ESPN+.' },
+    { warn: false, text: '<strong>6x at US supermarkets</strong> — best grocery rate on any card. First $6,000/yr then 1x.' },
+    { warn: false, text: '<strong>3x at US gas stations and transit</strong> — gas, parking, rideshare, taxis, trains, and buses.' },
+    { warn: false, text: '<strong>6x on select streaming services</strong> — eligible streaming billed directly to card.' }
   ],
   'Bilt Mastercard': [
-    { warn: false, text: '<strong>Bilt Rent Day (1st of each month)</strong> — 2x points on all purchases. Don\'t miss it.' }
+    { warn: false, text: '<strong>Earn points on rent — no transaction fee</strong> — 1x on rent. No other card does this without a fee.' },
+    { warn: true,  text: '<strong>Bilt Rent Day — 1st of every month</strong> — 2x on ALL non-rent purchases all day. Never miss this.' },
+    { warn: false, text: '<strong>DoorDash DashPass</strong> — complimentary membership. Activate via Bilt benefits.' },
+    { warn: false, text: '<strong>3x dining, 2x travel</strong> — exceptional earning with zero annual fee.' },
+    { warn: false, text: '<strong>17 transfer partners</strong> — World of Hyatt, United, American Airlines, and more. Hyatt at 1:1 is outstanding value.' },
+    { warn: false, text: '<strong>No annual fee</strong> — all of the above at $0/yr.' }
   ]
 };
 
@@ -1642,10 +1870,48 @@ function initiateStripeCheckout() {
   loadSharedOffers();
 })();
 
+// ── EMAIL CAPTURE — wired to Netlify Forms ──
+// All submissions appear in: app.netlify.com → your site → Forms
+
+function submitAlertsEmail(btn) {
+  var emailInput = btn.parentNode.querySelector('input[type="email"]');
+  var email = emailInput ? emailInput.value.trim() : '';
+  if (!email || !email.includes('@')) {
+    if (emailInput) emailInput.style.borderColor = '#e63946';
+    return;
+  }
+  // Get selected cards if in the Track Perks flow
+  var selectedCards = Array.from(document.querySelectorAll('#cards-select-grid input:checked'))
+    .map(cb => cb.closest('label').textContent.trim().replace(/\s+(Travel|Luxury|Dining|Flex|Cashback|Everyday|Rent)\s*$/, '').trim())
+    .join(', ');
+
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      'form-name': 'alerts-signup',
+      'email': email,
+      'cards': selectedCards || 'not specified',
+      'source': 'track-perks'
+    }).toString()
+  }).then(() => {
+    if (emailInput) emailInput.disabled = true;
+    btn.disabled = true;
+    btn.textContent = '✓ Done';
+    document.getElementById('alert-confirm-1').style.display = 'block';
+  }).catch(() => {
+    // Still show confirmation even if fetch fails — log error silently
+    document.getElementById('alert-confirm-1').style.display = 'block';
+    btn.disabled = true;
+    btn.textContent = '✓ Done';
+  });
+}
+
 // ── PRO INTEREST CAPTURE ──
 function submitProInterest() {
   document.getElementById('pro-interest-form').style.display = 'none';
   document.getElementById('pro-interest-confirm').style.display = 'block';
+  // Note: Pro purchases go through Stripe — no separate email capture needed here
 }
 
 // ── ADMIN CODE + PRO DASHBOARD ──
