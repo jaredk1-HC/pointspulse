@@ -478,7 +478,7 @@ body {
     <div class="nav-right">
       <button class="nav-link" onclick="switchTab('manual')">Enter spend</button>
       <button class="nav-link" onclick="switchTab('alerts')">My cards</button>
-      <button class="nav-link" onclick="openPartnerResources()">Partner Resources</button>
+      <button class="nav-link" onclick="openPartnerResources()">Our Top Picks</button>
       <button class="nav-signin" id="nav-signin-btn" onclick="handleSignIn()">Sign in</button>
       <button class="nav-pro" onclick="switchTab('premium')">Go Pro — $4.99/mo</button>
     </div>
@@ -896,7 +896,6 @@ body {
           <li><i class="ti ti-check" aria-hidden="true"></i> Monthly Chase + Amex offer digests</li>
           <li><i class="ti ti-check" aria-hidden="true"></i> Unlimited statement uploads + history</li>
           <li><i class="ti ti-check" aria-hidden="true"></i> Annual fee ROI tracker per card</li>
-          <li><i class="ti ti-check" aria-hidden="true"></i> AI card advisor — ask anything about your cards</li>
         </ul>
 
         <!-- Interest capture (shown by default) -->
@@ -983,25 +982,53 @@ body {
       <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:1.25rem;">
         <div style="background:#13132a;border:0.5px solid var(--dark-border);border-radius:var(--radius-lg);padding:14px 16px;">
           <div style="font-size:11px;color:var(--dark-muted);margin-bottom:4px;">Credits available</div>
-          <div style="font-size:22px;font-weight:600;color:var(--dark-text);" id="pro-stat-credits">$847</div>
-          <div style="font-size:11px;color:#5DCAA5;margin-top:2px;">↑ $120 from last month</div>
+          <div style="font-size:22px;font-weight:600;color:var(--dark-text);" id="pro-stat-credits">—</div>
+          <div style="font-size:11px;color:#5DCAA5;margin-top:2px;" id="pro-stat-credits-sub">Loading...</div>
         </div>
         <div style="background:#13132a;border:0.5px solid var(--dark-border);border-radius:var(--radius-lg);padding:14px 16px;">
           <div style="font-size:11px;color:var(--dark-muted);margin-bottom:4px;">Expiring soon</div>
-          <div style="font-size:22px;font-weight:600;color:#EF9F27;" id="pro-stat-expiring">$130</div>
-          <div style="font-size:11px;color:var(--dark-muted);margin-top:2px;">3 credits · 4–18 days</div>
+          <div style="font-size:22px;font-weight:600;color:#EF9F27;" id="pro-stat-expiring">—</div>
+          <div style="font-size:11px;color:var(--dark-muted);margin-top:2px;" id="pro-stat-expiring-sub">Monthly credits this month</div>
         </div>
         <div style="background:#13132a;border:0.5px solid var(--dark-border);border-radius:var(--radius-lg);padding:14px 16px;">
           <div style="font-size:11px;color:var(--dark-muted);margin-bottom:4px;">Used this month</div>
-          <div style="font-size:22px;font-weight:600;color:var(--dark-text);" id="pro-stat-used">$310</div>
-          <div style="font-size:11px;color:var(--dark-muted);margin-top:2px;">37% utilization</div>
+          <div style="font-size:22px;font-weight:600;color:var(--dark-text);" id="pro-stat-used">—</div>
+          <div style="font-size:11px;color:var(--dark-muted);margin-top:2px;" id="pro-stat-used-sub">0% utilization</div>
         </div>
       </div>
 
       <!-- Card credit tracker -->
       <div style="background:#13132a;border:0.5px solid var(--dark-border);border-radius:var(--radius-lg);padding:14px 16px;margin-bottom:1.25rem;">
-        <div style="font-size:13px;font-weight:600;color:var(--dark-text);margin-bottom:12px;" id="pro-cards-heading">Your cards — June 2026</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+          <div style="font-size:13px;font-weight:600;color:var(--dark-text);" id="pro-cards-heading">Your cards — June 2026</div>
+          <button onclick="openEditCards()" style="font-size:11px;background:#1e1e3a;color:#8b80e8;border:0.5px solid #2a2a4a;padding:4px 10px;border-radius:var(--radius-sm);cursor:pointer;"><i class="ti ti-pencil" style="font-size:12px;"></i> Edit cards</button>
+        </div>
         <div id="pro-card-rows"></div>
+      </div>
+
+      <!-- Edit Cards Modal (hidden) -->
+      <div id="edit-cards-modal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);z-index:2000;display:none;align-items:center;justify-content:center;">
+        <div style="background:#13132a;border:0.5px solid #2a2a4a;border-radius:var(--radius-xl);padding:1.5rem;max-width:480px;width:90%;max-height:80vh;overflow-y:auto;">
+          <div style="font-size:15px;font-weight:600;color:var(--dark-text);margin-bottom:12px;">Edit your cards</div>
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-bottom:1.25rem;" id="edit-cards-grid">
+            <label style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:0.5px solid #2a2a3a;border-radius:var(--radius-md);cursor:pointer;font-size:12px;color:#c8c8e8;background:#0d0d1a;"><input type="checkbox" value="Chase Sapphire Reserve" style="accent-color:#534AB7;"> Chase Sapphire Reserve</label>
+            <label style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:0.5px solid #2a2a3a;border-radius:var(--radius-md);cursor:pointer;font-size:12px;color:#c8c8e8;background:#0d0d1a;"><input type="checkbox" value="Chase Sapphire Preferred" style="accent-color:#534AB7;"> Chase Sapphire Preferred</label>
+            <label style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:0.5px solid #2a2a3a;border-radius:var(--radius-md);cursor:pointer;font-size:12px;color:#c8c8e8;background:#0d0d1a;"><input type="checkbox" value="Amex Platinum" style="accent-color:#534AB7;"> Amex Platinum</label>
+            <label style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:0.5px solid #2a2a3a;border-radius:var(--radius-md);cursor:pointer;font-size:12px;color:#c8c8e8;background:#0d0d1a;"><input type="checkbox" value="Amex Gold" style="accent-color:#534AB7;"> Amex Gold</label>
+            <label style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:0.5px solid #2a2a3a;border-radius:var(--radius-md);cursor:pointer;font-size:12px;color:#c8c8e8;background:#0d0d1a;"><input type="checkbox" value="Capital One Venture X" style="accent-color:#534AB7;"> Capital One Venture X</label>
+            <label style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:0.5px solid #2a2a3a;border-radius:var(--radius-md);cursor:pointer;font-size:12px;color:#c8c8e8;background:#0d0d1a;"><input type="checkbox" value="Capital One Venture" style="accent-color:#534AB7;"> Capital One Venture</label>
+            <label style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:0.5px solid #2a2a3a;border-radius:var(--radius-md);cursor:pointer;font-size:12px;color:#c8c8e8;background:#0d0d1a;"><input type="checkbox" value="Citi Strata Premier" style="accent-color:#534AB7;"> Citi Strata Premier</label>
+            <label style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:0.5px solid #2a2a3a;border-radius:var(--radius-md);cursor:pointer;font-size:12px;color:#c8c8e8;background:#0d0d1a;"><input type="checkbox" value="Chase Freedom Unlimited" style="accent-color:#534AB7;"> Chase Freedom Unlimited</label>
+            <label style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:0.5px solid #2a2a3a;border-radius:var(--radius-md);cursor:pointer;font-size:12px;color:#c8c8e8;background:#0d0d1a;"><input type="checkbox" value="Amex Blue Cash Preferred" style="accent-color:#534AB7;"> Amex Blue Cash Preferred</label>
+            <label style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:0.5px solid #2a2a3a;border-radius:var(--radius-md);cursor:pointer;font-size:12px;color:#c8c8e8;background:#0d0d1a;"><input type="checkbox" value="Bilt Mastercard" style="accent-color:#534AB7;"> Bilt Mastercard</label>
+            <label style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:0.5px solid #2a2a3a;border-radius:var(--radius-md);cursor:pointer;font-size:12px;color:#c8c8e8;background:#0d0d1a;"><input type="checkbox" value="Amazon Prime Visa" style="accent-color:#534AB7;"> Amazon Prime Visa</label>
+            <label style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:0.5px solid #2a2a3a;border-radius:var(--radius-md);cursor:pointer;font-size:12px;color:#c8c8e8;background:#0d0d1a;"><input type="checkbox" value="Marriott Bonvoy Boundless" style="accent-color:#534AB7;"> Marriott Bonvoy Boundless</label>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button onclick="saveEditCards()" style="flex:1;background:#534AB7;color:white;border:none;padding:9px;border-radius:var(--radius-md);font-size:13px;font-weight:500;cursor:pointer;">Save changes</button>
+            <button onclick="closeEditCards()" style="background:transparent;color:#5566aa;border:0.5px solid #2a2a4a;padding:9px 16px;border-radius:var(--radius-md);font-size:13px;cursor:pointer;">Cancel</button>
+          </div>
+        </div>
       </div>
 
       <!-- Monthly offers + screenshot upload -->
@@ -1024,13 +1051,175 @@ body {
         <input type="file" id="pro-offer-file-input" accept="image/*,.pdf" style="display:none" onchange="handleProOfferFile(this.files)">
         <div id="pro-offer-parsed-notice" style="display:none;margin-bottom:10px;padding:8px 12px;background:#0F3020;border-radius:var(--radius-md);font-size:12px;color:#5DCAA5;"></div>
 
-        <div style="display:flex;flex-direction:column;gap:7px;" id="pro-offers">
-          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);"><span style="font-size:19px;">🏬</span><div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">Macy's — 10% back</div><div style="font-size:11px;color:var(--dark-muted);">Chase Offer · Spend $50+ · Expires Jun 30</div></div><span style="font-size:11px;color:#5DCAA5;background:#0F3020;padding:2px 7px;border-radius:3px;">Active</span></div>
-          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);"><span style="font-size:19px;">✈️</span><div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">Delta — $50 off $300+</div><div style="font-size:11px;color:var(--dark-muted);">Amex Offer · Book by Jun 30 · Fly by Sep 30</div></div><span style="font-size:11px;color:#5DCAA5;background:#0F3020;padding:2px 7px;border-radius:3px;">Active</span></div>
-          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);"><span style="font-size:19px;">🛒</span><div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">Whole Foods — 5% back</div><div style="font-size:11px;color:var(--dark-muted);">Amex Offer · Up to $25 back · Expires Jun 30</div></div><span style="font-size:11px;color:#EF9F27;background:#3a2200;padding:2px 7px;border-radius:3px;">9 days</span></div>
-          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);"><span style="font-size:19px;">🏨</span><div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">Marriott — $75 off $300+</div><div style="font-size:11px;color:var(--dark-muted);">Chase Offer · Book through Jun 30 · Stay by Dec 31</div></div><span style="font-size:11px;color:#5DCAA5;background:#0F3020;padding:2px 7px;border-radius:3px;">Active</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px;" id="pro-offers">
+
+          <!-- ── EXPIRING THIS WEEK (≤ 7 days) ── -->
+          <div style="font-size:10px;font-weight:600;color:#EF9F27;letter-spacing:.8px;text-transform:uppercase;padding:4px 0 2px;">⚠ Expiring This Week</div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);border-left:2px solid #e63946;">
+            <span style="font-size:17px;">👓</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:600;color:#c8c8e8;">GlassesUSA.com — $20 back on $100+</div><div style="font-size:11px;color:var(--dark-muted);">Amex Offer · Expires Jun 18 · 2 days left</div></div>
+            <span style="font-size:11px;color:#e63946;background:#3a0000;padding:2px 7px;border-radius:3px;white-space:nowrap;">2 days</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);border-left:2px solid #e63946;">
+            <span style="font-size:17px;">🛍️</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:600;color:#c8c8e8;">Poshmark — $10 back on $50+</div><div style="font-size:11px;color:var(--dark-muted);">Amex Offer · Expires Jun 19 · 3 days left</div></div>
+            <span style="font-size:11px;color:#e63946;background:#3a0000;padding:2px 7px;border-radius:3px;white-space:nowrap;">3 days</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);border-left:2px solid #e63946;">
+            <span style="font-size:17px;">🥩</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:600;color:#c8c8e8;">Outback Steakhouse — 15% back (up to $15)</div><div style="font-size:11px;color:var(--dark-muted);">Amex Offer · Single purchase · Expires Jun 20 · 4 days</div></div>
+            <span style="font-size:11px;color:#e63946;background:#3a0000;padding:2px 7px;border-radius:3px;white-space:nowrap;">4 days</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);border-left:2px solid #e63946;">
+            <span style="font-size:17px;">⛳</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:600;color:#c8c8e8;">2026 U.S. Open — $10 back on $100+ merch/concessions</div><div style="font-size:11px;color:var(--dark-muted);">Amex Offer · Expires Jun 21 · 5 days left</div></div>
+            <span style="font-size:11px;color:#e63946;background:#3a0000;padding:2px 7px;border-radius:3px;white-space:nowrap;">5 days</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);border-left:2px solid #EF9F27;">
+            <span style="font-size:17px;">👟</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:600;color:#c8c8e8;">Zappos — $25 back on $125+</div><div style="font-size:11px;color:var(--dark-muted);">Amex Offer · Expires Jun 22 · 6 days left</div></div>
+            <span style="font-size:11px;color:#EF9F27;background:#3a2200;padding:2px 7px;border-radius:3px;white-space:nowrap;">6 days</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);border-left:2px solid #EF9F27;">
+            <span style="font-size:17px;">📺</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:600;color:#c8c8e8;">Sling TV — $15 back on $19.99+ (up to 2×, $30 total)</div><div style="font-size:11px;color:var(--dark-muted);">Amex Offer · Expires Jun 23 · 7 days left</div></div>
+            <span style="font-size:11px;color:#EF9F27;background:#3a2200;padding:2px 7px;border-radius:3px;white-space:nowrap;">7 days</span>
+          </div>
+
+          <!-- ── EXPIRING JUNE 30 ── -->
+          <div style="font-size:10px;font-weight:600;color:#EF9F27;letter-spacing:.8px;text-transform:uppercase;padding:6px 0 2px;margin-top:4px;">⏳ Expires Jun 30</div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);">
+            <span style="font-size:17px;">⛳</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">Topgolf — $15 back on $40+</div><div style="font-size:11px;color:var(--dark-muted);">Amex Offer · Single purchase · Expires Jun 30</div></div>
+            <span style="font-size:11px;color:#EF9F27;background:#3a2200;padding:2px 7px;border-radius:3px;">Jun 30</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);">
+            <span style="font-size:17px;">🏃</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">Under Armour — $10 back on $50+</div><div style="font-size:11px;color:var(--dark-muted);">Amex Offer · Expires Jun 30</div></div>
+            <span style="font-size:11px;color:#EF9F27;background:#3a2200;padding:2px 7px;border-radius:3px;">Jun 30</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);">
+            <span style="font-size:17px;">💎</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">LensCrafters — $40 back on $200+</div><div style="font-size:11px;color:var(--dark-muted);">Amex Offer · Expires Jun 30</div></div>
+            <span style="font-size:11px;color:#EF9F27;background:#3a2200;padding:2px 7px;border-radius:3px;">Jun 30</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);">
+            <span style="font-size:17px;">💳</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">QuickBooks Online — $10 back on $10+</div><div style="font-size:11px;color:var(--dark-muted);">Amex Offer · Easy money if you use QBO · Expires Jun 30</div></div>
+            <span style="font-size:11px;color:#EF9F27;background:#3a2200;padding:2px 7px;border-radius:3px;">Jun 30</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);">
+            <span style="font-size:17px;">✨</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">Glossier — $15 back on $65+</div><div style="font-size:11px;color:var(--dark-muted);">Amex Offer · Expires Jun 30</div></div>
+            <span style="font-size:11px;color:#EF9F27;background:#3a2200;padding:2px 7px;border-radius:3px;">Jun 30</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);">
+            <span style="font-size:17px;">🏨</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">Marriott Points Transfer Bonus — 20% more Bonvoy pts</div><div style="font-size:11px;color:var(--dark-muted);">Amex Offer · Transfer MR → Marriott Bonvoy · Expires Jun 30</div></div>
+            <span style="font-size:11px;color:#EF9F27;background:#3a2200;padding:2px 7px;border-radius:3px;">Jun 30</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);">
+            <span style="font-size:17px;">🎬</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">Disney+ — 15% cash back</div><div style="font-size:11px;color:var(--dark-muted);">Chase Offer · 15 days left · Expires Jun 30</div></div>
+            <span style="font-size:11px;color:#EF9F27;background:#3a2200;padding:2px 7px;border-radius:3px;">Jun 30</span>
+          </div>
+
+          <!-- ── ACTIVE INTO JULY ── -->
+          <div style="font-size:10px;font-weight:600;color:#5DCAA5;letter-spacing:.8px;text-transform:uppercase;padding:6px 0 2px;margin-top:4px;">✓ Active — July &amp; Beyond</div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);">
+            <span style="font-size:17px;">🌮</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">QDOBA — 15% back (Amex, up to $5) + 7% back (Chase)</div><div style="font-size:11px;color:var(--dark-muted);">Both cards · Amex expires 7/9 · Chase ongoing</div></div>
+            <span style="font-size:11px;color:#5DCAA5;background:#0F3020;padding:2px 7px;border-radius:3px;">Active</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);">
+            <span style="font-size:17px;">📡</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">DIRECTV — $50 back on $100+ (up to 2× = $100 total)</div><div style="font-size:11px;color:var(--dark-muted);">Amex Offer · NEW · Expires 7/10</div></div>
+            <span style="font-size:11px;color:#5DCAA5;background:#0F3020;padding:2px 7px;border-radius:3px;">Active</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);">
+            <span style="font-size:17px;">🛒</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">Amazon.com — 1,000 MR pts on $40+ (already added)</div><div style="font-size:11px;color:var(--dark-muted);">Amex Offer · Added to card · Expires 7/19</div></div>
+            <span style="font-size:11px;color:#5DCAA5;background:#0F3020;padding:2px 7px;border-radius:3px;">Added ✓</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);">
+            <span style="font-size:17px;">🏕️</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">Expedia/amex Prepaid Hotel — 10% back (already added)</div><div style="font-size:11px;color:var(--dark-muted);">Amex Offer · Added to card · Expires 8/4</div></div>
+            <span style="font-size:11px;color:#5DCAA5;background:#0F3020;padding:2px 7px;border-radius:3px;">Added ✓</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);">
+            <span style="font-size:17px;">🚗</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">Turo — $30 back on $150+</div><div style="font-size:11px;color:var(--dark-muted);">Chase Offer · Expires 12/31</div></div>
+            <span style="font-size:11px;color:#5DCAA5;background:#0F3020;padding:2px 7px;border-radius:3px;">Active</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);">
+            <span style="font-size:17px;">🦩</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">Sam's Club — 40% back on new membership</div><div style="font-size:11px;color:var(--dark-muted);">Chase Offer · NEW · Great if you're not a member</div></div>
+            <span style="font-size:11px;color:#5DCAA5;background:#0F3020;padding:2px 7px;border-radius:3px;">Active</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);">
+            <span style="font-size:17px;">📺</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">Fubo — 35% cash back on Live TV subscription</div><div style="font-size:11px;color:var(--dark-muted);">Chase Offer · Huge rate for streaming</div></div>
+            <span style="font-size:11px;color:#5DCAA5;background:#0F3020;padding:2px 7px;border-radius:3px;">Active</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);">
+            <span style="font-size:17px;">🔨</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">Lowe's — 15% cash back</div><div style="font-size:11px;color:var(--dark-muted);">Chase Offer · NEW · Great for home improvement spend</div></div>
+            <span style="font-size:11px;color:#5DCAA5;background:#0F3020;padding:2px 7px;border-radius:3px;">Active</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);">
+            <span style="font-size:17px;">🍽️</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">LongHorn Steakhouse — +2 MR pts/$ (up to 5,000 pts)</div><div style="font-size:11px;color:var(--dark-muted);">Amex Offer · Expires 8/30</div></div>
+            <span style="font-size:11px;color:#5DCAA5;background:#0F3020;padding:2px 7px;border-radius:3px;">Active</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);">
+            <span style="font-size:17px;">🍷</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">Olive Garden — +2 MR pts/$ (up to 5,000 pts)</div><div style="font-size:11px;color:var(--dark-muted);">Amex Offer · Expires 8/24</div></div>
+            <span style="font-size:11px;color:#5DCAA5;background:#0F3020;padding:2px 7px;border-radius:3px;">Active</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);">
+            <span style="font-size:17px;">🏨</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">Hotels.com/amex Prepaid Hotel — 10% back (up to $100)</div><div style="font-size:11px;color:var(--dark-muted);">Amex Offer · Expires 8/31</div></div>
+            <span style="font-size:11px;color:#5DCAA5;background:#0F3020;padding:2px 7px;border-radius:3px;">Active</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);">
+            <span style="font-size:17px;">🔐</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">Aura.com Online Safety — $60 back on $100+</div><div style="font-size:11px;color:var(--dark-muted);">Amex Offer · Best value offer this month · Expires 8/31</div></div>
+            <span style="font-size:11px;color:#5DCAA5;background:#0F3020;padding:2px 7px;border-radius:3px;">Active</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);">
+            <span style="font-size:17px;">📱</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">Ooma Internet Phone — $50 back on $70+ (Chase 35% back)</div><div style="font-size:11px;color:var(--dark-muted);">Both cards · Amex expires 12/11, Chase NEW</div></div>
+            <span style="font-size:11px;color:#5DCAA5;background:#0F3020;padding:2px 7px;border-radius:3px;">Active</span>
+          </div>
+
         </div>
-        <div style="margin-top:8px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);font-size:11px;color:#5566aa;"><i class="ti ti-info-circle" style="font-size:12px;" aria-hidden="true"></i> National brand offers (Macy's, Delta, etc.) are shared across all Pro users. Upload your screenshot to keep everyone's dashboard current.</div>
+        <div style="margin-top:8px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);font-size:11px;color:#5566aa;"><i class="ti ti-info-circle" style="font-size:12px;" aria-hidden="true"></i> Parsed from your actual Amex &amp; Chase offer PDFs (Jun 16, 2026). <strong style="color:#8b80e8;">28 offers shown</strong> — ask the AI Advisor which are best for your cards. Upload a new PDF when offers refresh.</div>
       </div>
 
       <!-- AI Card Advisor — emphasized -->
@@ -1205,16 +1394,37 @@ function runCompare() {
   var is3 = cards.length === 3;
   var colW = is3 ? '120px 1fr 1fr 1fr' : '150px 1fr 1fr';
 
+  // Read active priorities
+  var priorities = Array.from(document.querySelectorAll('.ppill.on')).map(p => p.textContent.trim());
+
+  // Map priority labels to DB field keys for row highlighting
+  var PRIORITY_ROW_MAP = {
+    'Maximize points':  'tpg',
+    'Low annual fee':   'fee',
+    'Lounge access':    'lounge',
+    'Dining rewards':   'dining',
+    'Travel credits':   'credits',
+    'Monthly credits':  'credits',
+    'Sign-up bonus':    'bonus',
+    'No foreign fees':  'foreign',
+    'Authorized users': 'transfer'
+  };
+  var highlightFields = new Set(priorities.map(p => PRIORITY_ROW_MAP[p]).filter(Boolean));
+
   // Header
   var hdr = '<div class="cmp-hcell" style="grid-column:1"></div>';
   cards.forEach(c => { hdr += '<div class="cmp-hcell"><div class="col-name">'+c.name+'</div><div class="col-fee">'+c.fee+'</div></div>'; });
   document.getElementById('cmp-header').style.gridTemplateColumns = colW;
   document.getElementById('cmp-header').innerHTML = hdr;
 
-  // Rows
+  // Rows — highlight rows that match active priorities
   document.getElementById('cmp-rows').innerHTML = ROWS.map(r => {
-    var row = '<div class="cmp-row" style="grid-template-columns:'+colW+'"><div class="cmp-cell row-label">'+r[0]+'</div>';
-    cards.forEach(c => { row += '<div class="cmp-cell">'+c[r[1]]+'</div>'; });
+    var isHighlighted = highlightFields.has(r[1]);
+    var rowStyle = isHighlighted
+      ? 'background:var(--purple-light);border-left:3px solid var(--purple);'
+      : '';
+    var row = '<div class="cmp-row" style="grid-template-columns:'+colW+';'+rowStyle+'"><div class="cmp-cell row-label" style="'+(isHighlighted?'color:var(--purple-text);font-weight:600;':'')+'">'+r[0]+(isHighlighted?' ★':'')+'</div>';
+    cards.forEach(c => { row += '<div class="cmp-cell" style="'+(isHighlighted?'color:var(--gray-900);font-weight:500;':'')+'">'+c[r[1]]+'</div>'; });
     row += '</div>';
     return row;
   }).join('');
@@ -1223,6 +1433,14 @@ function runCompare() {
   var verdict = is3
     ? 'Three-card comparison: ' + cards.map(c => c.name.split(' ').slice(-1)[0]).join(', ') + ' each serve different spend profiles. Review the rows above to find the strongest match for your top categories.'
     : getVerdict(picks[0], picks[1]);
+
+  // Append priority-specific guidance
+  if (priorities.length > 0 && picks.length === 2) {
+    var priorityInsights = buildPriorityInsights(priorities, picks, cards);
+    if (priorityInsights) verdict += ' <strong>Your priorities:</strong> ' + priorityInsights;
+  } else if (priorities.length > 0 && is3) {
+    verdict += ' Rows marked ★ reflect your selected priorities.';
+  }
   document.getElementById('cmp-verdict').innerHTML = '<strong>Our take:</strong> ' + verdict;
 
   // CTAs
@@ -1236,6 +1454,38 @@ function runCompare() {
   var out = document.getElementById('compare-output');
   out.classList.add('show');
   setTimeout(() => out.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+}
+
+function buildPriorityInsights(priorities, picks, cards) {
+  var c1 = cards[0], c2 = cards[1];
+  var notes = [];
+  priorities.forEach(function(p) {
+    if (p === 'Low annual fee') {
+      var fee1 = parseInt(c1.fee) || 0, fee2 = parseInt(c2.fee) || 0;
+      var winner = fee1 <= fee2 ? c1.name.split(' ').slice(-1)[0] : c2.name.split(' ').slice(-1)[0];
+      notes.push(winner + ' wins on annual fee');
+    } else if (p === 'Lounge access') {
+      var l1 = c1.lounge !== 'None', l2 = c2.lounge !== 'None';
+      if (l1 && !l2) notes.push(c1.name.split(' ').slice(-1)[0] + ' has lounge access; ' + c2.name.split(' ').slice(-1)[0] + ' does not');
+      else if (!l1 && l2) notes.push(c2.name.split(' ').slice(-1)[0] + ' has lounge access; ' + c1.name.split(' ').slice(-1)[0] + ' does not');
+      else if (l1 && l2) notes.push('both cards include lounge access');
+      else notes.push('neither card includes lounge access');
+    } else if (p === 'Dining rewards') {
+      notes.push('check the Dining rewards row above for the head-to-head');
+    } else if (p === 'Sign-up bonus') {
+      notes.push('compare the Sign-up bonus row to see which offer is stronger right now');
+    } else if (p === 'No foreign fees') {
+      var f1 = c1.foreign === 'None', f2 = c2.foreign === 'None';
+      if (f1 && !f2) notes.push(c1.name.split(' ').slice(-1)[0] + ' has no foreign fees; ' + c2.name.split(' ').slice(-1)[0] + ' does');
+      else if (!f1 && f2) notes.push(c2.name.split(' ').slice(-1)[0] + ' has no foreign fees; ' + c1.name.split(' ').slice(-1)[0] + ' does');
+      else if (f1 && f2) notes.push('both cards waive foreign transaction fees');
+    } else if (p === 'Maximize points') {
+      notes.push('see the Point value row — higher TPG value = more per dollar at redemption');
+    } else if (p === 'Travel credits' || p === 'Monthly credits') {
+      notes.push('the Statement credits row shows which card offsets its fee better');
+    }
+  });
+  return notes.length ? notes.join('; ') + '.' : '';
 }
 
 // ── UPLOAD: multi-file with 5-file limit ──
@@ -1411,16 +1661,11 @@ Return ONLY valid JSON, no markdown, no explanation outside the JSON, in exactly
   });
 
   try {
-    var res = await fetch('/.netlify/functions/claude', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 2000,
-        messages: [{ role: 'user', content: userContent }]
-      })
+    var data = await callClaudeAPI({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 2000,
+      messages: [{ role: 'user', content: userContent }]
     });
-    var data = await res.json();
     var raw = data.content && data.content[0] ? data.content[0].text : '';
     var clean = raw.replace(/```json|```/g, '').trim();
     var result = JSON.parse(clean);
@@ -1432,19 +1677,18 @@ Return ONLY valid JSON, no markdown, no explanation outside the JSON, in exactly
     btn.disabled = false;
     btn.textContent = 'Analyze & recommend';
 
-    // Show actual error for debugging
     var errMsg = err && err.message ? err.message : String(err);
-    console.error('analyzeStatement error:', err);
-
+    var displayMsg = '';
+    if (errMsg === 'NO_KEY') {
+      displayMsg = 'No API key configured. Open the Pro dashboard and add your Anthropic API key in the AI setup panel.';
+    } else if (errMsg.includes('JSON') || errMsg.includes('SyntaxError')) {
+      displayMsg = 'Unexpected response format — the PDF may be image-only (scanned). Try exporting a CSV from your bank instead.';
+    } else {
+      displayMsg = 'Error: ' + errMsg + '. Try a CSV export or the Manual entry tab.';
+    }
     document.getElementById('upload-results-inner').innerHTML =
       '<div style="padding:1rem;background:#FAECE7;border-radius:var(--radius-md);font-size:13px;color:#993C1D;">' +
-      '<strong>Analysis failed.</strong> ' +
-      (errMsg.includes('JSON') ?
-        'Claude returned an unexpected response format. This usually means the PDF is image-only (scanned) — try a CSV export from your bank instead.' :
-        errMsg.includes('timeout') || errMsg.includes('network') || errMsg.includes('fetch') ?
-        'Request timed out. Try a CSV export (smaller file) or use the Manual entry tab.' :
-        'Error: ' + errMsg + '. Try a CSV export or use the Manual entry tab.') +
-      '</div>';
+      '<strong>Analysis failed.</strong> ' + displayMsg + '</div>';
     document.getElementById('upload-results').classList.add('show');
   }
 }
@@ -2181,35 +2425,289 @@ function showProMain(session) {
   document.getElementById('pro-main').style.display = 'block';
   document.getElementById('pro-onboarding').style.display = 'none';
   if (session.email) document.getElementById('pro-user-email').textContent = session.email;
-  buildProCards(session.cards || ['Amex Gold','Chase Sapphire Reserve','Amex Platinum']);
-  var count = (session.cards || []).length;
+  var cards = session.cards || ['Amex Gold','Chase Sapphire Reserve','Amex Platinum'];
+  buildProCards(cards);
+  calcAndUpdateProStats(cards);
+  var count = cards.length;
   document.getElementById('pro-cards-heading').textContent = 'Your ' + count + ' card' + (count !== 1 ? 's' : '') + ' — June 2026';
+}
+
+// ── CREDIT TRACKING DATA (per card) ──
+var CARD_CREDITS_DATA = {
+  'Chase Sapphire Reserve': [
+    { label:'$300 Travel Credit', total:300, type:'dollar' },
+    { label:'$300 Dining Credit', total:300, type:'dollar' },
+    { label:'Global Entry / TSA PreCheck', total:120, type:'onetime', note:'Every 4 yrs' }
+  ],
+  'Chase Sapphire Preferred': [
+    { label:'$50 Hotel Credit', total:50, type:'dollar' }
+  ],
+  'Amex Platinum': [
+    { label:'$200 Airline Fee Credit', total:200, type:'dollar', note:'Resets Jan 1' },
+    { label:'$200 Fine Hotels+Resorts', total:200, type:'dollar' },
+    { label:'$300 Digital Entertainment', total:300, type:'dollar', note:'$25/mo', monthlyAmt:25 },
+    { label:'$200 Uber Cash', total:200, type:'dollar', note:'$15/mo, $20 Dec', monthlyAmt:15 },
+    { label:'$120 Uber One Credit', total:120, type:'dollar', monthlyAmt:10 },
+    { label:'$209 CLEAR Plus Credit', total:209, type:'dollar' },
+    { label:'Global Entry / TSA PreCheck', total:120, type:'onetime', note:'Every 4 yrs' }
+  ],
+  'Amex Gold': [
+    { label:'Dining Credit ($10/mo)', total:120, type:'dollar', note:'$10/mo, expires EOM', monthlyAmt:10 },
+    { label:'Uber Cash ($10/mo)', total:120, type:'dollar', note:'$10/mo, expires midnight EOM', monthlyAmt:10 },
+    { label:'Resy Credit ($50/half-yr)', total:100, type:'dollar' },
+    { label:'Dunkin Credit ($7/mo)', total:84, type:'dollar', monthlyAmt:7 }
+  ],
+  'Capital One Venture X': [
+    { label:'$300 Travel Portal Credit', total:300, type:'dollar', note:'Resets on anniversary' },
+    { label:'10,000 Anniversary Miles', total:185, type:'onetime', note:'~$185 value' },
+    { label:'Global Entry / TSA PreCheck', total:120, type:'onetime', note:'Every 4 yrs' }
+  ],
+  'Amex Blue Cash Preferred': [
+    { label:'$84 Disney Bundle Credit', total:84, type:'dollar', note:'$7/mo after enrollment', monthlyAmt:7 }
+  ],
+  'Bilt Mastercard': [],
+  'Capital One Venture': [
+    { label:'Global Entry / TSA PreCheck', total:120, type:'onetime', note:'Every 4 yrs' }
+  ],
+  'Citi Strata Premier': [
+    { label:'$100 Hotel Credit', total:100, type:'dollar', note:'1 stay of $500+ via CitiTravel' }
+  ],
+  'Chase Freedom Unlimited': [],
+  'Amazon Prime Visa': [],
+  'Marriott Bonvoy Boundless': [
+    { label:'Annual Free Night Award', total:280, type:'onetime', note:'Up to 35k pts, ~$280 value' },
+    { label:'$100 Airline Credit (2026)', total:100, type:'dollar', note:'$50 per half-year' }
+  ]
+};
+
+var CREDIT_USAGE_KEY = 'pp_credit_usage';
+function getCreditUsage() {
+  try { return JSON.parse(localStorage.getItem(CREDIT_USAGE_KEY)) || {}; } catch(e) { return {}; }
+}
+function saveCreditUsage(data) {
+  try { localStorage.setItem(CREDIT_USAGE_KEY, JSON.stringify(data)); } catch(e) {}
+}
+
+// ── DYNAMIC STATS CALCULATOR ─────────────────────────────
+function calcAndUpdateProStats(cards) {
+  var usage = getCreditUsage();
+  var totalValue = 0, totalUsed = 0, expiringValue = 0, expiringCount = 0;
+
+  var now = new Date();
+  var monthsElapsed = now.getMonth() + 1; // Jan=1 … Jun=6
+  var endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+  var daysLeft = Math.ceil((endOfMonth - now) / 86400000);
+
+  cards.forEach(function(cardName) {
+    var credits = CARD_CREDITS_DATA[cardName] || [];
+    var cardUsage = usage[cardName] || {};
+
+    credits.forEach(function(c) {
+      totalValue += c.total;
+      var used = c.type === 'onetime'
+        ? (cardUsage[c.label] ? c.total : 0)
+        : Math.min(parseFloat(cardUsage[c.label]) || 0, c.total);
+      totalUsed += used;
+
+      // Monthly-reset credits: how much of this month hasn't been used yet?
+      if (c.monthlyAmt) {
+        var expectedByNow = c.monthlyAmt * monthsElapsed;
+        var thisMonthUnused = Math.max(0, Math.min(c.monthlyAmt, expectedByNow - used));
+        if (thisMonthUnused > 0) {
+          expiringValue += thisMonthUnused;
+          expiringCount++;
+        }
+      }
+    });
+  });
+
+  var remaining = totalValue - totalUsed;
+  var utilPct = totalValue > 0 ? Math.round(totalUsed / totalValue * 100) : 0;
+
+  // Update values
+  var ce = document.getElementById('pro-stat-credits');
+  if (ce) ce.textContent = '$' + remaining.toLocaleString();
+
+  var ee = document.getElementById('pro-stat-expiring');
+  if (ee) ee.textContent = expiringValue > 0 ? '$' + expiringValue : '$0';
+
+  var ue = document.getElementById('pro-stat-used');
+  if (ue) ue.textContent = '$' + totalUsed.toLocaleString();
+
+  // Update subtitles
+  var cs = document.getElementById('pro-stat-credits-sub');
+  if (cs) {
+    cs.textContent = '$' + totalValue.toLocaleString() + ' total · ' + cards.length + ' card' + (cards.length !== 1 ? 's' : '');
+    cs.style.color = remaining > 0 ? '#5DCAA5' : '#5566aa';
+  }
+
+  var es = document.getElementById('pro-stat-expiring-sub');
+  if (es) {
+    if (expiringCount > 0) {
+      es.textContent = expiringCount + ' monthly credit' + (expiringCount !== 1 ? 's' : '') + ' · ' + daysLeft + ' days left this month';
+      es.style.color = daysLeft <= 7 ? '#e63946' : '#EF9F27';
+    } else {
+      es.textContent = 'All monthly credits used ✓';
+      es.style.color = '#5DCAA5';
+    }
+  }
+
+  var us = document.getElementById('pro-stat-used-sub');
+  if (us) us.textContent = utilPct + '% of annual credits used';
 }
 
 function buildProCards(cards) {
   var allCardData = {
-    'Chase Sapphire Reserve':   { pct:40, color:'#1a3a6e', warn:'$180 exp. 18d', status:'ds-warn' },
-    'Chase Sapphire Preferred': { pct:70, color:'#1e4976', warn:'$50 exp. Dec',  status:'ds-warn' },
-    'Amex Platinum':            { pct:85, color:'#b0b0b0', warn:'On track',       status:'ds-ok' },
-    'Amex Gold':                { pct:60, color:'#c49a28', warn:'$10 exp. 4d',    status:'ds-warn' },
-    'Capital One Venture X':    { pct:50, color:'#2a2a2a', warn:'$120 exp. Dec', status:'ds-warn' },
-    'Capital One Venture':      { pct:90, color:'#b52a2a', warn:'On track',       status:'ds-ok' },
-    'Citi Strata Premier':      { pct:30, color:'#0057b8', warn:'$100 exp. Dec', status:'ds-warn' },
-    'Chase Freedom Unlimited':  { pct:100,color:'#2e6b2e', warn:'No credits',    status:'ds-ok' },
-    'Amex Blue Cash Preferred': { pct:45, color:'#005cbf', warn:'$7 exp. Jun 30',status:'ds-warn' },
-    'Bilt Mastercard':          { pct:100,color:'#2d2d2d', warn:'No credits',    status:'ds-ok' }
+    'Chase Sapphire Reserve':   { color:'#1a3a6e' },
+    'Chase Sapphire Preferred': { color:'#1e4976' },
+    'Amex Platinum':            { color:'#b0b0b0' },
+    'Amex Gold':                { color:'#c49a28' },
+    'Capital One Venture X':    { color:'#2a2a2a' },
+    'Capital One Venture':      { color:'#b52a2a' },
+    'Citi Strata Premier':      { color:'#0057b8' },
+    'Chase Freedom Unlimited':  { color:'#2e6b2e' },
+    'Amex Blue Cash Preferred': { color:'#005cbf' },
+    'Bilt Mastercard':          { color:'#2d2d2d' },
+    'Amazon Prime Visa':        { color:'#002156' },
+    'Marriott Bonvoy Boundless':{ color:'#1A1F5E' }
   };
-  document.getElementById('pro-card-rows').innerHTML = cards.map(name => {
-    var d = allCardData[name] || { pct:50, color:'#534AB7', warn:'Check card', status:'ds-warn' };
-    return '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:0.5px solid #1e1e2e;">' +
-      '<div style="font-size:12px;font-weight:500;color:#c8c8e8;width:160px;flex-shrink:0;">'+name+'</div>' +
-      '<div style="flex:1;height:5px;background:#1e1e2e;border-radius:3px;overflow:hidden;">' +
-        '<div style="width:'+d.pct+'%;height:100%;background:'+d.color+';border-radius:3px;"></div>' +
+
+  var usage = getCreditUsage();
+
+  document.getElementById('pro-card-rows').innerHTML = cards.map(function(name) {
+    var d = allCardData[name] || { color:'#534AB7' };
+    var credits = CARD_CREDITS_DATA[name] || [];
+    var cardUsage = usage[name] || {};
+
+    // Calculate overall completion %
+    var totalValue = 0, usedValue = 0;
+    credits.forEach(function(c) {
+      totalValue += c.total;
+      var used = c.type === 'onetime'
+        ? (cardUsage[c.label] ? c.total : 0)
+        : Math.min(parseFloat(cardUsage[c.label]) || 0, c.total);
+      usedValue += used;
+    });
+    var pct = totalValue > 0 ? Math.round(usedValue / totalValue * 100) : 100;
+    var noCredits = credits.length === 0;
+    var statusText = noCredits ? 'No tracked credits' : (pct >= 100 ? 'All credits used' : pct + '% used — $' + (totalValue - usedValue) + ' remaining');
+    var statusClass = noCredits || pct >= 100 ? 'ds-ok' : (pct < 30 ? 'ds-warn' : 'ds-ok');
+
+    // Build credit rows
+    var creditRows = credits.map(function(c) {
+      var used = c.type === 'onetime'
+        ? (cardUsage[c.label] ? c.total : 0)
+        : Math.min(parseFloat(cardUsage[c.label]) || 0, c.total);
+      var creditPct = Math.round(used / c.total * 100);
+
+      if (c.type === 'onetime') {
+        var checked = cardUsage[c.label] ? 'checked' : '';
+        return '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:0.5px solid #1e1e2e;">' +
+          '<input type="checkbox" '+checked+' style="accent-color:#534AB7;cursor:pointer;" onchange="updateCreditToggle(\''+name.replace(/'/g,"\\'")+'\',' +
+            '\''+c.label.replace(/'/g,"\\'")+'\',this.checked)">' +
+          '<div style="flex:1;">' +
+            '<div style="font-size:11px;color:#c8c8e8;font-weight:500;">'+c.label+'</div>' +
+            (c.note ? '<div style="font-size:10px;color:#5566aa;">'+c.note+'</div>' : '') +
+          '</div>' +
+          '<span style="font-size:10px;color:'+(cardUsage[c.label]?'#5DCAA5':'#5566aa')+';">'+
+            (cardUsage[c.label] ? '✓ Redeemed' : 'Not yet used')+'</span>' +
+        '</div>';
+      } else {
+        var inputVal = parseFloat(cardUsage[c.label]) || 0;
+        return '<div style="padding:6px 0;border-bottom:0.5px solid #1e1e2e;">' +
+          '<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">' +
+            '<div style="flex:1;">' +
+              '<div style="font-size:11px;color:#c8c8e8;font-weight:500;">'+c.label+'</div>' +
+              (c.note ? '<div style="font-size:10px;color:#5566aa;">'+c.note+'</div>' : '') +
+            '</div>' +
+            '<div style="font-size:11px;color:#c8c8e8;display:flex;align-items:center;gap:4px;">' +
+              '$<input type="number" value="'+inputVal+'" min="0" max="'+c.total+'" step="1" ' +
+              'style="width:52px;background:#0d0d1a;border:0.5px solid #2a2a4a;border-radius:4px;color:#c8c8e8;font-size:11px;padding:2px 5px;text-align:right;" ' +
+              'onchange="updateCreditAmount(\''+name.replace(/'/g,"\\'")+'\',' +
+              '\''+c.label.replace(/'/g,"\\'")+'\',this.value,'+c.total+')" ' +
+              'onblur="buildProCards(getSession().cards||[])">' +
+              ' / $'+c.total +
+            '</div>' +
+          '</div>' +
+          '<div style="height:4px;background:#1e1e2e;border-radius:2px;overflow:hidden;">' +
+            '<div style="width:'+creditPct+'%;height:100%;background:'+d.color+';border-radius:2px;transition:width .3s;"></div>' +
+          '</div>' +
+        '</div>';
+      }
+    }).join('');
+
+    var expandId = 'credits-expand-' + name.replace(/\s+/g,'-').replace(/[^a-zA-Z0-9-]/g,'');
+
+    return '<div style="margin-bottom:4px;">' +
+      '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:0.5px solid #1e1e2e;">' +
+        '<div style="font-size:12px;font-weight:500;color:#c8c8e8;width:155px;flex-shrink:0;">'+name+'</div>' +
+        '<div style="flex:1;height:5px;background:#1e1e2e;border-radius:3px;overflow:hidden;">' +
+          '<div style="width:'+pct+'%;height:100%;background:'+d.color+';border-radius:3px;transition:width .3s;"></div>' +
+        '</div>' +
+        '<div style="font-size:11px;color:#5566aa;min-width:30px;text-align:right;">'+pct+'%</div>' +
+        '<span style="font-size:10px;padding:2px 7px;border-radius:3px;white-space:nowrap;" class="'+statusClass+'">'+statusText+'</span>' +
+        (credits.length > 0 ? '<button onclick="toggleCreditExpand(\''+expandId+'\')" style="background:transparent;border:none;color:#5566aa;cursor:pointer;font-size:16px;padding:0 2px;line-height:1;" title="Track credits"><i class="ti ti-chevron-down" id="chev-'+expandId+'"></i></button>' : '') +
       '</div>' +
-      '<div style="font-size:11px;color:#5566aa;min-width:30px;text-align:right;">'+d.pct+'%</div>' +
-      '<span style="font-size:10px;padding:2px 7px;border-radius:3px;" class="'+d.status+'">'+d.warn+'</span>' +
+      (credits.length > 0 ? '<div id="'+expandId+'" style="display:none;padding:4px 0 8px 0;">' + creditRows + '</div>' : '') +
     '</div>';
   }).join('');
+}
+
+function toggleCreditExpand(id) {
+  var el = document.getElementById(id);
+  var chev = document.getElementById('chev-' + id);
+  if (!el) return;
+  var isOpen = el.style.display !== 'none';
+  el.style.display = isOpen ? 'none' : 'block';
+  if (chev) chev.className = isOpen ? 'ti ti-chevron-down' : 'ti ti-chevron-up';
+}
+
+function updateCreditToggle(cardName, creditLabel, checked) {
+  var usage = getCreditUsage();
+  if (!usage[cardName]) usage[cardName] = {};
+  if (checked) usage[cardName][creditLabel] = true;
+  else delete usage[cardName][creditLabel];
+  saveCreditUsage(usage);
+  var s = getSession();
+  if (s) {
+    buildProCards(s.cards || []);
+    calcAndUpdateProStats(s.cards || []);
+  }
+}
+
+function updateCreditAmount(cardName, creditLabel, value, max) {
+  var usage = getCreditUsage();
+  if (!usage[cardName]) usage[cardName] = {};
+  var numVal = Math.min(Math.max(parseFloat(value) || 0, 0), max);
+  usage[cardName][creditLabel] = numVal;
+  saveCreditUsage(usage);
+  var s = getSession();
+  if (s) calcAndUpdateProStats(s.cards || []);
+}
+
+// ── EDIT CARDS ──
+function openEditCards() {
+  var s = getSession();
+  var current = s && s.cards ? s.cards : [];
+  // Pre-check current cards
+  document.querySelectorAll('#edit-cards-grid input[type="checkbox"]').forEach(function(cb) {
+    cb.checked = current.includes(cb.value);
+  });
+  var modal = document.getElementById('edit-cards-modal');
+  modal.style.display = 'flex';
+}
+function closeEditCards() {
+  document.getElementById('edit-cards-modal').style.display = 'none';
+}
+function saveEditCards() {
+  var cards = Array.from(document.querySelectorAll('#edit-cards-grid input:checked')).map(c => c.value);
+  if (!cards.length) { alert('Please select at least one card.'); return; }
+  var s = getSession() || {};
+  s.cards = cards;
+  saveSession(s);
+  closeEditCards();
+  showProMain(s);
+  calcAndUpdateProStats(cards);
 }
 
 // ── PRO OFFER SCREENSHOT UPLOAD ──
@@ -2228,32 +2726,37 @@ function handleProOfferFile(files) {
 async function processProOfferFile(f) {
   var notice = document.getElementById('pro-offer-parsed-notice');
   notice.style.display = 'block';
+  notice.style.background = '#0F3020';
+  notice.style.color = '#5DCAA5';
   notice.textContent = 'Parsing ' + f.name + ' for offers...';
   document.getElementById('pro-offer-upload-zone').style.display = 'none';
 
-  // Convert image to base64 for Claude vision
+  var isPDF = f.type === 'application/pdf' || f.name.toLowerCase().endsWith('.pdf');
+
+  // Convert file to base64
   var reader = new FileReader();
   reader.onload = async function(ev) {
     var base64 = ev.target.result.split(',')[1];
-    var mediaType = f.type || 'image/png';
+
+    // Build the content block — PDFs use document type; images use image type
+    var contentBlock = isPDF
+      ? { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: base64 } }
+      : { type: 'image', source: { type: 'base64', media_type: f.type || 'image/png', data: base64 } };
+
+    var promptText = isPDF
+      ? 'This is a PDF of Chase Offers or Amex Offers. Extract all offers visible and return ONLY a JSON array, no markdown, in this format: [{"brand":"Macy\'s","discount":"10% back","details":"Spend $50+","expires":"Jun 30","issuer":"Chase"},...]'
+      : 'This is a screenshot of Chase Offers or Amex Offers. Extract all offers you can see and return ONLY a JSON array, no markdown, in this format: [{"brand":"Macy\'s","discount":"10% back","details":"Spend $50+","expires":"Jun 30","issuer":"Chase"},...]';
 
     try {
-      var res = await fetch('/.netlify/functions/claude', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-6',
-          max_tokens: 1000,
-          messages: [{
-            role: 'user',
-            content: [
-              { type: 'image', source: { type: 'base64', media_type: mediaType, data: base64 } },
-              { type: 'text', text: 'This is a screenshot of Chase Offers or Amex Offers. Extract all offers you can see and return ONLY a JSON array, no markdown, in this format: [{"brand":"Macy\'s","discount":"10% back","details":"Spend $50+","expires":"Jun 30","issuer":"Chase"},...]' }
-            ]
-          }]
-        })
+      var data = await callClaudeAPI({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1000,
+        messages: [{
+          role: 'user',
+          content: [contentBlock, { type: 'text', text: promptText }]
+        }]
       });
-      var data = await res.json();
+
       var text = data.content && data.content[0] ? data.content[0].text : '';
       var clean = text.replace(/```json|```/g,'').trim();
       var parsed = JSON.parse(clean);
@@ -2261,26 +2764,34 @@ async function processProOfferFile(f) {
       // Save to localStorage as "shared" national offers
       var existing = [];
       try { existing = JSON.parse(localStorage.getItem(SHARED_OFFERS_KEY)) || []; } catch(e) {}
-      // Merge: add any new brands not already present
       parsed.forEach(o => {
         if (!existing.find(e => e.brand === o.brand && e.issuer === o.issuer)) existing.push(o);
       });
       localStorage.setItem(SHARED_OFFERS_KEY, JSON.stringify(existing));
 
       // Render the newly parsed offers
-      var emojis = { Chase:'🏦', Amex:'💳' };
-      var newHtml = parsed.map(o =>
-        '<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);">' +
-          '<span style="font-size:19px;">'+(o.brand.includes('Food')||o.brand.includes('Market')?'🛒':o.brand.includes('Delta')||o.brand.includes('United')||o.brand.includes('Air')?'✈️':o.brand.includes('Hotel')||o.brand.includes('Marriott')||o.brand.includes('Hilton')?'🏨':'🏬')+'</span>' +
-          '<div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">'+o.brand+' — '+o.discount+'</div><div style="font-size:11px;color:var(--dark-muted);">'+o.issuer+' Offer · '+o.details+' · Expires '+o.expires+'</div></div>' +
-          '<span style="font-size:11px;color:#5DCAA5;background:#0F3020;padding:2px 7px;border-radius:3px;">Active</span>' +
-        '</div>'
-      ).join('');
+      var newHtml = parsed.map(o => {
+        var icon = o.brand.includes('Food')||o.brand.includes('Market')||o.brand.includes('Whole')?'🛒':o.brand.includes('Delta')||o.brand.includes('United')||o.brand.includes('Air')?'✈️':o.brand.includes('Hotel')||o.brand.includes('Marriott')||o.brand.includes('Hilton')?'🏨':'🏬';
+        return '<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#0d0d1a;border-radius:var(--radius-md);">'+
+          '<span style="font-size:19px;">'+icon+'</span>'+
+          '<div style="flex:1"><div style="font-size:12px;font-weight:500;color:#c8c8e8;">'+o.brand+' — '+o.discount+'</div><div style="font-size:11px;color:var(--dark-muted);">'+o.issuer+' Offer · '+o.details+' · Expires '+o.expires+'</div></div>'+
+          '<span style="font-size:11px;color:#5DCAA5;background:#0F3020;padding:2px 7px;border-radius:3px;">Active</span>'+
+        '</div>';
+      }).join('');
       document.getElementById('pro-offers').innerHTML = newHtml;
       notice.textContent = '✓ ' + parsed.length + ' offers parsed from ' + f.name + '. National brands shared with all Pro users.';
     } catch(err) {
-      notice.textContent = 'Could not parse offers — please try a clearer screenshot.';
+      var eMsg = err && err.message ? err.message : String(err);
+      if (eMsg === 'NO_KEY') {
+        notice.textContent = '⚠ No API key — add your Anthropic API key in the AI Advisor setup panel.';
+      } else if (isPDF) {
+        notice.textContent = 'Could not parse PDF. Try a text-based PDF (not scanned) or take a screenshot (PNG/JPG) instead.';
+      } else {
+        notice.textContent = 'Could not parse offers: ' + eMsg + '. Try a clearer screenshot (PNG or JPG).';
+      }
       notice.style.background = '#3a0000';
+      notice.style.color = '#ff8888';
+      document.getElementById('pro-offer-upload-zone').style.display = 'block';
     }
   };
   reader.readAsDataURL(f);
@@ -2299,7 +2810,77 @@ function loadSharedOffers() {
   } catch(e) {}
 }
 
-// ── AI CARD ADVISOR ──
+// ══════════════════════════════════════════════════════════
+// UNIFIED CLAUDE API HELPER
+// Tries Netlify proxy first; falls back to direct browser API
+// with user-stored key if the proxy is unreachable.
+// ══════════════════════════════════════════════════════════
+var PP_API_KEY_STORE = 'pp_api_key';
+
+function getStoredKey() {
+  try { return localStorage.getItem(PP_API_KEY_STORE) || ''; } catch(e) { return ''; }
+}
+function setStoredKey(k) {
+  try { localStorage.setItem(PP_API_KEY_STORE, k.trim()); } catch(e) {}
+  refreshAPIStatus();
+}
+function clearStoredKey() {
+  try { localStorage.removeItem(PP_API_KEY_STORE); } catch(e) {}
+  refreshAPIStatus();
+}
+
+async function callClaudeAPI(payload) {
+  // ── Path 1: Netlify function proxy ──────────────────────
+  try {
+    var ctrl = new AbortController();
+    var tid  = setTimeout(function() { ctrl.abort(); }, 6000);
+    var pr = await fetch('/.netlify/functions/claude', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(payload),
+      signal:  ctrl.signal
+    });
+    clearTimeout(tid);
+    if (pr.ok) return await pr.json();
+    // Non-200 — check if it's a key-config issue vs real API error
+    var pe = {};
+    try { pe = await pr.json(); } catch(x) {}
+    // If proxy returned an actual API error (not just "key not configured"), propagate it
+    if (pe.error && pe.error !== 'API key not configured') {
+      throw Object.assign(new Error('PROXY_API_ERR'), { detail: pe.error });
+    }
+    // else fall through to direct
+  } catch(proxyErr) {
+    if (proxyErr.message === 'PROXY_API_ERR') throw proxyErr; // real error, surface it
+    // Network/timeout/abort → fall through to direct
+  }
+
+  // ── Path 2: Direct browser API call ────────────────────
+  var key = getStoredKey();
+  if (!key) throw Object.assign(new Error('NO_KEY'), {});
+
+  var dr = await fetch('https://api.anthropic.com/v1/messages', {
+    method:  'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key':    key,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
+    body: JSON.stringify(payload)
+  });
+  var dd = await dr.json();
+  if (!dr.ok) {
+    var msg = (dd.error && dd.error.message) ? dd.error.message : JSON.stringify(dd.error || dd);
+    throw Object.assign(new Error('DIRECT_API_ERR'), { detail: msg });
+  }
+  return dd;
+}
+
+// refreshAPIStatus — UI panel removed; kept as no-op so setStoredKey doesn't throw
+function refreshAPIStatus() {}
+
+// ── AI CARD ADVISOR ──────────────────────────────────────
 var aiHistory = [];
 
 function buildAISystem() {
@@ -2309,16 +2890,89 @@ function buildAISystem() {
 
 CARDS THE USER CARRIES: ${userCards}
 
-CURRENT MONTHLY OFFERS (June 2026):
-- Macy's: 10% back via Chase Offer (spend $50+, expires Jun 30)
-- Delta: $50 off $300+ via Amex Offer (book by Jun 30)
-- Whole Foods: 5% back via Amex Offer (up to $25, expires Jun 30 — 9 days left)
-- Marriott: $75 off $300+ via Chase Offer (book by Jun 30, stay by Dec 31)
+CURRENT OFFERS — JUNE 16, 2026 (parsed from actual Amex + Chase offer PDFs):
 
-CREDITS EXPIRING SOON:
-- Amex Gold $10 Uber Cash — 4 days remaining
-- Sapphire Reserve $300 travel credit — $180 remaining, resets Jan 1
-- Amex Gold $10 dining credit — 9 days remaining
+⚠ EXPIRING THIS WEEK (act now):
+- GlassesUSA.com: Amex — $20 back on $100+. Expires Jun 18 (2 days!)
+- Poshmark: Amex — $10 back on $50+. Expires Jun 19 (3 days!)
+- Outback Steakhouse: Amex — 15% back on single purchase, up to $15. Expires Jun 20 (4 days)
+- 2026 U.S. Open Championship: Amex — $10 back on $100+ merch/concessions. Expires Jun 21
+- Zappos: Amex — $25 back on $125+. Expires Jun 22
+- Sling TV: Amex — $15 back on $19.99+, up to 2 times ($30 total). Expires Jun 23
+
+EXPIRING JUNE 30:
+- Topgolf: Amex — $15 back on $40+. Expires Jun 30
+- Under Armour: Amex — $10 back on $50+. Expires Jun 30
+- LensCrafters: Amex — $40 back on $200+. Expires Jun 30
+- Citizen Watch: Amex — $75 back on $275+. Expires Jun 30
+- Club Champion Golf: Amex — $200 back on $800+. Expires Jun 30
+- STAUD: Amex — $70 back on $350+. Expires Jun 30
+- Broadway.com: Amex — $50 back on $250+. Expires Jun 30
+- QuickBooks Online: Amex — $10 back on $10+ (easy money if you use it). Expires Jun 30
+- Auntie Anne's: Amex — 10% back on single purchase, up to $4. Expires Jun 30
+- Glossier: Amex — $15 back on $65+. Expires Jun 30
+- Johnnie-O: Amex — $50 back on $300+. Expires Jun 26
+- Marriott Transfer Bonus: Amex — Transfer MR pts to Marriott Bonvoy, get 20% more Bonvoy pts. Through Jun 30
+- Disney+: Chase — 15% cash back. Expires Jun 30 (15 days left as of Jun 15)
+- Sunoco: Chase — Up to 5% cash back. Expiring
+
+ACTIVE THROUGH JULY+:
+- Amazon.com: Amex (Added to card) — 1,000 MR pts on $40+. Expires 7/19
+- QDOBA: Amex — 15% back, up to $5. Expires 7/9. Also Chase — 7% cash back
+- DIRECTV: Amex (NEW) — $50 back on $100+, up to 2 times ($100 total). Expires 7/10
+- Blaze Pizza: Amex — $5 back on $25+, up to 2 times. Expires 7/14
+- Hallmark+: Amex — $5 back on $5+. Expires 7/15
+- LensDirect: Chase (NEW) — $20 cash back
+- Expedia/amex Prepaid Hotel: Amex (Added to card) — 10% back. Expires 8/4
+- Sony Electronics: Amex — $50 back on $250+. Expires 9/26
+- Hotels.com/amex Prepaid Hotel: Amex — 10% back, up to $100. Expires 8/31
+- Sunglass Hut: Amex — $30 back on $200+. Expires 7/31
+- FragranceNet.com: Amex — $25 back on $125+, up to 2 times. Expires 7/29
+- The Wine Market: Amex — $15 back on $75+. Expires 7/31
+- Microsoft Store: Amex (NEW) — $15 back on $70+. Expires 9/13
+- LongHorn Steakhouse: Amex — +2 MR pts per $, up to 5,000 pts. Expires 8/30
+- Olive Garden: Amex — +2 MR pts per $, up to 5,000 pts. Expires 8/24
+- Groupon: Amex — $10 back on $50+. Expires 7/26
+- gorjana Jewelry: Amex — $25 back on $150+, up to 2 times. Expires 9/15
+- DIRECTV: Chase (NEW) — $50 cash back
+- Fubo: Chase — 35% cash back on Live TV (huge rate for streaming)
+- Sam's Club: Chase (NEW) — 40% cash back on new membership
+- Turo: Chase — $30 back on $150+. Expires 12/31
+- Lowe's: Chase (NEW) — 15% cash back (great for home improvement)
+- Therabody: Chase — 15% cash back. Expiring soon
+- JustFoodForDogs: Chase — $30 cash back. Expiring soon
+- Ooma: Both cards — Amex: $50 back on $70+ (expires 12/11). Chase: 35% cash back (NEW)
+- Aura.com Online Safety: Amex — $60 back on $100+ (60% return — best value offer). Expires 8/31
+- Tonal: Chase (NEW) — $250 cash back
+- Thuma: Chase (NEW) — $100 cash back
+- Rover: Chase (Exclusive) — $50 cash back
+- eBay: Chase — 10% cash back
+- Blue Apron: Chase — 15% cash back
+- Cesars Rewards: Amex — $40 back on $200+. Expires 8/31
+- Dine in the UK: Amex — 10% back, up to $250. Expires 8/31
+- Boll & Branch: Amex — $100 back on $500+. Expires 8/4
+- Tory Burch: Amex (NEW) — $50 back on $300+. Expires 7/15. Also Chase — 5% cash back
+- AllTrails.com: Amex — 50% back, up to $40. Expires 7/5
+- Cotopaxi: Amex — $25 back on $100+. Expires 7/1
+- Vans: Amex — 5% back, up to $250. Expires 7/1
+- Sweetwater Musical Instruments: Amex — $40 back on $250+. Expires 9/7
+- SimpliSafe: Amex — $75 back on $250+. Expires 12/4
+- Blueland: Amex — $20 back on $60+. Expires 7/31
+- The Motley Fool: Amex — $50 back on $99+. Expires 8/31
+- Grammarly: Amex (NEW) — $20 back on $100+. Expires 9/11
+- Dyson.com: Amex — 2% back, up to $250. Expires 7/1
+- Serena & Lily: Amex — $100 back on $500+. Expires 8/11
+- Europcar Pre-paid: Amex — $50 back on $250+. Expires 10/21
+- Auberge Collection: Amex (NEW) — $150 back on $750+. Expires 12/4
+- Fubo: Amex — $30 back on $65+, up to 3 times. Expires 11/7
+- LampsPlus.com: Amex (NEW) — $50 back on $350+. Expires 11/2
+- NBAStore.com: Amex — $20 back on $100+, up to 2 times. Expires 7/31
+- Avocado Green Mattress: Amex — $120 back on $600+. Expires 9/13
+- Hill House Home: Amex — $50 back on $240+. Expires 8/24
+- Huel: Chase (NEW) — 15% cash back
+- Daily Harvest: Chase (NEW) — 10% cash back
+- depop: Chase — 15% cash back. Also Amex — 25% back, up to $25 (expires 7/3)
+- Fanatics.com: Both — Amex: $20 back on $125+; Chase: 10% cash back
 
 CARD MULTIPLIERS:
 - Amex Gold: 4x dining, 4x US groceries, 3x flights, 1x everything else
@@ -2363,40 +3017,53 @@ async function sendAI() {
   var q = input.value.trim();
   if (!q) return;
   input.value = '';
+  input.disabled = true;
 
   var thread = document.getElementById('ai-chat-thread');
 
-  // Add user bubble
-  thread.innerHTML += '<div style="display:flex;justify-content:flex-end;"><div style="background:#534AB7;color:white;font-size:13px;padding:8px 12px;border-radius:12px 12px 2px 12px;max-width:80%;line-height:1.5;">'+q+'</div></div>';
+  // User bubble
+  var userDiv = document.createElement('div');
+  userDiv.style.cssText = 'display:flex;justify-content:flex-end;margin-bottom:2px;';
+  userDiv.innerHTML = '<div style="background:#534AB7;color:white;font-size:13px;padding:8px 12px;border-radius:12px 12px 2px 12px;max-width:80%;line-height:1.5;">' + q.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>';
+  thread.appendChild(userDiv);
 
-  // Add thinking bubble
-  var thinkId = 'think-' + Date.now();
-  thread.innerHTML += '<div id="'+thinkId+'" style="display:flex;justify-content:flex-start;"><div style="background:#13132a;border:0.5px solid #2a2a4a;color:#9090b0;font-size:13px;padding:8px 12px;border-radius:12px 12px 12px 2px;max-width:80%;line-height:1.5;">Thinking...</div></div>';
+  // Thinking bubble
+  var thinkDiv = document.createElement('div');
+  thinkDiv.style.cssText = 'display:flex;justify-content:flex-start;';
+  thinkDiv.innerHTML = '<div style="background:#13132a;border:0.5px solid #2a2a4a;color:#9090b0;font-size:13px;padding:8px 12px;border-radius:12px 12px 12px 2px;max-width:80%;line-height:1.5;">Thinking...</div>';
+  thread.appendChild(thinkDiv);
   thread.scrollTop = thread.scrollHeight;
 
   aiHistory.push({ role: 'user', content: q });
 
   try {
-    var res = await fetch('/.netlify/functions/claude', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 1500,
-        system: buildAISystem(),
-        messages: aiHistory
-      })
+    var data = await callClaudeAPI({
+      model:    'claude-sonnet-4-6',
+      max_tokens: 1024,
+      system:   buildAISystem(),
+      messages: aiHistory
     });
-    var data = await res.json();
-    var reply = data.content && data.content[0] ? data.content[0].text : 'Sorry, I couldn\'t get a response. Please try again.';
+    var reply = data.content && data.content[0] && data.content[0].text
+      ? data.content[0].text
+      : 'No response. Please try again.';
     aiHistory.push({ role: 'assistant', content: reply });
-    var el = document.getElementById(thinkId);
-    if (el) el.querySelector('div').innerHTML = reply.replace(/\n/g,'<br>');
-    el.querySelector('div').style.color = '#c8c8e8';
+    thinkDiv.querySelector('div').innerHTML = reply.replace(/\n/g,'<br>').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+    thinkDiv.querySelector('div').style.color = '#c8c8e8';
   } catch(e) {
-    var el = document.getElementById(thinkId);
-    if (el) el.querySelector('div').textContent = 'Network error — please try again.';
+    var msg = '';
+    if (e.message === 'NO_KEY') {
+      msg = '⚠ No API key configured. Enter your Anthropic API key in the setup panel above, then try again.';
+    } else if (e.message === 'PROXY_API_ERR' || e.message === 'DIRECT_API_ERR') {
+      msg = 'API error: ' + (e.detail || e.message);
+    } else {
+      msg = 'Connection error: ' + (e.message || String(e));
+    }
+    thinkDiv.querySelector('div').textContent = msg;
+    thinkDiv.querySelector('div').style.color = '#ff8888';
+    aiHistory.pop();
   }
+
+  input.disabled = false;
   thread.scrollTop = thread.scrollHeight;
 }
 
@@ -2411,7 +3078,7 @@ async function sendAI() {
         <div class="logo-mark"><i class="ti ti-bolt" aria-hidden="true"></i></div>
         <div>
           <span style="font-size:17px;font-weight:600;color:var(--gray-900);">Points<em style="color:var(--purple);font-style:normal;">Pulse.AI</em></span>
-          <span style="font-size:13px;color:var(--gray-400);margin-left:8px;">/ Partner Resources</span>
+          <span style="font-size:13px;color:var(--gray-400);margin-left:8px;">/ Our Top Picks</span>
         </div>
       </div>
       <button onclick="closePartnerResources()" style="background:transparent;border:0.5px solid var(--gray-200);color:var(--gray-600);padding:7px 14px;border-radius:var(--radius-md);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;"><i class="ti ti-x" style="font-size:13px;"></i> Close</button>
@@ -2420,7 +3087,7 @@ async function sendAI() {
     <!-- Intro -->
     <div style="margin-bottom:2rem;">
       <div class="sec-label purple">Curated by PointsPulse.AI</div>
-      <h2 style="font-size:22px;font-weight:600;letter-spacing:-.4px;color:var(--gray-900);margin-bottom:8px;">Tools and resources we stand behind.</h2>
+      <h2 style="font-size:22px;font-weight:600;letter-spacing:-.4px;color:var(--gray-900);margin-bottom:8px;">Our Top Picks: Curated Favorites</h2>
       <p style="font-size:14px;color:var(--gray-600);line-height:1.7;max-width:540px;">A hand-selected set of resources for people focused on building wealth and maximizing every dollar. Some links are affiliate links — they generate a small commission at no additional cost to you.</p>
     </div>
 
@@ -2471,8 +3138,97 @@ async function sendAI() {
 
     </div>
 
+    <!-- Book Recommendations Section -->
+    <div style="border-top:0.5px solid var(--gray-200);padding-top:2rem;margin-bottom:2.5rem;">
+      <div class="sec-label purple">Reading list</div>
+      <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:1.5rem;">
+        <div style="width:42px;height:42px;background:linear-gradient(135deg,#111,#2d2d2d);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid rgba(240,192,64,.25);">
+          <i class="ti ti-book-2" style="font-size:20px;color:#f0c040;" aria-hidden="true"></i>
+        </div>
+        <div>
+          <h2 style="font-size:18px;font-weight:600;letter-spacing:-.3px;color:var(--gray-900);margin-bottom:5px;">Book Recommendations</h2>
+          <p style="font-size:13px;color:var(--gray-600);line-height:1.65;max-width:520px;">Curated reading lists for ambitious people — whether you're just starting out, building a company, or leading a team. Every list is hand-picked with affiliate links that support the site at no extra cost to you.</p>
+        </div>
+      </div>
+
+      <!-- Book category grid -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;">
+
+        <!-- College Grads -->
+        <a href="https://breaktherulesbreakthebank.com/reading-recommendations/f/5-best-books-for-recent-college-grads?blogcategory=Book+Recommendations" target="_blank" rel="noopener" style="text-decoration:none;">
+          <div style="border:0.5px solid var(--gray-200);border-radius:var(--radius-lg);padding:14px 16px;background:#fff;transition:box-shadow .15s,border-color .15s;display:flex;align-items:center;gap:12px;" onmouseover="this.style.boxShadow='0 4px 16px rgba(83,74,183,.1)';this.style.borderColor='var(--purple)'" onmouseout="this.style.boxShadow='none';this.style.borderColor='var(--gray-200)'">
+            <div style="width:36px;height:36px;background:var(--purple-light);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span style="font-size:18px;">🎓</span>
+            </div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:var(--gray-900);margin-bottom:2px;">10 Must-Read Books for New College Grads</div>
+              <div style="font-size:11px;color:var(--gray-400);">Start your post-grad life with the right foundation</div>
+            </div>
+            <i class="ti ti-arrow-right" style="font-size:14px;color:var(--purple);flex-shrink:0;" aria-hidden="true"></i>
+          </div>
+        </a>
+
+        <!-- Entrepreneurs -->
+        <a href="https://breaktherulesbreakthebank.com/reading-recommendations/f/essential-books-for-entrepreneurs-and-first-time-startup-founders?blogcategory=Book+Recommendations" target="_blank" rel="noopener" style="text-decoration:none;">
+          <div style="border:0.5px solid var(--gray-200);border-radius:var(--radius-lg);padding:14px 16px;background:#fff;transition:box-shadow .15s,border-color .15s;display:flex;align-items:center;gap:12px;" onmouseover="this.style.boxShadow='0 4px 16px rgba(83,74,183,.1)';this.style.borderColor='var(--purple)'" onmouseout="this.style.boxShadow='none';this.style.borderColor='var(--gray-200)'">
+            <div style="width:36px;height:36px;background:#FFF8E8;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span style="font-size:18px;">🚀</span>
+            </div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:var(--gray-900);margin-bottom:2px;">Must-Read Books for Entrepreneurs</div>
+              <div style="font-size:11px;color:var(--gray-400);">Essential reads for founders &amp; first-time builders</div>
+            </div>
+            <i class="ti ti-arrow-right" style="font-size:14px;color:var(--purple);flex-shrink:0;" aria-hidden="true"></i>
+          </div>
+        </a>
+
+        <!-- Leaders & Managers -->
+        <a href="https://breaktherulesbreakthebank.com/reading-recommendations/f/10-best-books-for-managers-leaders?blogcategory=Book+Recommendations" target="_blank" rel="noopener" style="text-decoration:none;">
+          <div style="border:0.5px solid var(--gray-200);border-radius:var(--radius-lg);padding:14px 16px;background:#fff;transition:box-shadow .15s,border-color .15s;display:flex;align-items:center;gap:12px;" onmouseover="this.style.boxShadow='0 4px 16px rgba(83,74,183,.1)';this.style.borderColor='var(--purple)'" onmouseout="this.style.boxShadow='none';this.style.borderColor='var(--gray-200)'">
+            <div style="width:36px;height:36px;background:#E8F5EF;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span style="font-size:18px;">📋</span>
+            </div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:var(--gray-900);margin-bottom:2px;">10 Best Books for Leaders &amp; Managers</div>
+              <div style="font-size:11px;color:var(--gray-400);">Level up your management and leadership skills</div>
+            </div>
+            <i class="ti ti-arrow-right" style="font-size:14px;color:var(--purple);flex-shrink:0;" aria-hidden="true"></i>
+          </div>
+        </a>
+
+        <!-- Startup Execs -->
+        <a href="https://breaktherulesbreakthebank.com/reading-recommendations/f/top-5-books-for-start-up-leaders?blogcategory=Book+Recommendations" target="_blank" rel="noopener" style="text-decoration:none;">
+          <div style="border:0.5px solid var(--gray-200);border-radius:var(--radius-lg);padding:14px 16px;background:#fff;transition:box-shadow .15s,border-color .15s;display:flex;align-items:center;gap:12px;" onmouseover="this.style.boxShadow='0 4px 16px rgba(83,74,183,.1)';this.style.borderColor='var(--purple)'" onmouseout="this.style.boxShadow='none';this.style.borderColor='var(--gray-200)'">
+            <div style="width:36px;height:36px;background:#EEF2FF;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span style="font-size:18px;">⚡</span>
+            </div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:var(--gray-900);margin-bottom:2px;">5 Best Books for Startup Execs</div>
+              <div style="font-size:11px;color:var(--gray-400);">Required reading for startup leadership teams</div>
+            </div>
+            <i class="ti ti-arrow-right" style="font-size:14px;color:var(--purple);flex-shrink:0;" aria-hidden="true"></i>
+          </div>
+        </a>
+
+        <!-- Startup Employees -->
+        <a href="https://breaktherulesbreakthebank.com/reading-recommendations/f/top-5-books-for-start-up-employees?blogcategory=Book+Recommendations" target="_blank" rel="noopener" style="text-decoration:none;">
+          <div style="border:0.5px solid var(--gray-200);border-radius:var(--radius-lg);padding:14px 16px;background:#fff;transition:box-shadow .15s,border-color .15s;display:flex;align-items:center;gap:12px;" onmouseover="this.style.boxShadow='0 4px 16px rgba(83,74,183,.1)';this.style.borderColor='var(--purple)'" onmouseout="this.style.boxShadow='none';this.style.borderColor='var(--gray-200)'">
+            <div style="width:36px;height:36px;background:#FFF0EA;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span style="font-size:18px;">💡</span>
+            </div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:var(--gray-900);margin-bottom:2px;">5 Best Books for Startup Employees</div>
+              <div style="font-size:11px;color:var(--gray-400);">Navigate startup life like an insider from day one</div>
+            </div>
+            <i class="ti ti-arrow-right" style="font-size:14px;color:var(--purple);flex-shrink:0;" aria-hidden="true"></i>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
     <!-- Ad space row -->
-    <div style="border-top:0.5px solid var(--gray-200);padding-top:2rem;">
+    <div style="border-top:0.5px solid var(--gray-200);padding-top:2rem;margin-bottom:2.5rem;">
       <div class="sec-label" style="color:var(--gray-400);">Featured partners</div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">
         <div style="padding:1.5rem;border:1.5px dashed var(--gray-200);border-radius:var(--radius-lg);text-align:center;background:var(--gray-50);">
