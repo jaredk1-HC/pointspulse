@@ -934,8 +934,22 @@ body {
       </div>
       <div style="display:flex;gap:8px;align-items:center;">
         <span id="pro-user-email" style="font-size:12px;color:var(--dark-muted);"></span>
+        <!-- Admin-only API key button — hidden for regular users -->
+        <button id="pro-admin-settings-btn" onclick="toggleAdminAPIPanel()" style="display:none;background:transparent;border:0.5px solid var(--dark-border);color:var(--dark-muted);padding:6px 10px;border-radius:var(--radius-md);font-size:12px;cursor:pointer;" title="API settings"><i class="ti ti-settings" style="font-size:13px;"></i></button>
         <button onclick="closePro()" style="background:transparent;border:0.5px solid var(--dark-border);color:var(--dark-muted);padding:6px 12px;border-radius:var(--radius-md);font-size:13px;cursor:pointer;"><i class="ti ti-x"></i> Close</button>
       </div>
+    </div>
+
+    <!-- Admin API key panel (hidden by default, only for admin session) -->
+    <div id="pro-admin-api-panel" style="display:none;margin-bottom:1.25rem;padding:12px 14px;background:#0d0d1a;border:0.5px solid #534AB7;border-radius:var(--radius-lg);">
+      <div style="font-size:11px;font-weight:600;color:#8b80e8;margin-bottom:8px;letter-spacing:.5px;">⚙ API CONNECTION — ADMIN ONLY</div>
+      <div style="font-size:11px;color:#9090b0;margin-bottom:8px;">Primary path: Netlify function (set <code style="background:#1e1e3a;padding:1px 4px;border-radius:3px;">ANTHROPIC_API_KEY</code> in Netlify env vars). Fallback: key stored below in your browser.</div>
+      <div style="display:flex;gap:7px;align-items:center;">
+        <input type="password" id="admin-api-key-field" placeholder="sk-ant-api03-..." style="flex:1;padding:7px 10px;font-size:12px;border:0.5px solid #2a2a4a;border-radius:var(--radius-md);background:#1c1c2e;color:#c8c8e8;outline:none;" onfocus="this.style.borderColor='#534AB7'" onblur="this.style.borderColor='#2a2a4a'" onkeydown="if(event.key==='Enter')saveAdminAPIKey()">
+        <button onclick="saveAdminAPIKey()" style="background:#534AB7;color:white;border:none;padding:7px 14px;border-radius:var(--radius-md);font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;">Save</button>
+        <button onclick="clearStoredKey();document.getElementById('admin-api-key-status').textContent='Cleared.'" style="background:transparent;color:#5566aa;border:0.5px solid #2a2a4a;padding:7px 10px;border-radius:var(--radius-md);font-size:12px;cursor:pointer;">Clear</button>
+      </div>
+      <div id="admin-api-key-status" style="font-size:11px;margin-top:6px;color:#5566aa;"></div>
     </div>
 
     <!-- ── ONBOARDING FLOW (shown on first entry) ── -->
@@ -2430,6 +2444,16 @@ function showProMain(session) {
   calcAndUpdateProStats(cards);
   var count = cards.length;
   document.getElementById('pro-cards-heading').textContent = 'Your ' + count + ' card' + (count !== 1 ? 's' : '') + ' — June 2026';
+  // Show admin settings gear only for the admin account
+  var adminBtn = document.getElementById('pro-admin-settings-btn');
+  if (adminBtn) adminBtn.style.display = (session.email === 'admin@pointspulse.ai') ? 'flex' : 'none';
+  // Show current key status to admin
+  var adminStatus = document.getElementById('admin-api-key-status');
+  if (adminStatus && session.email === 'admin@pointspulse.ai') {
+    var k = getStoredKey();
+    adminStatus.textContent = k ? '✓ Browser key saved (' + k.slice(0,12) + '...)' : 'No browser key stored — Netlify env var is the primary path.';
+    adminStatus.style.color = k ? '#5DCAA5' : '#EF9F27';
+  }
 }
 
 // ── CREDIT TRACKING DATA (per card) ──
@@ -2880,6 +2904,24 @@ async function callClaudeAPI(payload) {
 // refreshAPIStatus — UI panel removed; kept as no-op so setStoredKey doesn't throw
 function refreshAPIStatus() {}
 
+function toggleAdminAPIPanel() {
+  var panel = document.getElementById('pro-admin-api-panel');
+  if (panel) panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+}
+function saveAdminAPIKey() {
+  var val = (document.getElementById('admin-api-key-field').value || '').trim();
+  if (!val) {
+    document.getElementById('admin-api-key-status').textContent = 'Enter a key first.';
+    document.getElementById('admin-api-key-status').style.color = '#e63946';
+    return;
+  }
+  setStoredKey(val);
+  document.getElementById('admin-api-key-field').value = '';
+  var status = document.getElementById('admin-api-key-status');
+  status.textContent = '✓ Key saved (' + val.slice(0,12) + '...). AI features active.';
+  status.style.color = '#5DCAA5';
+}
+
 // ── AI CARD ADVISOR ──────────────────────────────────────
 var aiHistory = [];
 
@@ -3043,9 +3085,21 @@ async function sendAI() {
       system:   buildAISystem(),
       messages: aiHistory
     });
-    var reply = data.content && data.content[0] && data.content[0].text
-      ? data.content[0].text
-      : 'No response. Please try again.';
+
+    // Surface real errors hidden inside a 200 response
+    if (!data || !data.content || !data.content[0] || !data.content[0].text) {
+      var errDetail = data && data.error
+        ? (typeof data.error === 'string' ? data.error : (data.error.message || JSON.stringify(data.error)))
+        : ('Unexpected response: ' + JSON.stringify(data || {}).slice(0, 120));
+      thinkDiv.querySelector('div').textContent = 'API error: ' + errDetail;
+      thinkDiv.querySelector('div').style.color = '#ff8888';
+      aiHistory.pop();
+      input.disabled = false;
+      thread.scrollTop = thread.scrollHeight;
+      return;
+    }
+
+    var reply = data.content[0].text;
     aiHistory.push({ role: 'assistant', content: reply });
     thinkDiv.querySelector('div').innerHTML = reply.replace(/\n/g,'<br>').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
     thinkDiv.querySelector('div').style.color = '#c8c8e8';
